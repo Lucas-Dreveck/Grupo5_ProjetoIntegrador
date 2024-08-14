@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ambiente-se</title>
+    <link rel="shortcut icon" th:href="@{/icons/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/styles/reset.css}">
+    <link rel="stylesheet" th:href="@{/styles/colors.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/root.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/header.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/loading.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img th:src=@{/icons/Logo.png} alt="Ambientese">
+    </div>
+    <div class="social">
+        <a href="https://api.whatsapp.com/send?phone=554430380838&text=Mensagem%20através%20do%20site" target="_blank" rel="noopener noreferrer">
+            <img th:src=@{/icons/Social/Whatsapp.svg} alt="Whatsapp" class="whatsapp">
+        </a>
+        <a href="https://www.instagram.com/ambientese.eng/" target="_blank" rel="noopener noreferrer">
+            <img th:src=@{/icons/Social/Instagram.svg} alt="Instagram" class="instagram">
+        </a>
+        <a href="https://www.facebook.com/ambientese.eng/" target="_blank" rel="noopener noreferrer">
+            <img th:src=@{/icons/Social/Facebook.svg} alt="Facebook" class="facebook">
+        </a>
+    </div>
+</header>
+
+<section class="main">
+    <section class="sidebar">
+        <div class="expand-menu">
+            <img th:src="@{/icons/Sidebar/arrow.svg}" alt="Expandir" class="expand-button">
+        </div>
+        <div class="menu" id="menu">
+            <ul class="main-list">
+                <li>Cadastro  <img th:src="@{/icons/Sidebar/down-arrow.svg}" alt="Subarrow"></li>
+                <ul class="sub-list">
+                    <li page="empresas">Cadastrar Empresa</li>
+                    <li page="funcionarios">Cadastrar Funcionário</li>
+                    <li page="perguntas">Cadastrar Pergunta</li>
+                </ul>
+                <li page="ranking">Ranking</li>
+                <li page="start-avaliacao">Avaliação</li>
+                <!-- <li page="historico">Histórico</li> -->
+            </ul>
+            <h2 class="login-logout" page="login">Login</h2>
+        </div>
+    </section>
+
+    <div class="frame" id="mainFrame">
+        <div class="main-content hidden">
+        </div>
+        <div class="loading hidden">
+            <span class="loader-dot loader-dot-one"></span>
+            <span class="loader-dot loader-dot-two"></span>
+            <span class="loader-dot loader-dot-three"></span>
+        </div>
+    </div>
+</section>
+
+<div id="allStyles">
+</div>
+
+<div id="allScripts">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script type="text/javascript" th:src="@{/scripts/root.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/login.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/forgot-password.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/avaliacao/selecao-empresa.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/avaliacao/avaliacao.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/avaliacao/result-avaliacao.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/ranking.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/cadastro-empresas.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/cadastro-funcionarios.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/pages/cadastro-perguntas.js}"></script>
+<!--Add others js files to this div-->
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+        if (page) {
+            getMainFrameContent(page);
+        } else {
+            getMainFrameContent('ranking');
+        }
+    });
+</script>
+</body>
+<!--The original structure as made by: Samuel Thomas, all credits to the author-->
+</html>

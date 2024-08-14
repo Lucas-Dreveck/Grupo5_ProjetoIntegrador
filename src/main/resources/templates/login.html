@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login | Ambiente-se </title>
+    <link rel="shortcut icon" th:href="@{/icons/favicon.png}"/>
+</head>
+<body>
+<content>
+    <div class="content-container">
+        <div class="box">
+            <div class="boxLogo">
+                <img class="imgLogo" th:src="@{/icons/AmbienteseBg.jpeg}" alt="LogoAmbientese">
+            </div>
+            <div class="boxLogin">
+                <h1 style="text-align: center; font-size: 50px; font-weight: bold;">Login</h1>
+                <form class="boxForm" id="login">
+                    <div class="inputs">
+                        <div class="divInput">
+                            <label for="user" style="font-size: 20px; font-weight: lighter; color: rgb(104, 104, 104);">Usuário ou Email</label>
+                            <input type="text" class="inputStyle" name="username" id="user">
+                        </div>
+                        <div class="divInput">
+                            <label for="password" style="font-size: 20px; font-weight: lighter; color: rgb(104, 104, 104);">Senha</label>
+                            <input type="password" class="inputStyle" name="password" id="password">
+                        </div>
+                        <span class="forgotPass" id="forgotPass"><u>Esqueci minha senha</u></span>
+                    </div>
+                    <div class="divBtns">
+                        <button class="confirmBtn" id="signIn">Entrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</content>
+
+<styles>
+    <link rel="stylesheet" th:href="@{/styles/pages/login.css}"/>
+</styles>
+</body>
+</html>

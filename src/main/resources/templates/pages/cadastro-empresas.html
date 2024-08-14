@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Empresas | Ambiente-se</title>
+</head>
+<body>
+<content>
+    <div class="content-container">
+    <div class="containerGeral">
+        <div class="divSelect">
+            <div class="selectBox">
+                <input type="text" id="search" class="inpFilter">
+                <img th:src="@{/icons/Cadastro-Empresa/search.png}" alt="Pesquisar" class="imgSearch">
+            </div>
+        </div>
+        <div class="divEmp">
+            <table class="tableEmp">
+                <thead>
+                    <tr>
+                        <th class="thTable" id="thImg"></th>
+                        <th class="thTable" id="thId">Id</th>
+                        <th class="thTable" id="thNome">Nome</th>
+                        <th class="thTable" id="thRamo">Ramo</th>
+                        <th class="thTable" id="thPorte">Porte</th>
+                        <th class="thTable btnAdd" id="thAcao"><div class="btn-plus">Novo Registro</div></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="divBtns">
+            <button id="priorBtnEmp" class="btn-prev disabled" disabled="true">
+                <img src="/icons/Buttons/arrow-left.svg" alt="Previous" class="arrow-icon">
+            </button>
+            <button id="nextBtnEmp" class="btn-next">
+                <img src="/icons/Buttons/arrow-right.svg" alt="Next" class="arrow-icon">
+            </button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="divAddEmp">
+        <div class="containerAddEmp">
+            <h2 style="font-size: x-large; font-weight: bold;">Empresa</h2>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="nomeFa" class="labelStyle">Nome Fantasia</label>
+                    <input type="text" class="inpStyleEmp inpNameFaEmp" id="nomeFa">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="nomeSo" class="labelStyle">Nome do Solicitante</label>
+                    <input type="text" class="inpStyleEmp inpNameSoEmp" id="nomeSo">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="telSo" class="labelStyle">Telefone do Solicitante</label>
+                    <input type="text" class="inpStyleEmp inpTelSoEmp" id="telSo">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="razao" class="labelStyle">Razão Social</label>
+                    <input type="text" class="inpStyleEmp inpRazaoEmp" id="razao">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="CNPJ" class="labelStyle">CNPJ</label>
+                    <input type="text" class="inpStyleEmp inpCnpjEmp" id="CNPJ">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="inscricao" class="labelStyle">Inscrição Social</label>
+                    <input type="text" class="inpStyleEmp inpInscricaoEmp" id="inscricao">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="email" class="labelStyle">Email</label>
+                    <input type="email" class="inpStyleEmp inpEmailEmp" id="email" autocomplete="off">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="telEmp" class="labelStyle">Telefone da Empresa</label>
+                    <input type="text" class="inpStyleEmp inpTelEmp" id="telEmp">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="porte" class="labelStyle">Porte da Empresa</label>
+                    <select name="porte" id="porte" class="inpStyleEmp">
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                    </select>
+                </div>
+                <div class="campoAddEmp">
+                    <label for="ramo" class="labelStyle">Ramo</label>
+                    <input type="text" class="inpStyleEmp inpAttEmp" id="ramo">
+                </div>
+            </div>
+            <h2 style="font-size: x-large; font-weight: bold; margin-top: 10px;">Endereço</h2>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="cep" class="labelStyle">Cep</label>
+                    <input type="text" class="inpStyleEmp inpCepEmp" id="cep">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="uf" class="labelStyle">UF</label>
+                    <input type="text" class="inpStyleEmp inpUfEmp" id="uf">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="cidade" class="labelStyle">Cidade</label>
+                    <input type="text" class="inpStyleEmp inpCidadeEmp" id="cidade">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="numero" class="labelStyle">Numero</label>
+                    <input type="text" class="inpStyleEmp inpNumeroEmp" id="numero">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="rua" class="labelStyle">Rua</label>
+                    <input type="text" class="inpStyleEmp inpRuaEmp" id="rua">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="bairro" class="labelStyle">Bairro</label>
+                    <input type="text" class="inpStyleEmp inpBairroEmp" id="bairro">
+                </div>
+            </div>
+<!--            <div class="rowsEmp">-->
+<!--                <div class="campoAddEmp">-->
+<!--                    <label for="icon" class="labelStyle">Identidade Visual</label>-->
+<!--                    <label for="icon" class="labelImg"><img th:src="@{/icons/Document.png}" alt="Clique aqui para enviar"> Adicionar Arquivo</label>-->
+<!--                    <input type="file" class="inpIconEmp" id="icon">-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="divAddBtnEmp">
+                <button class="btnStyle btnsCancel btnsEmp" id="cancelAddEmp">Cancelar</button>
+                <button class="btnStyle btnsConfirm btnsEmp" id="confirmAddEmp">Adicionar</button>
+            </div>
+        </div>
+    </div>
+    <div class="divEditEmp">
+        <div class="containerEditEmp">
+            <h2 style="font-size: x-large; font-weight: bold;">Empresa</h2>
+            <div class="rowsEmp">
+                <div class="campoEditEmp">
+                    <label for="nomeFaEdit" class="labelStyle">Nome Fantasia</label>
+                    <input type="text" class="inpStyleEmp inpNameFaEmp" id="nomeFaEdit">
+                </div>
+                <div class="campoEditEmp">
+                    <label for="nomeSoEdit" class="labelStyle">Nome do Solicitante</label>
+                    <input type="text" class="inpStyleEmp inpNameSoEmp" id="nomeSoEdit">
+                </div>
+                <div class="campoEditEmp">
+                    <label for="telSoEdit" class="labelStyle">Telefone do Solicitante</label>
+                    <input type="text" class="inpStyleEmp inpTelSoEmp" id="telSoEdit">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoEditEmp">
+                    <label for="razaoEdit" class="labelStyle">Razão Social</label>
+                    <input type="text" class="inpStyleEmp inpRazaoEmp" id="razaoEdit">
+                </div>
+                <div class="campoEditEmp">
+                    <label for="cnpjEdit" class="labelStyle">CNPJ</label>
+                    <input type="text" class="inpStyleEmp inpCnpjEmp" id="cnpjEdit">
+                </div>
+                <div class="campoEditEmp">
+                    <label for="inscricaoEdit" class="labelStyle">Inscrição Social</label>
+                    <input type="text" class="inpStyleEmp inpInscricaoEmp" id="inscricaoEdit">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoEditEmp">
+                    <label for="emailEdit" class="labelStyle">Email</label>
+                    <input type="email" class="inpStyleEmp inpEmailEmp" id="emailEdit" autocomplete="off">
+                </div>
+                <div class="campoEditEmp">
+                    <label for="telEmpEdit" class="labelStyle">Telefone da Empresa</label>
+                    <input type="text" class="inpStyleEmp inpTelEmp" id="telEmpEdit">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoEditEmp">
+                    <label for="porteEdit" class="labelStyle">Porte da Empresa</label>
+                    <select name="porte" id="porteEdit" class="inpStyleEmp">
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                    </select>
+                </div>
+                <div class="campoEditEmp">
+                    <label for="ramoEdit" class="labelStyle">Ramo</label>
+                    <input type="text" class="inpStyleEmp inpAttEmp" id="ramoEdit">
+                </div>
+            </div>
+<!--            <div class="rowsEmp">-->
+<!--                <div class="campoEditEmp">-->
+<!--                    <label for="iconEdit" class="labelStyle">Identidade Visual</label>-->
+<!--                    <label for="iconEdit" class="labelImg"><img th:src="@{/icons/Document.png}" alt="Clique aqui para enviar"> Adicionar Arquivo</label>-->
+<!--                    <input type="file" class="inpIconEmp" id="iconEdit">-->
+<!--                </div>-->
+<!--            </div>-->
+            <h2 style="font-size: x-large; font-weight: bold; margin-top: 10px;">Endereço</h2>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="cepEdit" class="labelStyle">Cep</label>
+                    <input type="text" class="inpStyleEmp inpCepEmp" id="cepEdit">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="ufEdit" class="labelStyle">UF</label>
+                    <input type="text" class="inpStyleEmp inpUfEmp" id="ufEdit">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="cidadeEdit" class="labelStyle">Cidade</label>
+                    <input type="text" class="inpStyleEmp inpCidadeEmp" id="cidadeEdit">
+                </div>
+            </div>
+            <div class="rowsEmp">
+                <div class="campoAddEmp">
+                    <label for="numeroEdit" class="labelStyle">Numero</label>
+                    <input type="text" class="inpStyleEmp inpNumeroEmp" id="numeroEdit">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="ruaEdit" class="labelStyle">Rua</label>
+                    <input type="text" class="inpStyleEmp inpRuaEmp" id="ruaEdit">
+                </div>
+                <div class="campoAddEmp">
+                    <label for="bairroEdit" class="labelStyle">Bairro</label>
+                    <input type="text" class="inpStyleEmp inpBairroEmp" id="bairroEdit">
+                </div>
+            </div>
+            <div class="divEditBtnEmp">
+                <button class="btnStyle btnsCancel btnsEmp" id="cancelEditEmp">Cancelar</button>
+                <button class="btnStyle btnsConfirm btnsEmp" id="confirmEditEmp">Editar</button>
+            </div>
+        </div>
+    </div>
+    <div class="divDeleteEmp">
+        <h1 class="deleteMsg" style="font-size: 20px;">Deseja realmente excluir o registro?</h1>
+        <div class="divBtnDelete">
+            <button class="btnStyle btnsCancel btnsDelete" id="cancelDelete">Cancelar</button>
+            <button class="btnStyle btnsConfirm btnsDelete" id="confirmDelete">Excluir</button>
+        </div>
+    </div>
+</div>
+</content>
+    <styles>
+        <link rel="stylesheet" th:href="@{/styles/pages/cadastro-empresas.css}"/>
+        <link rel="stylesheet" th:href="@{/styles/pages/cadastro-funcionarios.css}"/>
+    </styles>
+</body>
+</html>

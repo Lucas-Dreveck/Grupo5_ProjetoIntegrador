@@ -1,0 +1,303 @@
+.content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.containerGeral {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divSelect {
+    width: 100%;
+    margin-top: 1%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.selectBox {
+    width: 15%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0077C8;
+    border-radius: 7px;
+    margin-right: 5%;
+}
+
+.inpFilter {
+    width: 90%;
+    border: none;
+    outline: none;
+    font-size: 12px;
+}
+
+.imgSearch {
+    align-self: center;
+    width: 8%;
+    margin-right: 3%;
+    cursor: pointer;
+}
+
+.btnAdd {
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.btnAdd .btn-plus {
+    background-color: #0077C8;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.btnAdd .btn-plus:hover {
+    background-color: #005A8C;
+}
+
+.divFunc {
+    width: 100%;
+    max-height: 84%;
+    overflow: auto;
+    margin-bottom: 1%;
+}
+
+.divFunc::-webkit-scrollbar {
+    width: 0px;
+}
+
+.tableFunc {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1%;
+    border-collapse: collapse;
+}
+
+.imgStyle {
+    width: 45px;
+    height: 45px;
+    margin-left: 8%;
+    padding: 5px;
+    margin-top: 2%;
+    border: 3px solid #0077C8;
+    border-radius: 30%;
+    cursor: pointer;
+}
+
+.thTable {
+    font-size: 32px;
+}
+
+#thId {
+    width: 3%;
+}
+
+#thImg {
+    width: 5%;
+    border: none;
+}
+
+#thAcao {
+    width: 18%;
+}
+
+.thStyle {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+    background-color: white;
+}
+
+.thTable {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+tbody tr {
+    height: 70px;
+}
+
+.azul {
+    background-color: #C2DFF2;
+}
+
+.thImg {
+    width: 35px;
+    height: 35px;
+}
+
+.divBtns {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90%;
+    margin: 10px 0;
+}
+
+.btn-next,
+.btn-prev {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: var(--white);
+    color: #fff;
+    font-size: large;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.btn-prev.disabled,
+.btn-next.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.btn-prev.disabled .arrow-icon,
+.btn-next.disabled .arrow-icon {
+    filter: grayscale(100%) brightness(180%) saturate(100%);
+    opacity: 1;
+}
+
+.overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.divAddFunc, .divEditFunc, .divDeleteFunc, .divDeleteEmp {
+    display: none;
+    width: 45%;
+    height: 45%;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.divDeleteFunc, .divDeleteEmp {
+    width: auto;
+    height: auto;
+}
+
+.containerAddFunc, .containerEditFunc {
+    width: 100%;
+    height: 90%;
+    display: flex;
+}
+
+.boxLeft {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: green; */
+}
+
+.boxRight {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+}
+
+.inpStyle {
+    font-size: 24px;
+    width: 65%;
+    height: 10%;
+    border: 1px solid rgb(183, 183, 183);
+    border-radius: 5px;
+}
+
+.inputName {
+    width: 95%;
+}
+
+.inputCpf {
+    width: 60%;
+}
+
+.inputNasc {
+    width: 65%;
+}
+
+.genBox {
+    width: 20px;
+    height: 20px;
+}
+
+.labelStyle {
+    margin-top: 2%;
+    font-size: 22px;
+}
+
+.divBtnAdd, .divBtnEdit, .divBtnDelete {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnStyle {
+    width: 20%;
+    height: 80%;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btnsDelete {
+    width: 30%;
+}
+
+.btnsConfirm {
+    color: blue;
+    margin-left: 2%;
+}
+
+.btnsCancel {
+    color: red;
+}
+
+.btnsEmp {
+    width: 10%;
+}

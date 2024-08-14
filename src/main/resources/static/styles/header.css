@@ -1,0 +1,15 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+header .social {
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+}
