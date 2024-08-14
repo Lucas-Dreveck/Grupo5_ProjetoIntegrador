@@ -74,7 +74,7 @@ public class RankingService {
 
         List<FormularioRanking> resultado = filteredFormularios.subList(start, end).stream()
             .map(formulario -> new FormularioRanking(
-                formulario.getId(),
+                formulario.getEmpresa().getId(), // adicionado .getEmpresa()
                 formulario.getEmpresa().getRanking(),
                 formulario.getEmpresa().getNomeFantasia(),
                 formulario.getCertificado(),
