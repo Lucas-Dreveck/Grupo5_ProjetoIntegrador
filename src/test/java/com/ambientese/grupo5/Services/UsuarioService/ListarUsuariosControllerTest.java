@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.UsuarioService;
 
-import com.ambientese.grupo5.Controller.UsuarioController.BuscarUsuarioController;
+import com.ambientese.grupo5.Controller.UsuarioController;
 import com.ambientese.grupo5.Model.UsuarioModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class ListarUsuariosControllerTest {
     private ListarUsuarioService listarUsuariosService;
 
     @InjectMocks
-    private BuscarUsuarioController listarUsuariosController;
+    private UsuarioController listarUsuariosController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach

@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.FuncionarioService;
 
-import com.ambientese.grupo5.Controller.FuncionarioController.BuscarFuncionarioController;
+import com.ambientese.grupo5.Controller.FuncionarioController;
 import com.ambientese.grupo5.DTO.FuncionarioCadastro;
 import com.ambientese.grupo5.Model.CargoModel;
 import com.ambientese.grupo5.Model.FuncionarioModel;
@@ -29,7 +29,7 @@ public class ListarFuncionarioTeste {
     private ListarFuncionarioService listarFuncionariosService;
 
     @InjectMocks
-    private BuscarFuncionarioController listarFuncionariosController;
+    private FuncionarioController listarFuncionariosController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach

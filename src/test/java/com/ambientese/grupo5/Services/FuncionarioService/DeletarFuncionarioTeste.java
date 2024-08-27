@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.FuncionarioService;
 
-import com.ambientese.grupo5.Controller.FuncionarioController.DeletarFuncionarController;
+import com.ambientese.grupo5.Controller.FuncionarioController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ public class DeletarFuncionarioTeste {
     private DeletarFuncionarioService deletarFuncionarioService;
 
     @InjectMocks
-    private DeletarFuncionarController deletarFuncionarioController;
+    private FuncionarioController deletarFuncionarioController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach

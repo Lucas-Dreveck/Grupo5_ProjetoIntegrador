@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Controller.UsuarioController;
+package com.ambientese.grupo5.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.Model.UsuarioModel;
+import com.ambientese.grupo5.DTO.UsuarioLogin;
 import com.ambientese.grupo5.Services.UsuarioService.AuthService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Auth", description = "Endpoints para autenticação")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuarioModel user) {
+    public ResponseEntity<?> login(@RequestBody UsuarioLogin user) {
         String token = authService.login(user.getLogin(), user.getPassword());
         if (token != null) {
             return ResponseEntity.ok(new TokenResponse(token));

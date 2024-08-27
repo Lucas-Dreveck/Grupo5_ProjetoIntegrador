@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.FuncionarioService;
 
-import com.ambientese.grupo5.Controller.FuncionarioController.BuscarFuncionarioController;
+import com.ambientese.grupo5.Controller.FuncionarioController;
 import com.ambientese.grupo5.Exception.ValidacaoException;
 import com.ambientese.grupo5.Model.CargoModel;
 import com.ambientese.grupo5.Model.FuncionarioModel;
@@ -27,7 +27,7 @@ public class BuscarFuncionarioPorIdTeste {
     private FuncionarioRepository buscarFuncionarioService;
 
     @InjectMocks
-    private BuscarFuncionarioController buscarFuncionarioController;
+    private FuncionarioController buscarFuncionarioController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach
