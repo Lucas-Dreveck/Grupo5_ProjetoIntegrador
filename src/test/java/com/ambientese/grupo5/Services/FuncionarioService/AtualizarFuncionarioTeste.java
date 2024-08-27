@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.FuncionarioService;
 
-import com.ambientese.grupo5.Controller.FuncionarioController.AtualizarFuncionarioController;
+import com.ambientese.grupo5.Controller.FuncionarioController;
 import com.ambientese.grupo5.DTO.FuncionarioRequest;
 import com.ambientese.grupo5.Model.CargoModel;
 import com.ambientese.grupo5.Model.FuncionarioModel;
@@ -26,7 +26,7 @@ public class AtualizarFuncionarioTeste {
     private AtualizarFuncionarioService atualizarFuncionarioService;
 
     @InjectMocks
-    private AtualizarFuncionarioController atualizarFuncionarioController;
+    private FuncionarioController atualizarFuncionarioController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach

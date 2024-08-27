@@ -1,9 +1,12 @@
-package com.ambientese.grupo5.Controller.FormularioController;
+package com.ambientese.grupo5.Controller;
 
 import com.ambientese.grupo5.DTO.FormularioRanking;
 import com.ambientese.grupo5.Model.FormularioModel;
 import com.ambientese.grupo5.Model.Enums.PorteEnum;
 import com.ambientese.grupo5.Services.FormulariosService.RankingService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ranking")
+@Tag(name = "Ranking", description = "Endpoints para gerenciamento de rankings")
 public class RankingController {
 
     @Autowired

@@ -1,10 +1,13 @@
-package com.ambientese.grupo5.Controller.FormularioController;
+package com.ambientese.grupo5.Controller;
 
 import com.ambientese.grupo5.DTO.FormularioRequest;
 import com.ambientese.grupo5.DTO.QuestionarioResponse;
 import com.ambientese.grupo5.Model.FormularioModel;
 import com.ambientese.grupo5.Services.FormulariosService.BuscarPerguntasDoBancoService;
 import com.ambientese.grupo5.Services.FormulariosService.ProcessarFormularioService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag(name = "Questionario", description = "Endpoints para gerenciamento de questionários")
 public class QuestionarioController {
 
     @Autowired
