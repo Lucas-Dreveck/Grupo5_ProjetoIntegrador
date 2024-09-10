@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.UsuarioService;
 
-import com.ambientese.grupo5.Controller.UsuarioController.BuscarUsuarioController;
+import com.ambientese.grupo5.Controller.UsuarioController;
 import com.ambientese.grupo5.Exception.ValidacaoException;
 import com.ambientese.grupo5.Model.UsuarioModel;
 import com.ambientese.grupo5.Repository.UsuarioRepository;
@@ -26,7 +26,7 @@ public class BuscarUsuarioTeste {
     private UsuarioRepository buscarUsuarioService;
 
     @InjectMocks
-    private BuscarUsuarioController buscarUsuarioController;
+    private UsuarioController buscarUsuarioController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach

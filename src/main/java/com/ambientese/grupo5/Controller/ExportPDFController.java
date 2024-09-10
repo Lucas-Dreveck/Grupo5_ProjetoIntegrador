@@ -1,7 +1,10 @@
-package com.ambientese.grupo5.Controller.Export;
+package com.ambientese.grupo5.Controller;
 
 import com.ambientese.grupo5.Services.Export.ExportPDFService;
 import com.itextpdf.text.DocumentException;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/pdf")
+@Tag(name = "PDF", description = "Endpoints para gerar PDFs")
 public class ExportPDFController {
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.ambientese.grupo5.Services.EmpresaService;
 
-import com.ambientese.grupo5.Controller.EmpresaController.CriarEmpresaController;
+import com.ambientese.grupo5.Controller.EmpresaController;
 import com.ambientese.grupo5.DTO.EmpresaRequest;
 import com.ambientese.grupo5.Model.EmpresaModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ public class CriarEmpresasTeste {
     private CriarEmpresaService criarEmpresaService;
 
     @InjectMocks
-    private CriarEmpresaController criarEmpresaController;
+    private EmpresaController criarEmpresaController;
 
     @SuppressWarnings("deprecation")
     @BeforeEach
