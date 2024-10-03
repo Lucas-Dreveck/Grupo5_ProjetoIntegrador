@@ -1,7 +1,7 @@
 package com.ambientese.grupo5.Controller;
 
-import com.ambientese.grupo5.DTO.RankingForm;
-import com.ambientese.grupo5.Model.FormModel;
+import com.ambientese.grupo5.DTO.RankingEvaluation;
+import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Model.Enums.SizeEnum;
 import com.ambientese.grupo5.Services.RankingService;
 
@@ -26,14 +26,14 @@ public class RankingController {
     private RankingService rankingService;
 
     @GetMapping("/score")
-    public ResponseEntity<List<RankingForm>> sortByScore(
+    public ResponseEntity<List<RankingEvaluation>> sortByScore(
             @RequestParam(required = false) String tradeName,
             @RequestParam(required = false) String segment,
             @RequestParam(required = false) SizeEnum companySize,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
         
-        List<RankingForm> result = rankingService.sortByScoreWithFilter(tradeName, segment, companySize, page, size);
+        List<RankingEvaluation> result = rankingService.sortByScoreWithFilter(tradeName, segment, companySize, page, size);
         return ResponseEntity.ok(result);
     }
 
@@ -43,17 +43,17 @@ public class RankingController {
     }
 
     @GetMapping("/enviornmental")
-    public List<FormModel> sortByEnviornmentalPillar() {
+    public List<EvaluationModel> sortByEnviornmentalPillar() {
         return rankingService.sortByEnviornmentalPillar();
     }
 
     @GetMapping("/social")
-    public List<FormModel> sortBySocialPillar() {
+    public List<EvaluationModel> sortBySocialPillar() {
         return rankingService.sortBySocialPillar();
     }
 
     @GetMapping("/government")
-    public List<FormModel> sortByGovernmentPillar() {
+    public List<EvaluationModel> sortByGovernmentPillar() {
         return rankingService.sortByGovernmentPillar();
     }
 }

@@ -1,11 +1,11 @@
 package com.ambientese.grupo5.Services;
 
 import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.FormModel;
+import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Model.AnswerModel;
 import com.ambientese.grupo5.Model.Enums.PillarEnum;
 import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.FormRepository;
+import com.ambientese.grupo5.Repository.EvaluationRepository;
 import com.itextpdf.text.DocumentException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class PDFService {
     private CompanyRepository companyRepository;
 
     @Autowired
-    private FormRepository formRepository;
+    private EvaluationRepository evaluationRepository;
 
     public ByteArrayInputStream generatePdfFromHtml(String htmlContent) throws DocumentException, IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -43,20 +43,20 @@ public class PDFService {
         ITextRenderer renderer = new ITextRenderer();
 
         CompanyModel company = companyRepository.findById(companyId).orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
-        FormModel form = formRepository.findLatestFormByCompanyId(companyId);
+        EvaluationModel evaluation = evaluationRepository.findLatestEvaluationByCompanyId(companyId);
 
         PillarEnum social = PillarEnum.Social;
         PillarEnum government = PillarEnum.Governamental;
         PillarEnum enviornmental = PillarEnum.Ambiental;
 
-        List<AnswerModel> answers = form.getAnswers();
+        List<AnswerModel> answers = evaluation.getAnswers();
         List<AnswerModel> answersSocial = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(social)).collect(Collectors.toList());
         List<AnswerModel> answersGovernment = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(government)).collect(Collectors.toList());
         List<AnswerModel> answersEnviornmental = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(enviornmental)).collect(Collectors.toList());
 
-        String socialPercentage = form.getSocialScore() + "%";
-        String governmentPercentage = form.getGovernmentScore() + "%";
-        String enviornmentalPercentage = form.getEnviornmentalScore() + "%";
+        String socialPercentage = evaluation.getSocialScore() + "%";
+        String governmentPercentage = evaluation.getGovernmentScore() + "%";
+        String enviornmentalPercentage = evaluation.getEnviornmentalScore() + "%";
 
          String cssContent = "h1, h2 { text-align: center; }"
                 + "table { width: 100%; border-collapse: collapse; }"

@@ -15,14 +15,14 @@
 // import org.springframework.boot.test.context.SpringBootTest;
 
 // import com.ambientese.grupo5.Model.CompanyModel;
-// import com.ambientese.grupo5.Model.FormModel;
+// import com.ambientese.grupo5.Model.EvaluationModel;
 // import com.ambientese.grupo5.Model.AnswerModel;
 // import com.ambientese.grupo5.Model.QuestionModel;
 // import com.ambientese.grupo5.Model.AnswerId;
 // import com.ambientese.grupo5.Model.Enums.PillarEnum;
 // import com.ambientese.grupo5.Model.Enums.AnswersEnum;
 // import com.ambientese.grupo5.Repository.CompanyRepository;
-// import com.ambientese.grupo5.Repository.FormRepository;
+// import com.ambientese.grupo5.Repository.EvaluationRepository;
 // import com.ambientese.grupo5.Services.PDFService;
 // import com.itextpdf.text.DocumentException;
 
@@ -41,7 +41,7 @@
 //     private CompanyRepository companyRepository;
 
 //     @MockBean
-//     private FormRepository formRepository;
+//     private EvaluationRepository evaluationRepository;
 
 //     @Test
 //     public void testGeneratePdf() throws DocumentException, IOException {
@@ -50,8 +50,8 @@
 //         companyMock.setTradeName("Empresa Teste");
 //         Mockito.when(companyRepository.findById(1L)).thenReturn(Optional.of(companyMock));
 
-//         FormModel formMock = new FormModel();
-//         formMock.setId(1L);
+//         EvaluationModel evaluationMock = new EvaluationModel();
+//         evaluationMock.setId(1L);
 
 //         QuestionModel socialQuestion = new QuestionModel();
 //         socialQuestion.setPillar(PillarEnum.Social);
@@ -64,8 +64,8 @@
 //         List<AnswerModel> answers = new ArrayList<>();
 //         answers.add(socialAnswer);
 
-//         formMock.setAnswers(answers);
-//         Mockito.when(formRepository.findLatestFormByCompanyId(1L)).thenReturn(formMock);
+//         evaluationMock.setAnswers(answers);
+//         Mockito.when(evaluationRepository.findLatestEvaluationByCompanyId(1L)).thenReturn(evaluationMock);
 
 //         ByteArrayInputStream pdfStream = exportPDFService.generatePdf(1L);
 
@@ -79,11 +79,11 @@
 //         companyMock.setTradeName("Empresa Sem Respostas");
 //         Mockito.when(companyRepository.findById(1L)).thenReturn(Optional.of(companyMock));
 
-//         FormModel formMock = new FormModel();
-//         formMock.setId(2L);
-//         formMock.setAnswers(new ArrayList<>()); // Simulando sem answers
+//         EvaluationModel evaluationMock = new EvaluationModel();
+//         evaluationMock.setId(2L);
+//         evaluationMock.setAnswers(new ArrayList<>()); // Simulando sem answers
 
-//         Mockito.when(formRepository.findLatestFormByCompanyId(1L)).thenReturn(formMock);
+//         Mockito.when(evaluationRepository.findLatestEvaluationByCompanyId(1L)).thenReturn(evaluationMock);
 
 //         ByteArrayInputStream pdfStream = exportPDFService.generatePdf(1L);
 
@@ -97,8 +97,8 @@
 //         companyMock.setTradeName("Empresa Teste");
 //         Mockito.when(companyRepository.findById(1L)).thenReturn(Optional.of(companyMock));
 
-//         FormModel formMock = new FormModel();
-//         formMock.setId(3L);
+//         EvaluationModel evaluationMock = new EvaluationModel();
+//         evaluationMock.setId(3L);
 
 //         List<AnswerModel> answers = new ArrayList<>();
 //         for (int i = 0; i < 100; i++) { // Simulando 100 answers
@@ -106,7 +106,7 @@
 //             answer.setId(new AnswerId() {
 //                 private static final long serialVersionUID = 1L;
 //                 {
-//                     setFormId(1L);
+//                     setEvaluationId(1L);
 //                     setQuestionId(getQuestionId());
 //                 }
 //             });
@@ -120,9 +120,9 @@
 //             answers.add(answer);
 
 //         }
-//         formMock.setAnswers(answers);
+//         evaluationMock.setAnswers(answers);
 
-//         Mockito.when(formRepository.findLatestFormByCompanyId(1L)).thenReturn(formMock);
+//         Mockito.when(evaluationRepository.findLatestEvaluationByCompanyId(1L)).thenReturn(evaluationMock);
 
 //         ByteArrayInputStream pdfStream = exportPDFService.generatePdf(1L);
 

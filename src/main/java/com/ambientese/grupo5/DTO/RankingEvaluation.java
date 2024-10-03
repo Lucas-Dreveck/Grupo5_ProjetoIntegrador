@@ -3,7 +3,7 @@ package com.ambientese.grupo5.DTO;
 import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
 import com.ambientese.grupo5.Model.Enums.SizeEnum;
 
-public class RankingForm {
+public class RankingEvaluation {
     private long id;
     private Integer ranking;
     private String companyName;
@@ -16,7 +16,7 @@ public class RankingForm {
     private Integer governmentScore;
     private Boolean finishList;
     
-    public RankingForm(long id, Integer ranking, String companyName, CertificateLevelEnum certificateLevel,
+    public RankingEvaluation(long id, Integer ranking, String companyName, CertificateLevelEnum certificateLevel,
             String segment, SizeEnum size, Integer finalScore, Integer socialScore, Integer enviornmentalScore,
             Integer governmentScore, Boolean finishList) {
         this.id = id;

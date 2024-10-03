@@ -1,6 +1,6 @@
 const onOpenForgotPassword = () => {
-    const form = document.querySelector('#forgot');
-    form.addEventListener('submit', (event) => {
+    const evaluation = document.querySelector('#forgot');
+    evaluation.addEventListener('submit', (event) => {
         event.preventDefault();
         forgot();
     });
@@ -37,14 +37,14 @@ const forgot = async () => {
 }
 
 const goToNextStep = (email) => {
-    const form = document.querySelector('#forgot');
-    form.classList.add('hidden');
+    const evaluation = document.querySelector('#forgot');
+    evaluation.classList.add('hidden');
 
     const nextStep = document.querySelector('#recovery');
     nextStep.classList.remove('hidden');
 
-    const formRecovery = document.querySelector('#recovery');
-    formRecovery.addEventListener('submit', (event) => {
+    const evaluationRecovery = document.querySelector('#recovery');
+    evaluationRecovery.addEventListener('submit', (event) => {
         event.preventDefault();
         recovery(email);
     });

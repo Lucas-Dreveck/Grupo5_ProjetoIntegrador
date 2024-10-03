@@ -1,17 +1,17 @@
-// package com.ambientese.grupo5.Services.FormulariosService;
+// package com.ambientese.grupo5.Services.EvaluationulariosService;
 
-// import com.ambientese.grupo5.DTO.FormRequest;
+// import com.ambientese.grupo5.DTO.EvaluationRequest;
 // import com.ambientese.grupo5.Model.CompanyModel;
 // import com.ambientese.grupo5.Model.Enums.PillarEnum;
 // import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
 // import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-// import com.ambientese.grupo5.Model.FormModel;
+// import com.ambientese.grupo5.Model.EvaluationModel;
 // import com.ambientese.grupo5.Model.QuestionModel;
 // import com.ambientese.grupo5.Model.AnswerModel;
 // import com.ambientese.grupo5.Repository.CompanyRepository;
-// import com.ambientese.grupo5.Repository.FormRepository;
+// import com.ambientese.grupo5.Repository.EvaluationRepository;
 // import com.ambientese.grupo5.Repository.QuestionRepository;
-// import com.ambientese.grupo5.Services.FormService;
+// import com.ambientese.grupo5.Services.EvaluationService;
 // import com.ambientese.grupo5.Repository.AnswerRepository;
 
 // import org.junit.jupiter.api.Test;
@@ -30,10 +30,10 @@
 // import static org.mockito.Mockito.*;
 
 // @ExtendWith(MockitoExtension.class)
-// class ProcessFormTest {
+// class ProcessEvaluationTest {
 
 //     @Mock
-//     private FormRepository formRepository;
+//     private EvaluationRepository evaluationRepository;
 
 //     @Mock
 //     private CompanyRepository companyRepository;
@@ -45,16 +45,16 @@
 //     private AnswerRepository answerRepository;
 
 //     @InjectMocks
-//     private FormService formService;
+//     private EvaluationService evaluationService;
 
 //     @Test
 //     void testCreateProcessAndGenerateCertificate() {
 //         Long companyId = 1L;
 
-//         List<FormRequest> formList = Arrays.asList(
-//                 new FormRequest(1L, PillarEnum.Social, AnswersEnum.Conforme),
-//                 new FormRequest(2L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-//                 new FormRequest(3L, PillarEnum.Governamental, AnswersEnum.NaoConforme)
+//         List<EvaluationRequest> evaluationList = Arrays.asList(
+//                 new EvaluationRequest(1L, PillarEnum.Social, AnswersEnum.Conforme),
+//                 new EvaluationRequest(2L, PillarEnum.Ambiental, AnswersEnum.Conforme),
+//                 new EvaluationRequest(3L, PillarEnum.Governamental, AnswersEnum.NaoConforme)
 //         );
 
 //         QuestionModel questionMock = new QuestionModel();
@@ -64,39 +64,39 @@
 //         companyMock.setId(companyId);
 //         when(companyRepository.findById(companyId)).thenReturn(Optional.of(companyMock));
 
-//         FormModel expectedForm = getFormModel();
-//         expectedForm.setCompany(companyMock);
+//         EvaluationModel expectedEvaluation = getEvaluationModel();
+//         expectedEvaluation.setCompany(companyMock);
 
-//         when(formRepository.save(any())).thenReturn(expectedForm);
+//         when(evaluationRepository.save(any())).thenReturn(expectedEvaluation);
 //         when(questionRepository.findById(anyLong())).thenReturn(Optional.of(questionMock));
 
-//         FormModel actualForm = formService.createCompleteForm(companyId, formList);
+//         EvaluationModel actualEvaluation = evaluationService.createCompleteEvaluation(companyId, evaluationList);
 
-//         assertEquals(expectedForm.getFinalScore(), actualForm.getFinalScore());
-//         assertEquals(expectedForm.getSocialScore(), actualForm.getSocialScore());
-//         assertEquals(expectedForm.getEnviornmentalScore(), actualForm.getEnviornmentalScore());
-//         assertEquals(expectedForm.getGovernmentScore(), actualForm.getGovernmentScore());
-//         assertEquals(expectedForm.getCertificate(), actualForm.getCertificate());
-//         assertEquals(expectedForm.getCompany(), actualForm.getCompany());
+//         assertEquals(expectedEvaluation.getFinalScore(), actualEvaluation.getFinalScore());
+//         assertEquals(expectedEvaluation.getSocialScore(), actualEvaluation.getSocialScore());
+//         assertEquals(expectedEvaluation.getEnviornmentalScore(), actualEvaluation.getEnviornmentalScore());
+//         assertEquals(expectedEvaluation.getGovernmentScore(), actualEvaluation.getGovernmentScore());
+//         assertEquals(expectedEvaluation.getCertificate(), actualEvaluation.getCertificate());
+//         assertEquals(expectedEvaluation.getCompany(), actualEvaluation.getCompany());
 
-//         for (int i = 0; i < expectedForm.getAnswers().size(); i++) {
-//             AnswerModel expectedResposta = expectedForm.getAnswers().get(i);
-//             AnswerModel actualResposta = actualForm.getAnswers().get(i);
+//         for (int i = 0; i < expectedEvaluation.getAnswers().size(); i++) {
+//             AnswerModel expectedResposta = expectedEvaluation.getAnswers().get(i);
+//             AnswerModel actualResposta = actualEvaluation.getAnswers().get(i);
 //             assertEquals(expectedResposta.getAnswer(), actualResposta.getAnswer());
 //         }
 
-//         verify(formRepository, times(1)).save(any());
+//         verify(evaluationRepository, times(1)).save(any());
 //         verify(answerRepository, times(1)).saveAll(any());
 //         verify(companyRepository, times(1)).findById(companyId);
 //     }
 
-//     private static FormModel getFormModel() {
-//         FormModel expectedFormModel = new FormModel();
-//         expectedFormModel.setFinalScore(66);
-//         expectedFormModel.setSocialScore(1);
-//         expectedFormModel.setEnviornmentalScore(1);
-//         expectedFormModel.setGovernmentScore(0);
-//         expectedFormModel.setCertificate(CertificateLevelEnum.Bronze);
+//     private static EvaluationModel getEvaluationModel() {
+//         EvaluationModel expectedEvaluationModel = new EvaluationModel();
+//         expectedEvaluationModel.setFinalScore(66);
+//         expectedEvaluationModel.setSocialScore(1);
+//         expectedEvaluationModel.setEnviornmentalScore(1);
+//         expectedEvaluationModel.setGovernmentScore(0);
+//         expectedEvaluationModel.setCertificate(CertificateLevelEnum.Bronze);
 
 //         List<AnswerModel> answers = Arrays.asList(
 //                 createAnswerModel(AnswersEnum.Conforme),
@@ -104,8 +104,8 @@
 //                 createAnswerModel(AnswersEnum.NaoConforme)
 //         );
 
-//         expectedFormModel.setAnswers(answers);
-//         return expectedFormModel;
+//         expectedEvaluationModel.setAnswers(answers);
+//         return expectedEvaluationModel;
 //     }
 
 //     private static AnswerModel createAnswerModel(AnswersEnum answerEnum) {
@@ -116,19 +116,19 @@
 
 //     @Test
 //     void testCalculateCertificateLevelGold() {
-//         CertificateLevelEnum actualLevel = formService.calculateCertificateLevel(100);
+//         CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(100);
 //         assertEquals(CertificateLevelEnum.Ouro, actualLevel);
 //     }
 
 //     @Test
 //     void testCalculateCertificateLevelSilver() {
-//         CertificateLevelEnum actualLevel = formService.calculateCertificateLevel(80);
+//         CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(80);
 //         assertEquals(CertificateLevelEnum.Prata, actualLevel);
 //     }
 
 //     @Test
 //     void testCalculateCertificateLevelBronze() {
-//         CertificateLevelEnum actualLevel = formService.calculateCertificateLevel(60);
+//         CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(60);
 //         assertEquals(CertificateLevelEnum.Bronze, actualLevel);
 //     }
 // }

@@ -35,7 +35,7 @@ public class PDFController {
         ByteArrayInputStream bis = pdfService.generatePdfFromHtml(htmlContent);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=form.pdf");
+        headers.add("Content-Disposition", "inline; filename=evaluation.pdf");
 
         return ResponseEntity
                 .ok()
@@ -50,7 +50,7 @@ public class PDFController {
             ByteArrayInputStream bis = pdfService.generatePdf(companyId);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "inline; filename=form.pdf");
+            headers.add("Content-Disposition", "inline; filename=evaluation.pdf");
 
             return ResponseEntity
                     .ok()

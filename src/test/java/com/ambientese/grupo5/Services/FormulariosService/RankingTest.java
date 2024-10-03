@@ -1,7 +1,7 @@
-// package com.ambientese.grupo5.Services.FormulariosService;
+// package com.ambientese.grupo5.Services.EvaluationulariosService;
 
-// import com.ambientese.grupo5.Model.FormModel;
-// import com.ambientese.grupo5.Repository.FormRepository;
+// import com.ambientese.grupo5.Model.EvaluationModel;
+// import com.ambientese.grupo5.Repository.EvaluationRepository;
 // import com.ambientese.grupo5.Services.RankingService;
 
 // import org.junit.jupiter.api.Test;
@@ -20,24 +20,24 @@
 // class RankingTest {
 
 //     @Mock
-//     private FormRepository formRepository;
+//     private EvaluationRepository evaluationRepository;
 
 //     @InjectMocks
 //     private RankingService rankingService;
 
 //     @Test
 //     void sortByScoreTest() {
-//         List<FormModel> formMock = new ArrayList<>();
-//         formMock.add(new FormModel());
-//         formMock.add(new FormModel());
+//         List<EvaluationModel> evaluationMock = new ArrayList<>();
+//         evaluationMock.add(new EvaluationModel());
+//         evaluationMock.add(new EvaluationModel());
 
-//         when(formRepository.findAllByOrderByFinalScoreAsc()).thenReturn(formMock);
+//         when(evaluationRepository.findAllByOrderByFinalScoreAsc()).thenReturn(evaluationMock);
 
 //         // Chamando o método a ser testado
-//         List<FormModel> forms = rankingService.sortByScore();
+//         List<EvaluationModel> evaluations = rankingService.sortByScore();
 
 //         // Verificando se o método retorna a lista correta de formulários ordenada por pontuação final
-//         assertEquals(formMock, forms);
+//         assertEquals(evaluationMock, evaluations);
 //     }
 
 //     // Adicione mais testes para os outros métodos de classificação, seguindo o mesmo padrão

@@ -1,5 +1,5 @@
 const questionNumbers = 10;
-let formProps;
+let evaluationProps;
 let allQuestions = [];
 
 const addFile = () => {
@@ -13,9 +13,9 @@ const renderQuestions = (questions, isLast) => {
         questionsCategory.style.display = 'none';
     }
     questionsCategory.classList.add('questions-category');
-    questionsCategory.innerHTML = `<h2>${formProps.isNew ? questions[0].pillar : questions[0].questionPillar}</h2>`;
+    questionsCategory.innerHTML = `<h2>${evaluationProps.isNew ? questions[0].pillar : questions[0].questionPillar}</h2>`;
     questions.forEach(question => {
-        if (!formProps.isNew) {
+        if (!evaluationProps.isNew) {
             question = {
                 id: question.questionId,
                 description: question.questionDescription,
@@ -36,10 +36,10 @@ const renderQuestions = (questions, isLast) => {
             }
         }
         const whatsChecked = FwhatsChecked();
-        div.classList.add('form-question');
+        div.classList.add('evaluation-question');
         div.innerHTML = `
             <h2>${question.description}</h2>
-            <div class="form-answer">
+            <div class="evaluation-answer">
                 <label>
                     <input type="radio" name="answer-${question.id}" value="Conforme" ${question.answer ? question.answer === "Conforme" ? 'checked' : null : (enviornment === 'dev' && whatsChecked === 1 ? 'checked' : null)}>
                     <p>Conforme</p>
@@ -62,7 +62,7 @@ const renderQuestions = (questions, isLast) => {
         return questionsCategory.appendChild(div);
     });
 
-    const form = document.querySelector('.form-avaliation');
+    const evaluation = document.querySelector('.evaluation-avaliation');
     const divBtns = document.createElement('div');
     divBtns.classList.add('btns');
     const btnSubmit = document.createElement('button');
@@ -95,7 +95,7 @@ const renderQuestions = (questions, isLast) => {
             const nextCategory = questionsCategory.nextElementSibling;
             questionsCategory.style.display = 'none';
             nextCategory.style.display = 'flex';
-            form.scrollTop = 0;
+            evaluation.scrollTop = 0;
         }
     });
     if (otherCategory.length > 0) {
@@ -107,19 +107,19 @@ const renderQuestions = (questions, isLast) => {
             const prevCategory = questionsCategory.previousElementSibling;
             questionsCategory.style.display = 'none';
             prevCategory.style.display = 'flex';
-            form.scrollTop = 0;
+            evaluation.scrollTop = 0;
         });
         divBtns.appendChild(btnPrev);
     }
 
     divBtns.appendChild(btnSubmit);
     questionsCategory.appendChild(divBtns);
-    form.appendChild(questionsCategory);
+    evaluation.appendChild(questionsCategory);
 }
 
 const isAllQuestionsAnswered = (allQuestions) => {
     for (let i = 0; i < allQuestions.length; i++) {
-        const answer = document.querySelector(`input[name="answer-${formProps.isNew ? allQuestions[i].id : allQuestions[i].questionId}"]:checked`);
+        const answer = document.querySelector(`input[name="answer-${evaluationProps.isNew ? allQuestions[i].id : allQuestions[i].questionId}"]:checked`);
         if (!answer) {
             return false;
         }
@@ -131,16 +131,16 @@ const isAllQuestionsAnswered = (allQuestions) => {
 const sendQuestions = (isComplete, hasFinished) => {
     const questions = [];
     allQuestions.forEach(question => {
-        const answer = document.querySelector(`input[name="answer-${formProps.isNew ? question.id : question.questionId}"]:checked`);
+        const answer = document.querySelector(`input[name="answer-${evaluationProps.isNew ? question.id : question.questionId}"]:checked`);
         questions.push(
             {
-                questionId: formProps.isNew ? question.id : question.questionId,
+                questionId: evaluationProps.isNew ? question.id : question.questionId,
                 userAnswer: answer?.value ? answer.value : null,
-                questionPillar: formProps.isNew ? question.pillar : question.questionPillar,
+                questionPillar: evaluationProps.isNew ? question.pillar : question.questionPillar,
             }
         );
     });
-    const fullURL = `${ApiURL}/auth/processAnswers?companyId=${formProps.company.id}&isComplete=${isComplete}`;
+    const fullURL = `${ApiURL}/auth/processAnswers?companyId=${evaluationProps.company.id}&isComplete=${isComplete}`;
     const body = questions
     fetch(fullURL, {
         method: 'POST',
@@ -154,7 +154,7 @@ const sendQuestions = (isComplete, hasFinished) => {
     }).then(data => {
         if (isComplete) {
             toastAlert('Respostas enviadas com sucesso', 'success');
-            getMainFrameContent('result-form', data);
+            getMainFrameContent('result-evaluation', data);
         } else if (hasFinished) {
             toastAlert('Respostas salvas com sucesso', 'success');
             getMainFrameContent('ranking');
@@ -164,10 +164,10 @@ const sendQuestions = (isComplete, hasFinished) => {
     });
 }
 
-const onOpenForm = (props) => {
-    formProps = props;
-    const form = document.querySelector('.form-avaliation')
-    form.addEventListener('submit', (event) => {
+const onOpenEvaluation = (props) => {
+    evaluationProps = props;
+    const evaluation = document.querySelector('.evaluation-avaliation')
+    evaluation.addEventListener('submit', (event) => {
         if (event.explicitOriginalTarget !== document.getElementById("btn-submit")) {
             event.preventDefault();
         }
@@ -176,7 +176,7 @@ const onOpenForm = (props) => {
     const enviornmental = [];
     const social = [];
 
-    fetch(`${ApiURL}/auth/form/${props.isNew}?companyId=${props.company.id}`, options)
+    fetch(`${ApiURL}/auth/evaluation/${props.isNew}?companyId=${props.company.id}`, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro ao recuperar dados');
@@ -201,7 +201,7 @@ const onOpenForm = (props) => {
                     }
                 });
             } else {
-                data.formRequests.forEach(item => {
+                data.evaluationRequests.forEach(item => {
                     delete item.questionNumber;
                     if (item.questionPillar === 'Governamental') {
                         government.push(item);

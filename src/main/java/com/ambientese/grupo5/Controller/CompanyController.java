@@ -53,8 +53,8 @@ public class CompanyController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/form/search")
-    public ResponseEntity<List<CompanyRegistration>> companiesForForm(
+    @GetMapping("/evaluation/search")
+    public ResponseEntity<List<CompanyRegistration>> companiesForEvaluation(
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {

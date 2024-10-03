@@ -41,7 +41,7 @@ function updateMenuButtons() {
         "Admin": [],
         "Gestor": [],
         "Consultor": ["employees"],
-        "Guest": ["companies", "employees", "questions", "start-form"]
+        "Guest": ["companies", "employees", "questions", "start-evaluation"]
     };
     
     // Lista de todos os botões do menu
@@ -49,7 +49,7 @@ function updateMenuButtons() {
         "companies": document.querySelector('.menu li[page="companies"]'),
         "employees": document.querySelector('.menu li[page="employees"]'),
         "questions": document.querySelector('.menu li[page="questions"]'),
-        "start-form": document.querySelector('.menu li[page="start-form"]'),
+        "start-evaluation": document.querySelector('.menu li[page="start-evaluation"]'),
     };
 
     // Itera sobre as permissões e esconde os botões necessários
@@ -88,14 +88,14 @@ function loadSelectedPageScript(page, props) {
         case "ranking":
             onOpenRanking();
             break;
-        case "start-form":
-            onOpenStartForm();
+        case "start-evaluation":
+            onOpenStartEvaluation();
             break;
-        case "form":
-            onOpenForm(props);
+        case "evaluation":
+            onOpenEvaluation(props);
             break;
-        case "result-form":
-            onOpenResultForm(props);
+        case "result-evaluation":
+            onOpenResultEvaluation(props);
             break;
         case "companies":
             onOpenCompany();
@@ -156,7 +156,7 @@ function getMainFrameContent(page, props, addToHistory = true) {
         .then(data => {
             allMenuButtons.forEach(button => button.classList.remove("active"));
 
-            if (page !== 'login' && page !== 'form' && page !== 'result-form' && page !== 'forgot-password') {
+            if (page !== 'login' && page !== 'evaluation' && page !== 'result-evaluation' && page !== 'forgot-password') {
                 const selectedButton = document.querySelector(`.menu li[page="${page}"]`);
                 selectedButton.classList.add("active");
             }

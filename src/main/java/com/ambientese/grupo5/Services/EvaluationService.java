@@ -11,27 +11,27 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.FormRequest;
-import com.ambientese.grupo5.DTO.FormResponse;
+import com.ambientese.grupo5.DTO.EvaluationRequest;
+import com.ambientese.grupo5.DTO.EvaluationResponse;
 import com.ambientese.grupo5.Model.AnswerModel;
 import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.FormModel;
+import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Model.QuestionModel;
 import com.ambientese.grupo5.Model.Enums.AnswersEnum;
 import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
 import com.ambientese.grupo5.Model.Enums.PillarEnum;
 import com.ambientese.grupo5.Repository.AnswerRepository;
 import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.FormRepository;
+import com.ambientese.grupo5.Repository.EvaluationRepository;
 import com.ambientese.grupo5.Repository.QuestionRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class FormService {
+public class EvaluationService {
 
     @Autowired
-    private FormRepository formRepository;
+    private EvaluationRepository evaluationRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -43,13 +43,13 @@ public class FormService {
     private CompanyRepository companyRepository;
 
     @Transactional
-    public FormResponse searchQuestionsInDb(Boolean isNewForm, Long companyId) {
-        if (isNewForm) {
+    public EvaluationResponse searchQuestionsInDb(Boolean isNewEvaluation, Long companyId) {
+        if (isNewEvaluation) {
             Random random = new Random();
-            Optional<FormModel> latestForm = formRepository.findIncompleteByCompanyId(companyId);
-            if (latestForm.isPresent()) {
-                answerRepository.deleteAll(latestForm.get().getAnswers());
-                formRepository.delete(latestForm.get());
+            Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
+            if (latestEvaluation.isPresent()) {
+                answerRepository.deleteAll(latestEvaluation.get().getAnswers());
+                evaluationRepository.delete(latestEvaluation.get());
             }
 
             List<QuestionModel> allQuestions = new ArrayList<>();
@@ -63,20 +63,20 @@ public class FormService {
             if (allQuestions.size() != 30) {
                 throw new RuntimeException("Não foi possível encontrar o número necessário de questions");
             }
-            return new FormResponse(allQuestions, null);
+            return new EvaluationResponse(allQuestions, null);
         } else {
-            Optional<FormModel> latestForm = formRepository.findIncompleteByCompanyId(companyId);
-            if (latestForm.isPresent()) {
-                List<FormRequest> formRequests = latestForm.get().getAnswers().stream()
-                    .map(answer -> new FormRequest(
+            Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
+            if (latestEvaluation.isPresent()) {
+                List<EvaluationRequest> evaluationRequests = latestEvaluation.get().getAnswers().stream()
+                    .map(answer -> new EvaluationRequest(
                         answer.getQuestion().getId(),
                         answer.getQuestion().getDescription(),
                         answer.getAnswer(),
                         answer.getQuestion().getPillar(),
-                        latestForm.get().getId()
+                        latestEvaluation.get().getId()
                     ))
                     .collect(Collectors.toList());
-                return new FormResponse(null, formRequests);
+                return new EvaluationResponse(null, evaluationRequests);
             } else {
                 throw new RuntimeException("Não foi possível encontrar o formulário");
             }
@@ -84,104 +84,104 @@ public class FormService {
     }
 
     @Transactional
-    public FormModel createForm(Long companyId, List<FormRequest> formRequestList, Boolean isComplete) {
-        Optional<FormModel> incompleteFormOpt = formRepository.findIncompleteByCompanyId(companyId);
+    public EvaluationModel createEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList, Boolean isComplete) {
+        Optional<EvaluationModel> incompleteEvaluationOpt = evaluationRepository.findIncompleteByCompanyId(companyId);
 
         if (isComplete) {
-            if (incompleteFormOpt.isPresent()) {
-                return replaceIncompleteFormWithComplete(incompleteFormOpt.get(), formRequestList);
+            if (incompleteEvaluationOpt.isPresent()) {
+                return replaceIncompleteEvaluationWithComplete(incompleteEvaluationOpt.get(), evaluationRequestList);
             } else {
-                return createCompleteForm(companyId, formRequestList);
+                return createCompleteEvaluation(companyId, evaluationRequestList);
             }
         } else {
-            if (incompleteFormOpt.isPresent()) {
-                return replaceIncompleteFormWithIncomplete(incompleteFormOpt.get(), formRequestList);
+            if (incompleteEvaluationOpt.isPresent()) {
+                return replaceIncompleteEvaluationWithIncomplete(incompleteEvaluationOpt.get(), evaluationRequestList);
             } else {
-                return createIncompleteForm(companyId, formRequestList);
+                return createIncompleteEvaluation(companyId, evaluationRequestList);
             }
         }
     }
 
-    public FormModel createCompleteForm(Long companyId, List<FormRequest> formRequestList) {
-        validateCompleteForm(companyId, formRequestList);
+    public EvaluationModel createCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList) {
+        validateCompleteEvaluation(companyId, evaluationRequestList);
 
         CompanyModel company = companyRepository.findById(companyId).orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
 
-        FormModel formModel = new FormModel();
-        formModel.setCompany(company);
+        EvaluationModel evaluationModel = new EvaluationModel();
+        evaluationModel.setCompany(company);
 
-        formModel = updateScores(formModel, formRequestList);
+        evaluationModel = updateScores(evaluationModel, evaluationRequestList);
 
-        List<AnswerModel> answers = createAnswers(formModel, formRequestList);
+        List<AnswerModel> answers = createAnswers(evaluationModel, evaluationRequestList);
         answerRepository.saveAll(answers);
-        formModel.setAnswers(answers);
-        formRepository.save(formModel);
+        evaluationModel.setAnswers(answers);
+        evaluationRepository.save(evaluationModel);
 
         updateRanking();
 
-        return formModel;
+        return evaluationModel;
     }
 
-    public FormModel createIncompleteForm(Long companyId, List<FormRequest> formRequestList) {
+    public EvaluationModel createIncompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList) {
         CompanyModel company = companyRepository.findById(companyId).orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
 
-        FormModel formModel = new FormModel();
-        formModel.setCompany(company);
-        formModel.setAnswerDate(new Date());
+        EvaluationModel evaluationModel = new EvaluationModel();
+        evaluationModel.setCompany(company);
+        evaluationModel.setAnswerDate(new Date());
 
-        formModel = formRepository.saveAndFlush(formModel);
+        evaluationModel = evaluationRepository.saveAndFlush(evaluationModel);
 
-        List<AnswerModel> answers = createAnswers(formModel, formRequestList);
+        List<AnswerModel> answers = createAnswers(evaluationModel, evaluationRequestList);
         answerRepository.saveAll(answers);
-        formModel.setAnswers(answers);
+        evaluationModel.setAnswers(answers);
 
-        return formRepository.save(formModel);
+        return evaluationRepository.save(evaluationModel);
     }
 
-    private FormModel replaceIncompleteFormWithComplete(FormModel incompleteForm, List<FormRequest> formRequestList) {
+    private EvaluationModel replaceIncompleteEvaluationWithComplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
         // Remover todas as answers antigas do formulário incompleto
-        List<AnswerModel> oldAnswers = incompleteForm.getAnswers();
+        List<AnswerModel> oldAnswers = incompleteEvaluation.getAnswers();
         if (oldAnswers != null && !oldAnswers.isEmpty()) {
-            incompleteForm.setAnswers(new ArrayList<>());
-            formRepository.saveAndFlush(incompleteForm);
+            incompleteEvaluation.setAnswers(new ArrayList<>());
+            evaluationRepository.saveAndFlush(incompleteEvaluation);
             answerRepository.deleteAll(oldAnswers);
         }
 
         // Atualizar o formulário incompleto para se tornar completo
-        updateScores(incompleteForm, formRequestList);
-        incompleteForm.setAnswerDate(new Date());
+        updateScores(incompleteEvaluation, evaluationRequestList);
+        incompleteEvaluation.setAnswerDate(new Date());
 
-        List<AnswerModel> newAnswers = createAnswers(incompleteForm, formRequestList);
+        List<AnswerModel> newAnswers = createAnswers(incompleteEvaluation, evaluationRequestList);
         answerRepository.saveAll(newAnswers);
-        incompleteForm.setAnswers(newAnswers);
-        formRepository.saveAndFlush(incompleteForm);
+        incompleteEvaluation.setAnswers(newAnswers);
+        evaluationRepository.saveAndFlush(incompleteEvaluation);
 
         updateRanking();
 
-        return incompleteForm;
+        return incompleteEvaluation;
     }
 
-    private FormModel replaceIncompleteFormWithIncomplete(FormModel incompleteForm, List<FormRequest> formRequestList) {
+    private EvaluationModel replaceIncompleteEvaluationWithIncomplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
         // Remover todas as answers antigas do formulário incompleto
-        List<AnswerModel> oldAnswers = incompleteForm.getAnswers();
+        List<AnswerModel> oldAnswers = incompleteEvaluation.getAnswers();
         if (oldAnswers != null && !oldAnswers.isEmpty()) {
-            incompleteForm.setAnswers(new ArrayList<>());
-            formRepository.saveAndFlush(incompleteForm);
+            incompleteEvaluation.setAnswers(new ArrayList<>());
+            evaluationRepository.saveAndFlush(incompleteEvaluation);
             answerRepository.deleteAll(oldAnswers);
         }
 
         // Atualizar o formulário incompleto com novas answers
-        incompleteForm.setAnswerDate(new Date());
+        incompleteEvaluation.setAnswerDate(new Date());
 
-        List<AnswerModel> newAnswers = createAnswers(incompleteForm, formRequestList);
+        List<AnswerModel> newAnswers = createAnswers(incompleteEvaluation, evaluationRequestList);
         answerRepository.saveAll(newAnswers);
-        incompleteForm.setAnswers(newAnswers);
+        incompleteEvaluation.setAnswers(newAnswers);
 
-        return formRepository.saveAndFlush(incompleteForm);
+        return evaluationRepository.saveAndFlush(incompleteEvaluation);
     }
 
-    private FormModel updateScores(FormModel formModel, List<FormRequest> formRequestList) {
-        int totalQuestions = formRequestList.size();
+    private EvaluationModel updateScores(EvaluationModel evaluationModel, List<EvaluationRequest> evaluationRequestList) {
+        int totalQuestions = evaluationRequestList.size();
         int questionsAsPer = 0;
         int socialAsPer = 0;
         int nonCompliantSocial = 0;
@@ -190,7 +190,7 @@ public class FormService {
         int governmentAsPer = 0;
         int nonCompliantGovernment = 0;
 
-        for (FormRequest answer : formRequestList) {
+        for (EvaluationRequest answer : evaluationRequestList) {
             if (answer.getUserAnswer() != null) {
                 if (answer.getUserAnswer() == AnswersEnum.Conforme) {
                     questionsAsPer++;
@@ -230,32 +230,32 @@ public class FormService {
 
         CertificateLevelEnum nivelCertificado = calculateCertificateLevel(finalScore);
 
-        formModel.setFinalScore((int) finalScore);
-        formModel.setSocialScore((int) socialScore);
-        formModel.setEnviornmentalScore((int) enviornmentalScore);
-        formModel.setGovernmentScore((int) governmentScore);
-        formModel.setCertificate(nivelCertificado);
-        formModel.setAnswerDate(new Date());
-        return formRepository.saveAndFlush(formModel);
+        evaluationModel.setFinalScore((int) finalScore);
+        evaluationModel.setSocialScore((int) socialScore);
+        evaluationModel.setEnviornmentalScore((int) enviornmentalScore);
+        evaluationModel.setGovernmentScore((int) governmentScore);
+        evaluationModel.setCertificate(nivelCertificado);
+        evaluationModel.setAnswerDate(new Date());
+        return evaluationRepository.saveAndFlush(evaluationModel);
     }
 
-    private List<AnswerModel> createAnswers(FormModel formModel, List<FormRequest> formRequestList) {
+    private List<AnswerModel> createAnswers(EvaluationModel evaluationModel, List<EvaluationRequest> evaluationRequestList) {
         List<AnswerModel> answers = new ArrayList<>();
-        for (FormRequest entry : formRequestList) {
+        for (EvaluationRequest entry : evaluationRequestList) {
             QuestionModel question = questionRepository.findById(entry.getQuestionId())
                     .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
-            AnswerModel answerModel = new AnswerModel(formModel, question, entry.getUserAnswer());
+            AnswerModel answerModel = new AnswerModel(evaluationModel, question, entry.getUserAnswer());
             answers.add(answerModel);
         }
         return answers;
     }
 
     private void updateRanking() {
-        List<FormModel> latestForms = formRepository.findLatestByCompanyOrderByFinalScoreDesc();
+        List<EvaluationModel> latestEvaluations = evaluationRepository.findLatestByCompanyOrderByFinalScoreDesc();
 
-        for (int i = 0; i < latestForms.size(); i++) {
-            FormModel form = latestForms.get(i);
-            CompanyModel company = form.getCompany();
+        for (int i = 0; i < latestEvaluations.size(); i++) {
+            EvaluationModel evaluation = latestEvaluations.get(i);
+            CompanyModel company = evaluation.getCompany();
             company.setRanking(i + 1);
             companyRepository.save(company);
         }
@@ -271,8 +271,8 @@ public class FormService {
         }
     }
 
-    private void validateCompleteForm(Long companyId, List<FormRequest> formRequestList) {
-        if (formRequestList.size() != 30) {
+    private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList) {
+        if (evaluationRequestList.size() != 30) {
             throw new RuntimeException("Número de questions inválido");
         }
         if (companyId == null) {
@@ -280,16 +280,16 @@ public class FormService {
         }
     }
 
-    public boolean haveActiveForm(Long companyId) {
-        FormModel latestForm = formRepository.findLatestFormByCompanyId(companyId);
-        if (latestForm != null) {
-            return latestForm.getFinalScore() == null;
+    public boolean haveActiveEvaluation(Long companyId) {
+        EvaluationModel latestEvaluation = evaluationRepository.findLatestEvaluationByCompanyId(companyId);
+        if (latestEvaluation != null) {
+            return latestEvaluation.getFinalScore() == null;
         }
         
         return false;
     }
 
-    public FormModel searchById(Long id) {
-        return formRepository.findById(id).orElse(null);
+    public EvaluationModel searchById(Long id) {
+        return evaluationRepository.findById(id).orElse(null);
     }
 }

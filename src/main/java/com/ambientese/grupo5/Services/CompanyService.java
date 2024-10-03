@@ -11,10 +11,10 @@ import com.ambientese.grupo5.DTO.CompanyRequest;
 import com.ambientese.grupo5.Exception.ValidationException;
 import com.ambientese.grupo5.Model.AddressModel;
 import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.FormModel;
+import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Repository.AddressRepository;
 import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.FormRepository;
+import com.ambientese.grupo5.Repository.EvaluationRepository;
 import com.ambientese.grupo5.Services.Validations.Company.CNPJValidation;
 import com.ambientese.grupo5.Services.Validations.Company.MandatoryFieldsValidation;
 
@@ -30,7 +30,7 @@ public class CompanyService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private FormRepository formRepository;
+    private EvaluationRepository evaluationRepository;
 
     @Autowired
     private MandatoryFieldsValidation mandatoryFieldsValidation;
@@ -95,9 +95,9 @@ public class CompanyService {
     public void deleteCompany(Long id) {
         CompanyModel company = companyRepository.findById(id).orElse(null);
         if (company != null) {
-            List<FormModel> forms = formRepository.findByCompanyId(company.getId());
-            for (FormModel form : forms) {
-                formRepository.delete(form);
+            List<EvaluationModel> evaluations = evaluationRepository.findByCompanyId(company.getId());
+            for (EvaluationModel evaluation : evaluations) {
+                evaluationRepository.delete(evaluation);
             }
             companyRepository.delete(company);
         }

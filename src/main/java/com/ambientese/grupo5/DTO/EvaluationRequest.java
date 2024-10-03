@@ -3,30 +3,30 @@ package com.ambientese.grupo5.DTO;
 import com.ambientese.grupo5.Model.Enums.PillarEnum;
 import com.ambientese.grupo5.Model.Enums.AnswersEnum;
 
-public class FormRequest {
+public class EvaluationRequest {
     private Long questionId;
     private Long questionNumber;
     private String questionDescription;
     private AnswersEnum userAnswer;
     private PillarEnum questionPillar;
-    private Long formId;
+    private Long evaluationId;
 
-    public FormRequest() {
+    public EvaluationRequest() {
     }
 
-    public FormRequest(Long questionId, PillarEnum questionPillar, AnswersEnum userAnswer) {
+    public EvaluationRequest(Long questionId, PillarEnum questionPillar, AnswersEnum userAnswer) {
         this.questionId = questionId;
         this.questionPillar = questionPillar;
         this.userAnswer = userAnswer;
     }
     
-    public FormRequest(Long questionId, String questionDescription, AnswersEnum userAnswer, PillarEnum questionPillar,
-            Long formId) {
+    public EvaluationRequest(Long questionId, String questionDescription, AnswersEnum userAnswer, PillarEnum questionPillar,
+            Long evaluationId) {
         this.questionId = questionId;
         this.questionDescription = questionDescription;
         this.userAnswer = userAnswer;
         this.questionPillar = questionPillar;
-        this.formId = formId;
+        this.evaluationId = evaluationId;
     }
 
     public Long getQuestionId() {
@@ -79,13 +79,13 @@ public class FormRequest {
     }
 
 
-    public Long getFormId() {
-        return formId;
+    public Long getEvaluationId() {
+        return evaluationId;
     }
 
 
-    public void setFormId(Long formId) {
-        this.formId = formId;
+    public void setEvaluationId(Long evaluationId) {
+        this.evaluationId = evaluationId;
     }
 
     

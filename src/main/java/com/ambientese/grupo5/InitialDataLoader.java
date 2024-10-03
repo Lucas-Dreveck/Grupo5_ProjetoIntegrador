@@ -15,11 +15,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ambientese.grupo5.DTO.FormRequest;
+import com.ambientese.grupo5.DTO.EvaluationRequest;
 import com.ambientese.grupo5.Model.*;
 import com.ambientese.grupo5.Model.Enums.*;
 import com.ambientese.grupo5.Repository.*;
-import com.ambientese.grupo5.Services.FormService;
+import com.ambientese.grupo5.Services.EvaluationService;
 import com.github.javafaker.Faker;
 
 @Component
@@ -40,7 +40,7 @@ public class InitialDataLoader implements CommandLineRunner {
     private QuestionRepository questionRepository;
 
     @Autowired
-    private FormService formService;
+    private EvaluationService evaluationService;
 
     private final Faker faker = new Faker(new Locale("pt-BR"));
 
@@ -146,15 +146,12 @@ public class InitialDataLoader implements CommandLineRunner {
                 }
             }
 
-            // Populate form table with formService
-            System.out.println("Criando formulários para empresas...");
+            // Populate evaluation table with evaluationService
             List<CompanyModel> companies = companyRepository.findAll();
             for (CompanyModel company : companies) {
-                List<FormRequest> formRequests = generateFormRequest();
-                System.out.println("Criando formulário para empresa: " + company.getTradeName());
-                formService.createCompleteForm(company.getId(), formRequests);
+                List<EvaluationRequest> evaluationRequests = generateEvaluationRequest();
+                evaluationService.createCompleteEvaluation(company.getId(), evaluationRequests);
             }
-            System.out.println("Formulários criados com sucesso.");
 
             // Create root user
             UserModel newUser = new UserModel();
@@ -200,8 +197,8 @@ public class InitialDataLoader implements CommandLineRunner {
         return segments[randomIndex];
     }
 
-    private List<FormRequest> generateFormRequest() {
-        List<FormRequest> formRequests = new ArrayList<>();
+    private List<EvaluationRequest> generateEvaluationRequest() {
+        List<EvaluationRequest> evaluationRequests = new ArrayList<>();
 
         // Supondo que há 10 questions para cada pillar (Ambiental, Social, Governamental)
         List<QuestionModel> enviornmentalQuestionsList = questionRepository.findByPillar(PillarEnum.Ambiental);
@@ -213,14 +210,14 @@ public class InitialDataLoader implements CommandLineRunner {
         selectedQuestions.addAll(getRandomQuestions(governmentQuestionsList, 10));
 
         for (QuestionModel question : selectedQuestions) {
-            FormRequest request = new FormRequest();
+            EvaluationRequest request = new EvaluationRequest();
             request.setQuestionId(question.getId());
             request.setQuestionPillar(question.getPillar());
             request.setUserAnswer(getAnswerProbability());
-            formRequests.add(request);
+            evaluationRequests.add(request);
         }
 
-        return formRequests;
+        return evaluationRequests;
     }
 
     private List<QuestionModel> getRandomQuestions(List<QuestionModel> questions, int numberOfQuestions) {

@@ -10,14 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Form")
-public class FormModel {
+@Table(name = "Evaluation")
+public class EvaluationModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "evaluation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<AnswerModel> answers = new ArrayList<>();
 
@@ -71,12 +71,12 @@ public class FormModel {
 
     public void addAnswer(AnswerModel answer) {
         answers.add(answer);
-        answer.setForm(this);
+        answer.setEvaluation(this);
     }
 
     public void removeAnswer(AnswerModel answer) {
         answers.remove(answer);
-        answer.setForm(null);
+        answer.setEvaluation(null);
     }
 
     public List<AnswerModel> getAnswers() {

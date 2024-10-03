@@ -19,7 +19,7 @@ public class WebConfig {
     public FilterRegistrationBean<AuthFilter> authFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new AuthFilter(jwtUtil));
-        registrationBean.addUrlPatterns("/api/auth/*", "/employees", "/empresas", "/start-form", "/form", "/result-form");
+        registrationBean.addUrlPatterns("/api/auth/*", "/employees", "/empresas", "/start-evaluation", "/evaluation", "/result-evaluation");
         registrationBean.setOrder(1);
         return registrationBean;
     }
@@ -28,6 +28,7 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
+            @SuppressWarnings("null")
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/")

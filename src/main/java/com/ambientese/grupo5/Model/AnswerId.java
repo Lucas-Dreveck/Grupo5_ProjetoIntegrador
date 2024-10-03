@@ -6,13 +6,13 @@ import jakarta.persistence.*;
 
 @Embeddable
 public class AnswerId implements Serializable {
-    private Long formId;
+    private Long evaluationId;
     private Long questionId;
 
     public AnswerId() {}
 
-    public AnswerId(Long formId, Long questionId) {
-        this.formId = formId;
+    public AnswerId(Long evaluationId, Long questionId) {
+        this.evaluationId = evaluationId;
         this.questionId = questionId;
     }
 
@@ -21,21 +21,21 @@ public class AnswerId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AnswerId that = (AnswerId) o;
-        return Objects.equals(formId, that.formId) &&
+        return Objects.equals(evaluationId, that.evaluationId) &&
                 Objects.equals(questionId, that.questionId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(formId, questionId);
+        return Objects.hash(evaluationId, questionId);
     }
 
-    public Long getFormId() {
-        return formId;
+    public Long getEvaluationId() {
+        return evaluationId;
     }
 
-    public void setFormId(Long formId) {
-        this.formId = formId;
+    public void setEvaluationId(Long evaluationId) {
+        this.evaluationId = evaluationId;
     }
 
     public Long getQuestionId() {

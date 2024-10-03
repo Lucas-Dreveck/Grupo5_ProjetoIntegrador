@@ -13,10 +13,10 @@ public class AnswerModel {
     private AnswerId id = new AnswerId();
 
     @ManyToOne
-    @MapsId("formId")
-    @JoinColumn(name = "form_id")
+    @MapsId("evaluationId")
+    @JoinColumn(name = "evaluation_id")
     @JsonBackReference
-    private FormModel form;
+    private EvaluationModel evaluation;
 
     @ManyToOne
     @MapsId("questionId")
@@ -29,18 +29,18 @@ public class AnswerModel {
 
     public AnswerModel() {}
 
-    public AnswerModel(AnswerId id, FormModel form, QuestionModel question, AnswersEnum answer) {
+    public AnswerModel(AnswerId id, EvaluationModel evaluation, QuestionModel question, AnswersEnum answer) {
         this.id = id;
-        this.form = form;
+        this.evaluation = evaluation;
         this.question = question;
         this.answer = answer;
     }
 
-    public AnswerModel(FormModel form, QuestionModel question, AnswersEnum answer) {
-        this.form = form;
+    public AnswerModel(EvaluationModel evaluation, QuestionModel question, AnswersEnum answer) {
+        this.evaluation = evaluation;
         this.question = question;
         this.answer = answer;
-        this.id = new AnswerId(form.getId(), question.getId());
+        this.id = new AnswerId(evaluation.getId(), question.getId());
     }
 
     public AnswerId getId() {
@@ -51,12 +51,12 @@ public class AnswerModel {
         this.id = id;
     }
 
-    public FormModel getForm() {
-        return form;
+    public EvaluationModel getEvaluation() {
+        return evaluation;
     }
 
-    public void setForm(FormModel form) {
-        this.form = form;
+    public void setEvaluation(EvaluationModel evaluation) {
+        this.evaluation = evaluation;
     }
 
     public QuestionModel getQuestion() {

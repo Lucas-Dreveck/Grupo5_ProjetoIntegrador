@@ -1,38 +1,38 @@
-const createGraphs = (form) => {
+const createGraphs = (evaluation) => {
     return (`
         <div class="graph">
             <svg viewBox="0 0 36 36" class="circular-chart">
                 <path class="circle social-graph"
-                stroke-dasharray="${form.socialScore}, 100"
+                stroke-dasharray="${evaluation.socialScore}, 100"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="20" text-anchor="middle" class="percentage">${form.socialScore}%</text>
+                <text x="18" y="20" text-anchor="middle" class="percentage">${evaluation.socialScore}%</text>
             </svg>
             <h2 class="subtitle">Social</h2>
         </div>
         <div class="graph">
             <svg viewBox="0 0 36 36" class="circular-chart">
                 <path class="circle government-graph"
-                stroke-dasharray="${form.governmentScore}, 100"
+                stroke-dasharray="${evaluation.governmentScore}, 100"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="20" text-anchor="middle" class="percentage">${form.governmentScore}%</text>
+                <text x="18" y="20" text-anchor="middle" class="percentage">${evaluation.governmentScore}%</text>
             </svg>
             <h2 class="subtitle">Governamental</h2>
         </div>
         <div class="graph">
             <svg viewBox="0 0 36 36" class="circular-chart">
                 <path class="circle enviornmental-graph"
-                stroke-dasharray="${form.enviornmentalScore}, 100"
+                stroke-dasharray="${evaluation.enviornmentalScore}, 100"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="20" text-anchor="middle" class="percentage">${form.enviornmentalScore}%</text>
+                <text x="18" y="20" text-anchor="middle" class="percentage">${evaluation.enviornmentalScore}%</text>
             </svg>
             <h2 class="subtitle">Ambiental</h2>
         </div>
@@ -95,7 +95,7 @@ const renderTables = (answers) => {
     return socialTable + governmentTable + enviornmentalData;
 }
 
-const onOpenResultForm = (props) => {
+const onOpenResultEvaluation = (props) => {
     const result = document.querySelector('#result-content');
     const h1 = document.createElement('h1');
     h1.classList.add('title');

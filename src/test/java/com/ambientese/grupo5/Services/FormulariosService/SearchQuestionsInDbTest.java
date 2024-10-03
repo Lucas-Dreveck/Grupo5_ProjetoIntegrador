@@ -1,10 +1,10 @@
-// package com.ambientese.grupo5.Services.FormulariosService;
+// package com.ambientese.grupo5.Services.EvaluationulariosService;
 
 // import com.ambientese.grupo5.Model.Enums.PillarEnum;
-// import com.ambientese.grupo5.DTO.FormResponse;
+// import com.ambientese.grupo5.DTO.EvaluationResponse;
 // import com.ambientese.grupo5.Model.QuestionModel;
 // import com.ambientese.grupo5.Repository.QuestionRepository;
-// import com.ambientese.grupo5.Services.FormService;
+// import com.ambientese.grupo5.Services.EvaluationService;
 
 // import org.junit.jupiter.api.Test;
 // import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@
 //     private QuestionRepository questionRepository;
 
 //     @InjectMocks
-//     private FormService formService;
+//     private EvaluationService evaluationService;
 
 //     @Test
 //     void testSearchQuestionsInDb() {
@@ -40,10 +40,10 @@
 //         when(questionRepository.findByPillar(PillarEnum.Ambiental)).thenReturn(questionsMock);
 //         when(questionRepository.findByPillar(PillarEnum.Governamental)).thenReturn(questionsMock);
 
-//         FormResponse questions = formService.searchQuestionsInDb(true, 1L);
+//         EvaluationResponse questions = evaluationService.searchQuestionsInDb(true, 1L);
 
-//         if (questions.getFormRequests().size() > 0) {
-//             assertEquals(15, questions.getFormRequests().size());
+//         if (questions.getEvaluationRequests().size() > 0) {
+//             assertEquals(15, questions.getEvaluationRequests().size());
 //         } else {
 //             assertEquals(15, questions.getQuestions().size());
 //         }

@@ -43,19 +43,19 @@ public class Pages {
         return processRequest(request, "pages/ranking", "ranking");
     }
 
-    @GetMapping("/start-form")
-    public String pageStartForm(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/form/start-form", "start-form");
+    @GetMapping("/start-evaluation")
+    public String pageStartEvaluation(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/evaluation/start-evaluation", "start-evaluation");
     }
 
-    @GetMapping("/form")
-    public String pageForm(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/form/form", "start-form");
+    @GetMapping("/evaluation")
+    public String pageEvaluation(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/evaluation/evaluation", "start-evaluation");
     }
 
-    @GetMapping("/result-form")
-    public String pageResultForm(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/form/result-form", "start-form");
+    @GetMapping("/result-evaluation")
+    public String pageResultEvaluation(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/evaluation/result-evaluation", "start-evaluation");
     }
 
     private String processRequest(HttpServletRequest request, String page, String route) {

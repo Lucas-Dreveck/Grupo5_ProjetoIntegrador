@@ -6,7 +6,7 @@ const fetchCompanies = (input, dropdown) => {
     const filter = input.value.toLowerCase();
     const queryParams = new URLSearchParams();
     queryParams.append('name', filter ? filter : 'a')
-    const fullUrl = `${ApiURL}/auth/Company/form/search?${queryParams.toString()}`;
+    const fullUrl = `${ApiURL}/auth/Company/evaluation/search?${queryParams.toString()}`;
     fetch(fullUrl, options)
         .then (response => {
             if (!response.ok) {
@@ -36,8 +36,8 @@ function clearSelectedCompanyIfNotMatch(input) {
     }
 }
 
-async function verifyActiveForm() {
-    return fetch(`${ApiURL}/auth/haveActiveForm/${settedCompany.id}`, options)
+async function verifyActiveEvaluation() {
+    return fetch(`${ApiURL}/auth/haveActiveEvaluation/${settedCompany.id}`, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro ao recuperar dados');
@@ -49,7 +49,7 @@ async function verifyActiveForm() {
         });
 }
 
-const onOpenStartForm = () => {
+const onOpenStartEvaluation = () => {
     const input = document.querySelector('.search');
     const dropdown = document.querySelector('.dropdown-content');
     const content = document.querySelector('.content-container');
@@ -91,9 +91,9 @@ const onOpenStartForm = () => {
     const btnNext = document.querySelector('.btn-next');
     btnNext.addEventListener('click', async () => {
         if (settedCompany) {
-            const hasActiveForm = await verifyActiveForm();
-            if (!hasActiveForm) {
-                getMainFrameContent('form', {
+            const hasActiveEvaluation = await verifyActiveEvaluation();
+            if (!hasActiveEvaluation) {
+                getMainFrameContent('evaluation', {
                     company: settedCompany,
                     isNew: true
                 });
@@ -106,14 +106,14 @@ const onOpenStartForm = () => {
                     cancelText: 'Continuar avaliação',
                     haveCancel: false,
                     onConfirm: () => {
-                        getMainFrameContent('form', {
+                        getMainFrameContent('evaluation', {
                             company: settedCompany,
                             isNew: true
                         });
                         settedCompany = null;
                     },
                     onCancel: () => {
-                        getMainFrameContent('form', {
+                        getMainFrameContent('evaluation', {
                             company: settedCompany,
                             isNew: false
                         });
