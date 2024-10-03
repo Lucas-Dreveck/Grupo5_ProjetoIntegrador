@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Perguntas | Ambiente-se</title>
+</head>
+<body>
+<content>
+    <div class="content-container">
+        <div class="containerGeral">
+            <div class="divSelect">
+                <div class="selectBox">
+                    <input type="text" id="search" class="inpFilter">
+                    <img th:src="@{/icons/Companies-Registration/search.png}" alt="Pesquisar" class="imgSearch">
+                </div>
+            </div>
+            <div class="divQuestion">
+                <table class="tableQuestion">
+                    <thead>
+                    <tr>
+                        <th class="thTable" id="thImg"></th>
+                        <th class="thTable" id="thId">Id</th>
+                        <th class="thTable" id="thName">Pergunta</th>
+                        <th class="thTable" id="thSegment">Eixo</th>
+                        <th class="thTable btnAdd" id="thAcao"><div class="btn-plus">Nova Pergunta</div></th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="divBtns">
+                <button id="priorBtnQuestion" class="btn-prev disabled" disabled="true">
+                    <img src="/icons/Buttons/arrow-left.svg" alt="Previous" class="arrow-icon">
+                </button>
+                <button id="nextBtnQuestion" class="btn-next">
+                    <img src="/icons/Buttons/arrow-right.svg" alt="Next" class="arrow-icon">
+                </button>
+            </div>
+        </div>
+        <div class="overlay"></div>
+        <div class="divAddQuestion">
+            <div class="containerAddQuestion">
+                <div class="rowsQuestion">
+                    <label for="questionPillarAdd" class="labelStyle">Eixo da Pergunta</label>
+                    <select name="eixoAdd" id="questionPillarAdd">
+                        <option value="Governamental">Governamental</option>
+                        <option value="Ambiental">Ambiental</option>
+                        <option value="Social">Social</option>
+                    </select>
+                    <label for="questionAdd" class="labelStyle">Pergunta</label>
+                    <textarea name="question" id="questionAdd" cols="24" rows="3"></textarea>
+                </div>
+                <div class="divAddBtnQuestion">
+                    <button class="btnsCancel btnsQuestion" id="cancelAddPerg">Cancelar</button>
+                    <button class="btnsConfirm btnsQuestion" id="confirmAddQuestion">Adicionar</button>
+                </div>
+            </div>
+        </div>
+        <div class="divEditQuestion">
+            <div class="containerEditQuestion">
+                <div class="rowsQuestion">
+                    <label for="questionPillarEdit" class="labelStyle">Eixo da Pergunta</label>
+                    <select name="eixoAdd" id="questionPillarEdit">
+                        <option value="Governamental">Governamental</option>
+                        <option value="Ambiental">Ambiental</option>
+                        <option value="Social">Social</option>
+                    </select>
+                    <label for="questionEdit" class="labelStyle">Pergunta</label>
+                    <textarea name="question" id="questionEdit" cols="40" rows="5"></textarea>
+                </div>
+                <div class="divEditBtnQuestion">
+                    <button class="btnsCancel btnsQuestion" id="cancelEditPerg">Cancelar</button>
+                    <button class="btnsConfirm btnsQuestion" id="confirmEditQuestion">Editar</button>
+                </div>
+            </div>
+        </div>
+        <div class="divDeleteQuestion">
+            <h1 class="deleteMsg" style="font-size: 20px;">Deseja realmente excluir essa question?</h1>
+            <div class="divBtnDeleteQuestion">
+                <button class="btnsCancel btnsDelete" id="cancelDelete">Cancelar</button>
+                <button class="btnsConfirm btnsDelete" id="confirmDelete">Excluir</button>
+            </div>
+        </div>
+    </div>
+</content>
+<styles>
+    <link rel="stylesheet" th:href="@{/styles/pages/questions-registration.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/pages/employees-registration.css}"/>
+</styles>
+</body>
+</html>

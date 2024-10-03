@@ -1,0 +1,200 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.subtitle {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: var(--white);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.result-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    padding-bottom: 5vh;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.graphics {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 33%;
+    margin-top: 20px;
+}
+
+.percentage {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.social-graph {
+    stroke: #f0870b;
+}
+
+.government-graph {
+    stroke: #0071bf;
+}
+
+.enviornmental-graph {
+    stroke: #6ac04a;
+}
+
+.circular-chart {
+    display: block;
+    margin: 10px auto;
+    max-width: 80%;
+    max-height: 250px;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+
+.tables {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.tables .table {
+    width: 70%;
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.tables .table th,
+.tables .table td {
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tables .table thead {
+    border-bottom: 1px solid black;
+}
+
+.tables .table th {
+    line-height: 1.4;
+}
+
+.tables .table td {
+    line-height: 1.6;
+}
+
+.tables .table .question {
+    border-right: 2px solid black;
+}
+
+.tables .table-social .even-row{
+    background-color: #f0870b;
+}
+
+.tables .table-social .odd-row{
+    background-color: #fdc685;
+}
+
+.tables .table-government .even-row{
+    background-color: #0071bf;
+}
+
+.tables .table-government .odd-row{
+    background-color: #8ab7e0;
+}
+
+.tables .table-enviornmental .even-row{
+    background-color: #6ac04a;
+}
+
+.tables .table-enviornmental .odd-row{
+    background-color: #a0dca0;
+}
+
+.btn-home{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--white);
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-export {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--white);
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+} 
+
+.btn-home:hover,
+.btn-export:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}

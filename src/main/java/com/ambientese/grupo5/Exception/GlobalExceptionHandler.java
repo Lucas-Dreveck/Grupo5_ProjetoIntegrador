@@ -23,8 +23,8 @@
             return ResponseEntity.badRequest().body(errors);
         }
 
-        @ExceptionHandler(ValidacaoException.class)
-        public ResponseEntity<Object> handleCustomValidationExceptions(ValidacaoException ex) {
+        @ExceptionHandler(ValidationException.class)
+        public ResponseEntity<Object> handleCustomValidationExceptions(ValidationException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
 

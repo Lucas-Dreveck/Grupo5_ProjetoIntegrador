@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ambientese.grupo5.Services.UsuarioService.JWTUtil;
+import com.ambientese.grupo5.Services       .JWTUtil;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import jakarta.servlet.FilterChain;
@@ -23,17 +23,17 @@ public class AuthFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-    private boolean isAuthorized(String cargo, String requestURI) {
-        List<String> gestorBlockedRoutes = Arrays.asList();
-        List<String> consultorBlockedRoutes = Arrays.asList("/auth/Funcionario/*", "/auth/Usuarios/*", "/funcionarios");
+    private boolean isAuthorized(String role, String requestURI) {
+        List<String> managerBlockedRoutes = Arrays.asList();
+        List<String> consultantBlockedRoutes = Arrays.asList("/api/auth/Employee/*", "/api/auth/User/*", "/employees");
 
-        switch (cargo) {
+        switch (role) {
             case "Admin":
                 return true;
             case "Gestor":
-                return !matchesAny(gestorBlockedRoutes, requestURI);
+                return !matchesAny(managerBlockedRoutes, requestURI);
             case "Consultor":
-                return !matchesAny(consultorBlockedRoutes, requestURI);
+                return !matchesAny(consultantBlockedRoutes, requestURI);
             default:
                 return false;
         }
@@ -57,10 +57,10 @@ public class AuthFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             DecodedJWT jwt = jwtUtil.validateToken(token);
             if (jwt != null) {
-                String cargo = jwt.getClaim("cargo").asString();
+                String role = jwt.getClaim("role").asString();
                 String requestURI = request.getRequestURI();
 
-                if (isAuthorized(cargo, requestURI)) {
+                if (isAuthorized(role, requestURI)) {
                     filterChain.doFilter(request, response);
                     return;
                 } else {

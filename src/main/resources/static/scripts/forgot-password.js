@@ -14,7 +14,7 @@ const onOpenForgotPassword = () => {
 const forgot = async () => {
     const email = document.querySelector('#email').value;
 
-    await fetch(`${URL}/forgot-password?email=${email}`, {
+    await fetch(`${ApiURL}/forgot-password?email=${email}`, {
         method: 'POST',
         headers,
     })
@@ -59,7 +59,7 @@ const recovery = async (email) => {
         toastAlert("Senhas não conferem", "error");
         return;
     }
-    await fetch(`${URL}/reset-password?email=${email}&recoveryCode=${recoveryCode}&newPassword=${password}`, {
+    await fetch(`${ApiURL}/reset-password?email=${email}&recoveryCode=${recoveryCode}&newPassword=${password}`, {
         method: 'POST',
         headers,
     })

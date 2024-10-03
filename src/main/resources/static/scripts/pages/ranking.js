@@ -1,5 +1,5 @@
 let page = 0;
-const createTop3 = (companys, content) => {
+const createTop3 = (companies, content) => {
     const setMedal = (index) => {
         if (index === 3) {
             return '/icons/Medals/bronze-medal.svg';
@@ -12,7 +12,7 @@ const createTop3 = (companys, content) => {
 
     const Top3Div = document.createElement('div');
     Top3Div.classList.add('top3');
-    companys.forEach((company, index) => {
+    companies.forEach((company, index) => {
         let position;
         if (index === 0) {
             position = '2';
@@ -25,14 +25,14 @@ const createTop3 = (companys, content) => {
         const place = document.createElement('div');
         place.classList.add(`place-${position}`);
         place.innerHTML = `
-            <h2 class="company-name">${company.empresaNome}</h2>
-            <h1 class="place-${position}-title">${position}º lugar - ${company.pontuacaoFinal} pontos</h1>
-            <p class="branch">${company.ramo}</p>
+            <h2 class="company-name">${company.companyName}</h2>
+            <h1 class="place-${position}-title">${position}º lugar - ${company.finalScore} pontos</h1>
+            <p class="branch">${company.segment}</p>
             <img src="${medalIcon}" alt="Medal" class="medal-icon">
         `;
 
         place.addEventListener('click', () => 
-            exportPDF(company.id, company.empresaNome)
+            exportPDF(company.id, company.companyName)
         );
 
         Top3Div.appendChild(place);
@@ -40,7 +40,7 @@ const createTop3 = (companys, content) => {
     content.appendChild(Top3Div);
 }
 
-const createRanking = (companys, content) => {
+const createRanking = (companies, content) => {
     let rankingTable = document.querySelector('.ranking-table');
     if (!rankingTable) {
         rankingTable = document.createElement('table');
@@ -51,13 +51,13 @@ const createRanking = (companys, content) => {
     }
 
     const tbody = document.createElement('tbody');
-    companys.forEach((company) => {
+    companies.forEach((company) => {
         if (company.ranking === 1 || company.ranking === 2 || company.ranking === 3) return;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td class="ranking">${company.ranking}º - ${company.empresaNome}</td>
-            <td class="branch">${company.ramo}</td>
-            <td class="size">${company.pontuacaoFinal} pontos</td>
+            <td class="ranking">${company.ranking}º - ${company.companyName}</td>
+            <td class="branch">${company.segment}</td>
+            <td class="size">${company.finalScore} pontos</td>
             <td class="pdf-img">
                 <img src="/icons/file-link.svg" alt="BaixarPdf">
             </td>
@@ -67,7 +67,7 @@ const createRanking = (companys, content) => {
         const pdfBtn = tr.querySelector('.pdf-img')
         
         pdfBtn.addEventListener('click', () =>
-            exportPDF(company.id, company.empresaNome)
+            exportPDF(company.id, company.companyName)
         );
 
         tbody.appendChild(tr);
@@ -77,65 +77,65 @@ const createRanking = (companys, content) => {
 }
 
 const addOptions = async (content) => {
-    const ramoDropdown = document.createElement('select');
-    ramoDropdown.classList.add('ramo-dropdown');
-    ramoDropdown.innerHTML = '<option value="">Ramo da empresa</option>';
+    const segmentDropdown = document.createElement('select');
+    segmentDropdown.classList.add('segment-dropdown');
+    segmentDropdown.innerHTML = '<option value="">Ramo da empresa</option>';
 
-    const porteDropdown = document.createElement('select');
-    porteDropdown.classList.add('porte-dropdown');
-    porteDropdown.innerHTML = '<option value="">Porte da empresa</option>';
+    const companySizeDropdown = document.createElement('select');
+    companySizeDropdown.classList.add('companySize-dropdown');
+    companySizeDropdown.innerHTML = '<option value="">Porte da empresa</option>';
 
-    const ramoOptions = new Set();
-    const porteOptions = new Set(['Pequeno', 'Médio', 'Grande']);
+    const segmentOptions = new Set();
+    const companySizeOptions = new Set(['Pequeno', 'Médio', 'Grande']);
 
-    await fetch(`${URL}/ranking/ramos/list`, options)
+    await fetch(`${ApiURL}/ranking/segments`, options)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro ao buscar ramos');
+                throw new Error('Erro ao buscar segments');
             }
             return response.json();
         })
         .then(response => {
-            response.forEach(ramo => ramoOptions.add(ramo));
+            response.forEach(segment => segmentOptions.add(segment));
         });
 
-    ramoOptions.forEach(option => {
-        const ramo = document.createElement('option');
-        ramo.value = option;
-        ramo.innerHTML = option;
-        ramoDropdown.appendChild(ramo);
+    segmentOptions.forEach(option => {
+        const segment = document.createElement('option');
+        segment.value = option;
+        segment.innerHTML = option;
+        segmentDropdown.appendChild(segment);
     });
 
-    porteOptions.forEach(option => {
-        const porte = document.createElement('option');
-        porte.value = option;
-        porte.innerHTML = option;
-        porteDropdown.appendChild(porte);
+    companySizeOptions.forEach(option => {
+        const companySize = document.createElement('option');
+        companySize.value = option;
+        companySize.innerHTML = option;
+        companySizeDropdown.appendChild(companySize);
     });
 
-    ramoDropdown.addEventListener('change', () => {
+    segmentDropdown.addEventListener('change', () => {
         page = 0;
         updateRanking()
     });
-    porteDropdown.addEventListener('change', () => {
+    companySizeDropdown.addEventListener('change', () => {
         page = 0;
         updateRanking()
     });
 
-    content.appendChild(ramoDropdown);
-    content.appendChild(porteDropdown);
+    content.appendChild(segmentDropdown);
+    content.appendChild(companySizeDropdown);
 }
 
 const updateRanking = () => {
-    const ramo = document.querySelector('.ramo-dropdown').value;
-    const porte = document.querySelector('.porte-dropdown').value;
+    const segment = document.querySelector('.segment-dropdown').value;
+    const companySize = document.querySelector('.companySize-dropdown').value;
     const search = document.querySelector('.search-bar').value;
     const queryParams = new URLSearchParams();
-    if (ramo) queryParams.append('ramo', ramo);
-    if (porte) queryParams.append('porte', porte);
-    if (search) queryParams.append('nomeFantasia', search);
+    if (segment) queryParams.append('segment', segment);
+    if (companySize) queryParams.append('companySize', companySize);
+    if (search) queryParams.append('tradeName', search);
     queryParams.append('page', page);
-    const fullUrl = `${URL}/ranking/pontuacao?${queryParams.toString()}`;
+    const fullUrl = `${ApiURL}/ranking/score?${queryParams.toString()}`;
 
     fetch(fullUrl, options)
         .then(response => {
@@ -170,7 +170,7 @@ const createSearch = (content) => {
     search.classList.add('search');
     const searchBar = document.createElement('input');
     searchBar.classList.add('search-bar');
-    searchBar.placeholder = 'Nome da empresa';
+    searchBar.placeholder = 'Name da empresa';
     const searchButton = document.createElement('button');
     searchButton.classList.add('search-button');
     searchButton.innerHTML = `
@@ -207,7 +207,7 @@ const onOpenRanking = async () => {
     rankingTableContainer.classList.add('ranking-content');
 
     const queryParams = new URLSearchParams();
-    await fetch(`${URL}/ranking/pontuacao?${queryParams.toString()}`, options)
+    await fetch(`${ApiURL}/ranking/score?${queryParams.toString()}`, options)
         .then(response => {
             if (!response.ok) throw new Error('Erro ao buscar ranking');
             return response.json();

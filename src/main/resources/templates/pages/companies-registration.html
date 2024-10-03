@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Empresas | Ambiente-se</title>
+</head>
+<body>
+<content>
+    <div class="content-container">
+    <div class="containerGeral">
+        <div class="divSelect">
+            <div class="selectBox">
+                <input type="text" id="search" class="inpFilter">
+                <img th:src="@{/icons/Companies-Registration/search.png}" alt="Pesquisar" class="imgSearch">
+            </div>
+        </div>
+        <div class="divCompany">
+            <table class="tableCompany">
+                <thead>
+                    <tr>
+                        <th class="thTable" id="thImg"></th>
+                        <th class="thTable" id="thId">Id</th>
+                        <th class="thTable" id="thName">Nome</th>
+                        <th class="thTable" id="thSegment">Ramo</th>
+                        <th class="thTable" id="thCompanySize">Porte</th>
+                        <th class="thTable btnAdd" id="thAcao"><div class="btn-plus">Novo Registro</div></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="divBtns">
+            <button id="priorBtnCompany" class="btn-prev disabled" disabled="true">
+                <img src="/icons/Buttons/arrow-left.svg" alt="Previous" class="arrow-icon">
+            </button>
+            <button id="nextBtnCompany" class="btn-next">
+                <img src="/icons/Buttons/arrow-right.svg" alt="Next" class="arrow-icon">
+            </button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="divAddCompany">
+        <div class="containerAddCompany">
+            <h2 style="font-size: x-large; font-weight: bold;">Empresa</h2>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="tradeName" class="labelStyle">Nome Fantasia</label>
+                    <input type="text" class="inpStyleCompany inpNameFaEmp" id="tradeName">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="applicantsName" class="labelStyle">Nome do Solicitante</label>
+                    <input type="text" class="inpStyleCompany inpNameSoEmp" id="applicantsName">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="applicantsPhone" class="labelStyle">Telefone do Solicitante</label>
+                    <input type="text" class="inpStyleCompany inpApplicantsPhoneEmp" id="applicantsPhone">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="companyName" class="labelStyle">Razão Social</label>
+                    <input type="text" class="inpStyleCompany inpCompanyNameEmp" id="companyName">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="CNPJ" class="labelStyle">CNPJ</label>
+                    <input type="text" class="inpStyleCompany inpCnpjEmp" id="CNPJ">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="inscription" class="labelStyle">Inscrição Social</label>
+                    <input type="text" class="inpStyleCompany inpInscriptionEmp" id="inscription">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="email" class="labelStyle">Email</label>
+                    <input type="email" class="inpStyleCompany inpEmailEmp" id="email" autocomplete="off">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="companyPhone" class="labelStyle">Telefone da Empresa</label>
+                    <input type="text" class="inpStyleCompany inpCompanyPhone" id="companyPhone">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="companySize" class="labelStyle">Porte da Empresa</label>
+                    <select name="companySize" id="companySize" class="inpStyleCompany">
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                    </select>
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="segment" class="labelStyle">Ramo</label>
+                    <input type="text" class="inpStyleCompany inpAttEmp" id="segment">
+                </div>
+            </div>
+            <h2 style="font-size: x-large; font-weight: bold; margin-top: 10px;">Endereço</h2>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="cep" class="labelStyle">Cep</label>
+                    <input type="text" class="inpStyleCompany inpCepEmp" id="cep">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="uf" class="labelStyle">UF</label>
+                    <input type="text" class="inpStyleCompany inpUfEmp" id="uf">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="city" class="labelStyle">Cidade</label>
+                    <input type="text" class="inpStyleCompany inpCityEmp" id="city">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="number" class="labelStyle">Numero</label>
+                    <input type="text" class="inpStyleCompany inpNumberEmp" id="number">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="street" class="labelStyle">Rua</label>
+                    <input type="text" class="inpStyleCompany inpRuaEmp" id="street">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="neighborhood" class="labelStyle">Bairro</label>
+                    <input type="text" class="inpStyleCompany inpNeighborhoodEmp" id="neighborhood">
+                </div>
+            </div>
+<!--            <div class="rowsCompany">-->
+<!--                <div class="fieldAddCompany">-->
+<!--                    <label for="icon" class="labelStyle">Identidade Visual</label>-->
+<!--                    <label for="icon" class="labelImg"><img th:src="@{/icons/Document.png}" alt="Clique aqui para enviar"> Adicionar Arquivo</label>-->
+<!--                    <input type="file" class="inpIconCompany" id="icon">-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="divAddBtnCompany">
+                <button class="btnStyle btnsCancel btnsCompany" id="cancelAddEmp">Cancelar</button>
+                <button class="btnStyle btnsConfirm btnsCompany" id="confirmAddCompany">Adicionar</button>
+            </div>
+        </div>
+    </div>
+    <div class="divEditCompany">
+        <div class="containerEditCompany">
+            <h2 style="font-size: x-large; font-weight: bold;">Empresa</h2>
+            <div class="rowsCompany">
+                <div class="fieldEditCompany">
+                    <label for="tradeNameEdit" class="labelStyle">Nome Fantasia</label>
+                    <input type="text" class="inpStyleCompany inpNameFaEmp" id="tradeNameEdit">
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="applicantsNameEdit" class="labelStyle">Nome do Solicitante</label>
+                    <input type="text" class="inpStyleCompany inpNameSoEmp" id="applicantsNameEdit">
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="applicantsPhoneEdit" class="labelStyle">Telefone do Solicitante</label>
+                    <input type="text" class="inpStyleCompany inpApplicantsPhoneEmp" id="applicantsPhoneEdit">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldEditCompany">
+                    <label for="companyNameEdit" class="labelStyle">Razão Social</label>
+                    <input type="text" class="inpStyleCompany inpCompanyNameEmp" id="companyNameEdit">
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="cnpjEdit" class="labelStyle">CNPJ</label>
+                    <input type="text" class="inpStyleCompany inpCnpjEmp" id="cnpjEdit">
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="inscriptionEdit" class="labelStyle">Inscrição Social</label>
+                    <input type="text" class="inpStyleCompany inpInscriptionEmp" id="inscriptionEdit">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldEditCompany">
+                    <label for="emailEdit" class="labelStyle">Email</label>
+                    <input type="email" class="inpStyleCompany inpEmailEmp" id="emailEdit" autocomplete="off">
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="companyPhoneEdit" class="labelStyle">Telefone da Empresa</label>
+                    <input type="text" class="inpStyleCompany inpCompanyPhone" id="companyPhoneEdit">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldEditCompany">
+                    <label for="companySizeEdit" class="labelStyle">Porte da Empresa</label>
+                    <select name="companySize" id="companySizeEdit" class="inpStyleCompany">
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                    </select>
+                </div>
+                <div class="fieldEditCompany">
+                    <label for="segmentEdit" class="labelStyle">Ramo</label>
+                    <input type="text" class="inpStyleCompany inpAttEmp" id="segmentEdit">
+                </div>
+            </div>
+<!--            <div class="rowsCompany">-->
+<!--                <div class="fieldEditCompany">-->
+<!--                    <label for="iconEdit" class="labelStyle">Identidade Visual</label>-->
+<!--                    <label for="iconEdit" class="labelImg"><img th:src="@{/icons/Document.png}" alt="Clique aqui para enviar"> Adicionar Arquivo</label>-->
+<!--                    <input type="file" class="inpIconCompany" id="iconEdit">-->
+<!--                </div>-->
+<!--            </div>-->
+            <h2 style="font-size: x-large; font-weight: bold; margin-top: 10px;">Endereço</h2>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="cepEdit" class="labelStyle">Cep</label>
+                    <input type="text" class="inpStyleCompany inpCepEmp" id="cepEdit">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="ufEdit" class="labelStyle">UF</label>
+                    <input type="text" class="inpStyleCompany inpUfEmp" id="ufEdit">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="cityEdit" class="labelStyle">Cidade</label>
+                    <input type="text" class="inpStyleCompany inpCityEmp" id="cityEdit">
+                </div>
+            </div>
+            <div class="rowsCompany">
+                <div class="fieldAddCompany">
+                    <label for="numberEdit" class="labelStyle">Numero</label>
+                    <input type="text" class="inpStyleCompany inpNumberEmp" id="numberEdit">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="streetEdit" class="labelStyle">Rua</label>
+                    <input type="text" class="inpStyleCompany inpRuaEmp" id="streetEdit">
+                </div>
+                <div class="fieldAddCompany">
+                    <label for="neighborhoodEdit" class="labelStyle">Bairro</label>
+                    <input type="text" class="inpStyleCompany inpNeighborhoodEmp" id="neighborhoodEdit">
+                </div>
+            </div>
+            <div class="divEditBtnCompany">
+                <button class="btnStyle btnsCancel btnsCompany" id="cancelEditEmp">Cancelar</button>
+                <button class="btnStyle btnsConfirm btnsCompany" id="confirmEditCompany">Editar</button>
+            </div>
+        </div>
+    </div>
+    <div class="divDeleteCompany">
+        <h1 class="deleteMsg" style="font-size: 20px;">Deseja realmente excluir o registro?</h1>
+        <div class="divBtnDelete">
+            <button class="btnStyle btnsCancel btnsDelete" id="cancelDelete">Cancelar</button>
+            <button class="btnStyle btnsConfirm btnsDelete" id="confirmDelete">Excluir</button>
+        </div>
+    </div>
+</div>
+</content>
+    <styles>
+        <link rel="stylesheet" th:href="@{/styles/pages/companies-registration.css}"/>
+        <link rel="stylesheet" th:href="@{/styles/pages/employees-registration.css}"/>
+    </styles>
+</body>
+</html>

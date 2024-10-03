@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleção de empresa</title>
+</head>
+<body>
+<content>
+    <div class="content-container">
+        <h1>Escolha a empresa para avaliação</h1>
+        <div class="dropdown">
+            <input type="text" class="search" placeholder="Buscar...">
+            <ul class="dropdown-content"></ul>
+        </div>
+        <button class="btn-next">Avaliar</button>
+    </div>
+</content>
+
+<styles>
+    <link rel="stylesheet" th:href="@{/styles/pages/form/start-form.css}"/>
+</styles>
+</body>
+</html>

@@ -23,24 +23,19 @@ public class Pages {
         return processRequest(request, "forgot-password", "forgot-password");
     }
 
-    @GetMapping("/empresas")
-    public String pageEmpresas(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/cadastro-empresas", "empresas");
+    @GetMapping("/companies")
+    public String pageCompanies(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/companies-registration", "companies");
     }
 
-    @GetMapping("/funcionarios")
-    public String pageFuncionarios(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/cadastro-funcionarios", "funcionarios");
+    @GetMapping("/employees")
+    public String pageEmployees(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/employees-registration", "employees");
     }
-
-    @GetMapping("/perguntas")
-    public String pagePerguntas(Model model, HttpServletRequest request) throws InterruptedException {
-        String meuHeaderValue = request.getHeader("X-Requested-With");
-        if (meuHeaderValue != null && meuHeaderValue.equals("InsideApplication")) {
-            return "pages/cadastro-perguntas";
-        } else {
-            return "redirect:/";
-        }
+//lembrar que alterei aqui
+    @GetMapping("/questions")
+    public String pageQuestions(Model model, HttpServletRequest request) throws InterruptedException {
+        return processRequest(request, "pages/questions-registration", "questions");
     }
 
     @GetMapping("/ranking")
@@ -48,19 +43,19 @@ public class Pages {
         return processRequest(request, "pages/ranking", "ranking");
     }
 
-    @GetMapping("/start-avaliacao")
-    public String pageStartAvaliacao(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/avaliacao/selecao-empresa", "start-avaliacao");
+    @GetMapping("/start-form")
+    public String pageStartForm(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/form/start-form", "start-form");
     }
 
-    @GetMapping("/avaliacao")
-    public String pageAvaliacao(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/avaliacao/avaliacao", "start-avaliacao");
+    @GetMapping("/form")
+    public String pageForm(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/form/form", "start-form");
     }
 
-    @GetMapping("/result-avaliacao")
-    public String pageResultAvaliacao(Model model, HttpServletRequest request) {
-        return processRequest(request, "pages/avaliacao/result-avaliacao", "start-avaliacao");
+    @GetMapping("/result-form")
+    public String pageResultForm(Model model, HttpServletRequest request) {
+        return processRequest(request, "pages/form/result-form", "start-form");
     }
 
     private String processRequest(HttpServletRequest request, String page, String route) {

@@ -1,5 +1,6 @@
-const URL = "";
-const enviornment = "prod";
+const URL = ""
+const ApiURL = "/api";
+const enviornment = "dev";
 
 const mainContent = document.querySelector(".main-content");
 const allStyles = document.getElementById("allStyles");
@@ -34,45 +35,45 @@ const freeInputs = () => {
 
 function updateMenuButtons() {
     const userInfo = token ? jwt_decode(token) : null;
-    const cargo = userInfo ? userInfo.cargo : "Guest";
+    const role = userInfo ? userInfo.role : "Guest";
     
     const permissions = {
         "Admin": [],
         "Gestor": [],
-        "Consultor": ["funcionarios"],
-        "Guest": ["empresas", "funcionarios", "perguntas", "start-avaliacao"]
+        "Consultor": ["employees"],
+        "Guest": ["companies", "employees", "questions", "start-form"]
     };
     
     // Lista de todos os botões do menu
     const menuButtons = {
-        "empresas": document.querySelector('.menu li[page="empresas"]'),
-        "funcionarios": document.querySelector('.menu li[page="funcionarios"]'),
-        "perguntas": document.querySelector('.menu li[page="perguntas"]'),
-        "start-avaliacao": document.querySelector('.menu li[page="start-avaliacao"]'),
+        "companies": document.querySelector('.menu li[page="companies"]'),
+        "employees": document.querySelector('.menu li[page="employees"]'),
+        "questions": document.querySelector('.menu li[page="questions"]'),
+        "start-form": document.querySelector('.menu li[page="start-form"]'),
     };
 
     // Itera sobre as permissões e esconde os botões necessários
     Object.keys(menuButtons).forEach(button => {
-        if (permissions[cargo] && permissions[cargo].includes(button)) {
+        if (permissions[role] && permissions[role].includes(button)) {
             menuButtons[button].style.display = 'none';
         } else {
             menuButtons[button].style.display = 'block';
         }
     });
 
-    const cadastroSubItems = document.querySelectorAll('.menu .sub-list li');
+    const subitemRegistration = document.querySelectorAll('.menu .sub-list li');
     let allHidden = true;
-    cadastroSubItems.forEach(item => {
+    subitemRegistration.forEach(item => {
         if (item.style.display !== 'none') {
             allHidden = false;
         }
     });
 
-    const cadastroItem = document.querySelector('.menu .main-list > li:first-child');
+    const itemRegistration = document.querySelector('.menu .main-list > li:first-child');
     if (allHidden) {
-        cadastroItem.style.display = 'none';
+        itemRegistration.style.display = 'none';
     } else {
-        cadastroItem.style.display = 'block';
+        itemRegistration.style.display = 'block';
     }
 }
 
@@ -87,23 +88,23 @@ function loadSelectedPageScript(page, props) {
         case "ranking":
             onOpenRanking();
             break;
-        case "start-avaliacao":
-            onOpenSelecaoEmpresa();
+        case "start-form":
+            onOpenStartForm();
             break;
-        case "avaliacao":
-            onOpenAvaliacao(props);
+        case "form":
+            onOpenForm(props);
             break;
-        case "result-avaliacao":
-            onOpenResultAvaliacao(props);
+        case "result-form":
+            onOpenResultForm(props);
             break;
-        case "empresas":
-            onOpenEmpresa();
+        case "companies":
+            onOpenCompany();
             break;
-        case "funcionarios":
-            onOpenFuncionario();
+        case "employees":
+            onOpenEmployee();
             break;
-        case "perguntas":
-            onOpenPerguntas();
+        case "questions":
+            onOpenQuestion();
             break;
         default:
             break;
@@ -146,7 +147,7 @@ function getMainFrameContent(page, props, addToHistory = true) {
                 } else if (response.status === 403) {
                     toastAlert("Você não tem permissão para acessar essa página", "error");
                 } else {
-                    toastAlert("Erro ao acessar tela", "error");
+                    toastAlert("Erro ao acessar a tela", "error");
                 }
                 throw new Error(`Erro ao recuperar tela: ${page}`);
             }
@@ -155,7 +156,7 @@ function getMainFrameContent(page, props, addToHistory = true) {
         .then(data => {
             allMenuButtons.forEach(button => button.classList.remove("active"));
 
-            if (page !== 'login' && page !== 'avaliacao' && page !== 'result-avaliacao' && page !== 'forgot-password') {
+            if (page !== 'login' && page !== 'form' && page !== 'result-form' && page !== 'forgot-password') {
                 const selectedButton = document.querySelector(`.menu li[page="${page}"]`);
                 selectedButton.classList.add("active");
             }
@@ -274,8 +275,8 @@ function confirmationModal({ title, message, confirmText = "Confirmar", cancelTe
     }
 }
 
-function exportPDF(empresaId, nomeFantasia) {
-    fetch(`${URL}/pdf/getPdf/${empresaId}`, options)
+function exportPDF(companyId, tradeName) {
+    fetch(`${ApiURL}/pdf/${companyId}`, options)
     .then(response => {
         if (!response.ok) {
             throw new Error('Erro ao baixar PDF');

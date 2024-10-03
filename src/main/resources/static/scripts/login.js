@@ -15,7 +15,7 @@ const login = async () => {
     const login = document.querySelector('#user').value;
     const password = document.querySelector('#password').value;
 
-    await fetch(`${URL}/login`, {
+    await fetch(`${ApiURL}/login`, {
         method: 'POST',
         headers,
         body: JSON.stringify({ login, password })
