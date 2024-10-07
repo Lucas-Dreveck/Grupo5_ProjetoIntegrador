@@ -89,8 +89,8 @@
     align-self: end;
 }
 
-.content-container .side-content .ramo-dropdown,
-.content-container .side-content .porte-dropdown {
+.content-container .side-content .segment-dropdown,
+.content-container .side-content .companySize-dropdown {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,8 +103,8 @@
     border-color: 2px solid var(--main-blue);
 }
 
-.content-container .side-content .ramo-dropdown select,
-.content-container .side-content .porte-dropdown select {
+.content-container .side-content .segment-dropdown select,
+.content-container .side-content .companySize-dropdown select {
     text-align: center;
     padding: 10px;
     border-radius: 5px;

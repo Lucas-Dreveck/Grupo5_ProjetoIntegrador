@@ -15,146 +15,146 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ambientese.grupo5.DTO.FormularioRequest;
+import com.ambientese.grupo5.DTO.EvaluationRequest;
 import com.ambientese.grupo5.Model.*;
 import com.ambientese.grupo5.Model.Enums.*;
 import com.ambientese.grupo5.Repository.*;
-import com.ambientese.grupo5.Services.FormulariosService.ProcessarFormularioService;
+import com.ambientese.grupo5.Services.EvaluationService;
 import com.github.javafaker.Faker;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
     @Autowired
-    private UsuarioRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private CompanyRepository companyRepository;
 
     @Autowired
-    private CargoRepository cargoRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    private FuncionarioRepository funcionarioRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    private PerguntasRepository perguntasRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    private ProcessarFormularioService processarFormularioService;
+    private EvaluationService evaluationService;
 
     private final Faker faker = new Faker(new Locale("pt-BR"));
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        UsuarioModel rootUser = userRepository.findByLogin("root");
+        UserModel rootUser = userRepository.findByLogin("root");
 
         if (rootUser == null) {
             int numberToGenerate = 60;
 
-            // Popular tabela endereco e empresa
+            // Populate address and company tables
             for (int i = 0; i < numberToGenerate; i++) {
-                EmpresaModel empresa = new EmpresaModel();
-                empresa.setNomeFantasia(getRandomNomeFantasia());
-                empresa.setNomeSolicitante(faker.name().fullName());
+                CompanyModel company = new CompanyModel();
+                company.setTradeName(getRandomTradeName());
+                company.setApplicantsName(faker.name().fullName());
                 String cellPhone = faker.phoneNumber().cellPhone();
                 if (cellPhone.length() > 15) {
                     cellPhone = cellPhone.substring(0, 15);
                 }
-                empresa.setTelefoneSolicitante(cellPhone);
-                empresa.setRazaoSocial(faker.company().name());
-                empresa.setCnpj(faker.number().digits(14));
-                empresa.setInscricaoSocial(faker.number().digits(20));
-                empresa.setEmail(faker.internet().emailAddress());
-                String telefone = faker.phoneNumber().phoneNumber();
-                if (telefone.length() > 15) {
-                    telefone = telefone.substring(0, 15);
+                company.setApplicantsPhone(cellPhone);
+                company.setCompanyName(faker.company().name());
+                company.setCnpj(faker.number().digits(14));
+                company.setSocialInscription(faker.number().digits(20));
+                company.setEmail(faker.internet().emailAddress());
+                String phone = faker.phoneNumber().phoneNumber();
+                if (phone.length() > 15) {
+                    phone = phone.substring(0, 15);
                 }
-                empresa.setTelefoneEmpresas(telefone);
-                empresa.setRamo(getRandomRamo());
-                empresa.setPorteEmpresas(getRandomPorte());
+                company.setCompanyPhone(phone);
+                company.setSegment(getRandomSegment());
+                company.setCompanySize(getRandomCompanySize());
 
-                EnderecoModel endereco = new EnderecoModel();
-                endereco.setCep(faker.address().zipCode());
-                endereco.setNumero(faker.number().numberBetween(1, 1000));
-                endereco.setLogradouro(faker.address().streetName());
-                endereco.setComplemento(faker.address().secondaryAddress());
-                endereco.setCidade(faker.address().cityName());
-                endereco.setBairro(faker.address().streetName());
-                endereco.setUF(faker.address().stateAbbr());
+                AddressModel address = new AddressModel();
+                address.setCep(faker.address().zipCode());
+                address.setNumber(faker.number().numberBetween(1, 1000));
+                address.setPatio(faker.address().streetName());
+                address.setComplement(faker.address().secondaryAddress());
+                address.setCity(faker.address().cityName());
+                address.setNeighborhood(faker.address().streetName());
+                address.setUF(faker.address().stateAbbr());
 
-                empresa.setEndereco(endereco);
+                company.setAddres(address);
 
-                empresaRepository.save(empresa);
+                companyRepository.save(company);
             }
 
-            // Popular tabela de cargos
-            CargoModel cargoGestor = new CargoModel();
-            cargoGestor.setDescricao("Gestor");
-            cargoGestor = cargoRepository.save(cargoGestor);
+            // Populate role table
+            RoleModel managerRole = new RoleModel();
+            managerRole.setDescription("Gestor");
+            managerRole = roleRepository.save(managerRole);
 
-            CargoModel cargoConsultor = new CargoModel();
-            cargoConsultor.setDescricao("Consultor");
-            cargoConsultor = cargoRepository.save(cargoConsultor);
+            RoleModel consultantRole = new RoleModel();
+            consultantRole.setDescription("Consultor");
+            consultantRole = roleRepository.save(consultantRole);
 
-            // Popular tabela de funcionarios
+            // Populate employee table
             for (int i = 0; i < numberToGenerate; i++) {
-                UsuarioModel usuario = new UsuarioModel();
-                usuario.setLogin(i == 0 ? "Gestor" : i == 1 ? "Consultor" : faker.name().username());
-                usuario.setPassword(BCrypt.hashpw(i == 0 ? "gestor" : i == 1 ? "consultor" : faker.internet().password(), BCrypt.gensalt()));
-                usuario.setIsAdmin(false);
-                usuario = userRepository.save(usuario);
+                UserModel user = new UserModel();
+                user.setLogin(i == 0 ? "Gestor" : i == 1 ? "Consultor" : faker.name().username());
+                user.setPassword(BCrypt.hashpw(i == 0 ? "gestor" : i == 1 ? "consultor" : faker.internet().password(), BCrypt.gensalt()));
+                user.setIsAdmin(false);
+                user = userRepository.save(user);
 
-                FuncionarioModel funcionario = new FuncionarioModel();
-                funcionario.setUsuario(usuario);
-                funcionario.setNome(faker.name().fullName());
-                funcionario.setCpf(faker.regexify("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}"));
-                funcionario.setEmail(i == 0 ? "Gestor@test.com" : i == 1 ? "Consultor@test.com" : faker.internet().emailAddress());
+                EmployeeModel employee = new EmployeeModel();
+                employee.setUser(user);
+                employee.setName(faker.name().fullName());
+                employee.setCpf(faker.regexify("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}"));
+                employee.setEmail(i == 0 ? "Gestor@test.com" : i == 1 ? "Consultor@test.com" : faker.internet().emailAddress());
 
-                // Converter Date para LocalDate
+                // Convert date to localDate
                 Date birthday = faker.date().birthday();
                 LocalDate localDate = birthday.toInstant()
                                             .atZone(ZoneId.systemDefault())
                                             .toLocalDate();
-                funcionario.setDataNascimento(localDate);
-                funcionario.setCargo(i == 0 ? cargoGestor : cargoConsultor);
+                employee.setBirthDate(localDate);
+                employee.setRole(i == 0 ? managerRole : consultantRole);
 
-                funcionarioRepository.save(funcionario);
+                employeeRepository.save(employee);
             }
 
-            // Popular tabela de perguntas
-            for (EixoEnum eixo : EixoEnum.values()) {
-                String[] perguntasArray;
-                switch (eixo) {
+            // Populate question table
+            for (PillarEnum pillar : PillarEnum.values()) {
+                String[] questions;
+                switch (pillar) {
                     case Ambiental:
-                        perguntasArray = perguntasAmbiental;
+                        questions = enviornmentalQuestions;
                         break;
                     case Social:
-                        perguntasArray = perguntasSocial;
+                        questions = socialQuestions;
                         break;
                     case Governamental:
-                        perguntasArray = perguntasGovernamental;
+                        questions = governmentQuestions;
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + eixo);
+                        throw new IllegalStateException("Unexpected value: " + pillar);
                 }
-                for (int i = 0; i < perguntasArray.length; i++) {
-                    PerguntasModel pergunta = new PerguntasModel();
-                    pergunta.setDescricao(perguntasArray[i]);
-                    pergunta.setEixo(eixo);
-                    perguntasRepository.save(pergunta);
+                for (int i = 0; i < questions.length; i++) {
+                    QuestionModel question = new QuestionModel();
+                    question.setDescription(questions[i]);
+                    question.setPillar(pillar);
+                    questionRepository.save(question);
                 }
             }
 
-            // Popular tabela de formulários utilizando o serviço ProcessarFormularioService
-            List<EmpresaModel> empresas = empresaRepository.findAll();
-            for (EmpresaModel empresa : empresas) {
-                List<FormularioRequest> formularioRequests = generateFormularioRequests();
-                processarFormularioService.criarFormularioCompleto(empresa.getId(), formularioRequests);
+            // Populate evaluation table with evaluationService
+            List<CompanyModel> companies = companyRepository.findAll();
+            for (CompanyModel company : companies) {
+                List<EvaluationRequest> evaluationRequests = generateEvaluationRequest();
+                evaluationService.createCompleteEvaluation(company.getId(), evaluationRequests);
             }
 
-            // Criação do usuário root
-            UsuarioModel newUser = new UsuarioModel();
+            // Create root user
+            UserModel newUser = new UserModel();
             newUser.setLogin("root");
             newUser.setPassword(BCrypt.hashpw("root", BCrypt.gensalt()));
             newUser.setIsAdmin(true);
@@ -186,87 +186,87 @@ public class InitialDataLoader implements CommandLineRunner {
         }
     }
 
-    private PorteEnum getRandomPorte() {
-        PorteEnum[] portes = PorteEnum.values();
-        int randomIndex = faker.random().nextInt(portes.length);
-        return portes[randomIndex];
+    private SizeEnum getRandomCompanySize() {
+        SizeEnum[] sizes = SizeEnum.values();
+        int randomIndex = faker.random().nextInt(sizes.length);
+        return sizes[randomIndex];
     }
 
-    private String getRandomRamo() {
-        int randomIndex = faker.number().numberBetween(0, ramos.length - 1);
-        return ramos[randomIndex];
+    private String getRandomSegment() {
+        int randomIndex = faker.number().numberBetween(0, segments.length - 1);
+        return segments[randomIndex];
     }
 
-    private List<FormularioRequest> generateFormularioRequests() {
-        List<FormularioRequest> formularioRequests = new ArrayList<>();
+    private List<EvaluationRequest> generateEvaluationRequest() {
+        List<EvaluationRequest> evaluationRequests = new ArrayList<>();
 
-        // Supondo que há 10 perguntas para cada eixo (Ambiental, Social, Governamental)
-        List<PerguntasModel> perguntasAmbientalList = perguntasRepository.findByEixo(EixoEnum.Ambiental);
-        List<PerguntasModel> perguntasSocialList = perguntasRepository.findByEixo(EixoEnum.Social);
-        List<PerguntasModel> perguntasGovernamentalList = perguntasRepository.findByEixo(EixoEnum.Governamental);
+        // Supondo que há 10 questions para cada pillar (Ambiental, Social, Governamental)
+        List<QuestionModel> enviornmentalQuestionsList = questionRepository.findByPillar(PillarEnum.Ambiental);
+        List<QuestionModel> socialQuestionsList = questionRepository.findByPillar(PillarEnum.Social);
+        List<QuestionModel> governmentQuestionsList = questionRepository.findByPillar(PillarEnum.Governamental);
 
-        List<PerguntasModel> perguntasSelecionadas = getRandomQuestions(perguntasAmbientalList, 10);
-        perguntasSelecionadas.addAll(getRandomQuestions(perguntasSocialList, 10));
-        perguntasSelecionadas.addAll(getRandomQuestions(perguntasGovernamentalList, 10));
+        List<QuestionModel> selectedQuestions = getRandomQuestions(enviornmentalQuestionsList, 10);
+        selectedQuestions.addAll(getRandomQuestions(socialQuestionsList, 10));
+        selectedQuestions.addAll(getRandomQuestions(governmentQuestionsList, 10));
 
-        for (PerguntasModel pergunta : perguntasSelecionadas) {
-            FormularioRequest request = new FormularioRequest();
-            request.setPerguntaId(pergunta.getId());
-            request.setPerguntaEixo(pergunta.getEixo());
-            request.setRespostaUsuario(getRespostaProbabilidade());
-            formularioRequests.add(request);
+        for (QuestionModel question : selectedQuestions) {
+            EvaluationRequest request = new EvaluationRequest();
+            request.setQuestionId(question.getId());
+            request.setQuestionPillar(question.getPillar());
+            request.setUserAnswer(getAnswerProbability());
+            evaluationRequests.add(request);
         }
 
-        return formularioRequests;
+        return evaluationRequests;
     }
 
-    private List<PerguntasModel> getRandomQuestions(List<PerguntasModel> perguntas, int numberOfQuestions) {
+    private List<QuestionModel> getRandomQuestions(List<QuestionModel> questions, int numberOfQuestions) {
         Random random = new Random();
-        List<PerguntasModel> randomQuestions = new ArrayList<>();
+        List<QuestionModel> randomQuestions = new ArrayList<>();
         List<Integer> selectedIndexes = new ArrayList<>();
     
-        while (randomQuestions.size() < numberOfQuestions && selectedIndexes.size() < perguntas.size()) {
-            int randomIndex = random.nextInt(perguntas.size());
+        while (randomQuestions.size() < numberOfQuestions && selectedIndexes.size() < questions.size()) {
+            int randomIndex = random.nextInt(questions.size());
             if (!selectedIndexes.contains(randomIndex)) {
                 selectedIndexes.add(randomIndex);
-                PerguntasModel randomQuestion = perguntas.get(randomIndex);
+                QuestionModel randomQuestion = questions.get(randomIndex);
                 randomQuestions.add(randomQuestion);
             }
         }
         return randomQuestions;
     }
     
-    private RespostasEnum getRespostaProbabilidade() {
-        int randomIndex = faker.random().nextInt(respostaProbabilidades.size());
-        return respostaProbabilidades.get(randomIndex);
+    private AnswersEnum getAnswerProbability() {
+        int randomIndex = faker.random().nextInt(answerProbability.size());
+        return answerProbability.get(randomIndex);
     }
     
-    private String getRandomNomeFantasia() {
-        int randomIndex = faker.number().numberBetween(0, nomesReaisEmpresas.length - 1);
-        String nomeFantasia = nomesReaisEmpresas[randomIndex];
-        nomesReaisEmpresas = ArrayUtils.removeElement(nomesReaisEmpresas, nomeFantasia);
-        return nomeFantasia;
+    private String getRandomTradeName() {
+        int randomIndex = faker.number().numberBetween(0, realCompanyNames.length - 1);
+        String tradeName = realCompanyNames[randomIndex];
+        realCompanyNames = ArrayUtils.removeElement(realCompanyNames, tradeName);
+        return tradeName;
     }
 
-    private List<RespostasEnum> gerarRespostaProbabilidades() {
-        List<RespostasEnum> probabilidades = new ArrayList<>();
+    private List<AnswersEnum> generateAnswerPobability() {
+        List<AnswersEnum> probabilities = new ArrayList<>();
         for (int i = 0; i < 45; i++) {
-            probabilidades.add(RespostasEnum.Conforme);
+            probabilities.add(AnswersEnum.Conforme);
         }
         for (int i = 0; i < 35; i++) {
-            probabilidades.add(RespostasEnum.NaoConforme);
+            probabilities.add(AnswersEnum.NaoConforme);
         }
         for (int i = 0; i < 20; i++) {
-            probabilidades.add(RespostasEnum.NaoSeAdequa);
+            probabilities.add(AnswersEnum.NaoSeAdequa);
         }
-        return probabilidades;
+        return probabilities;
     }
 
-    private static final String[] ramos = {
+    private static final String[] segments = {
         "Agricultura", "Automotivo", "Comércio", "Construção", "Educação", "Indústria", "Saúde", "Telecomunicações", "Transporte",
     };
 
-    private static String[] nomesReaisEmpresas = {
+    private static String[] realCompanyNames = {
         "Google", "Microsoft", "Apple", "Amazon", "Facebook", "IBM", "Intel", "Samsung", "Sony", "Coca-Cola",
         "PepsiCo", "Toyota", "Ford", "General Motors", "Volkswagen", "Siemens", "Procter & Gamble", "Johnson & Johnson",
         "Nestlé", "Unilever", "HP", "Dell", "Cisco", "Oracle", "Adobe", "Salesforce", "Tesla", "Netflix", "Uber",
@@ -275,9 +275,9 @@ public class InitialDataLoader implements CommandLineRunner {
         "Alibaba", "Tencent", "Baidu", "JD.com", "Berkshire Hathaway", "ExxonMobil", "Chevron", "Shell", "BP", "Total", "Aramco"
     };
 
-    private final List<RespostasEnum> respostaProbabilidades = gerarRespostaProbabilidades();
+    private final List<AnswersEnum> answerProbability = generateAnswerPobability();
 
-    private static final String[] perguntasAmbiental = {
+    private static final String[] enviornmentalQuestions = {
         "A empresa possui uma política ambiental clara e documentada?",
         "A empresa possui metas de redução de emissões de carbono?",
         "A empresa gerencia adequadamente seus resíduos sólidos?",
@@ -300,7 +300,7 @@ public class InitialDataLoader implements CommandLineRunner {
         "A empresa possui um compromisso com a restauração de ecossistemas afetados por suas operações?"
     };
 
-    private static final String[] perguntasSocial = {
+    private static final String[] socialQuestions = {
         "A empresa possui políticas de diversidade e inclusão?",
         "A empresa compromete-se com a saúde e segurança dos funcionários?",
         "A empresa oferece oportunidades de desenvolvimento e capacitação para os empregados?",
@@ -323,7 +323,7 @@ public class InitialDataLoader implements CommandLineRunner {
         "A empresa possui políticas de equilíbrio entre vida pessoal e profissional para os funcionários?"
     };
 
-    private static final String[] perguntasGovernamental = {
+    private static final String[] governmentQuestions = {
         "A empresa possui uma estratégia clara de sustentabilidade ambiental?",
         "A empresa integra considerações ambientais em seu planejamento estratégico?",
         "A empresa realiza auditorias ambientais regulares?",

@@ -28,11 +28,19 @@
   ~~~sh
   mvn spring-boot:run
   ~~~
-- Tudo pronto, as credencias base de acesso estarão no terminal e agora é só abrir o seu localhost:8080
-  
+- Tudo pronto, as credencias base de acesso estarão no terminal e agora é só abrir o seu [Localhost](http://localhost:8080/)
+- Caso deseje verificar as rotas e fazer testes mais aprofundados no back-end terá a seguinte rota [Swagger](http://localhost:8080/swagger-ui/index.html#/)
 
 ## Changelog
 Informações sobre as versões e mudanças do projeto.
+
+## Versão 2.1.0 - 2024-10-03
+### Adicionado
+- Inserido a dependência do Swagger com suas configurações para melhor documentação e visualização da API;
+- Inserido as dependências necessárias para telemetria da aplicação.
+### Refatorado
+- Padronizado todo o sistema para inglês, mantendo apenas a interface visual e pontos necessários em português;
+- Modificado estrutra de services, controllers e nome de rotas para melhor organização.
 
 ## Versão 2.0.0 - 2024-06-23
 ### Adicionado

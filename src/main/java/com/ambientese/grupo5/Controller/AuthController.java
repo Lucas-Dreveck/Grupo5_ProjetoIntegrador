@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.UsuarioLogin;
-import com.ambientese.grupo5.Services.UsuarioService.AuthService;
+import com.ambientese.grupo5.DTO.UserLogin;
+import com.ambientese.grupo5.Services.AuthService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -20,8 +20,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuarioLogin user) {
+    @PostMapping("/api/login")
+    public ResponseEntity<?> login(@RequestBody UserLogin user) {
         String token = authService.login(user.getLogin(), user.getPassword());
         if (token != null) {
             return ResponseEntity.ok(new TokenResponse(token));
@@ -30,12 +30,12 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/forgot-password")
+    @PostMapping("/api/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         return authService.forgotPassword(email);
     }
 
-    @PostMapping("/reset-password")
+    @PostMapping("/api/reset-password")
     public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String recoveryCode, @RequestParam String newPassword) {
         return authService.resetPassword(email, recoveryCode, newPassword);
     }

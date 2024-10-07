@@ -1,6 +1,6 @@
 const onOpenForgotPassword = () => {
-    const form = document.querySelector('#forgot');
-    form.addEventListener('submit', (event) => {
+    const evaluation = document.querySelector('#forgot');
+    evaluation.addEventListener('submit', (event) => {
         event.preventDefault();
         forgot();
     });
@@ -14,7 +14,7 @@ const onOpenForgotPassword = () => {
 const forgot = async () => {
     const email = document.querySelector('#email').value;
 
-    await fetch(`${URL}/forgot-password?email=${email}`, {
+    await fetch(`${ApiURL}/forgot-password?email=${email}`, {
         method: 'POST',
         headers,
     })
@@ -37,14 +37,14 @@ const forgot = async () => {
 }
 
 const goToNextStep = (email) => {
-    const form = document.querySelector('#forgot');
-    form.classList.add('hidden');
+    const evaluation = document.querySelector('#forgot');
+    evaluation.classList.add('hidden');
 
     const nextStep = document.querySelector('#recovery');
     nextStep.classList.remove('hidden');
 
-    const formRecovery = document.querySelector('#recovery');
-    formRecovery.addEventListener('submit', (event) => {
+    const evaluationRecovery = document.querySelector('#recovery');
+    evaluationRecovery.addEventListener('submit', (event) => {
         event.preventDefault();
         recovery(email);
     });
@@ -59,7 +59,7 @@ const recovery = async (email) => {
         toastAlert("Senhas não conferem", "error");
         return;
     }
-    await fetch(`${URL}/reset-password?email=${email}&recoveryCode=${recoveryCode}&newPassword=${password}`, {
+    await fetch(`${ApiURL}/reset-password?email=${email}&recoveryCode=${recoveryCode}&newPassword=${password}`, {
         method: 'POST',
         headers,
     })

@@ -1,0 +1,118 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+.evaluation-avaliation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: var(--white);
+    overflow-y: auto;
+}
+
+.questions-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: var(--white);
+    margin-bottom: 20px;
+}
+
+.questions-category h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.evaluation-question {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    border: 3px solid var(--main-blue);
+    margin-bottom: 40px;
+}
+
+.evaluation-question h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.evaluation-question label {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.evaluation-question .add-file {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-radius: 5px;
+}
+
+.evaluation-question .add-file .btn-file {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: var(--white);
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.evaluation-question .add-file .btn-file:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.evaluation-avaliation .btns {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.evaluation-avaliation .btn-next,
+.evaluation-avaliation .btn-prev,
+.evaluation-avaliation .btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--white);
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 20px;
+}
+
+.evaluation-avaliation .btn-next:hover,
+.evaluation-avaliation .btn-prev:hover,
+.evaluation-avaliation .btn-submit:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
