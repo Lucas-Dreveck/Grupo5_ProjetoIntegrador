@@ -43,8 +43,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeModel createEmployee (@RequestBody EmployeeRequest funcionarioModel) {
-        return employeeService.createEmployee(funcionarioModel);
+    public EmployeeModel createEmployee (@RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.createEmployee(employeeRequest);
     }
 
     @PutMapping("/{id}")
