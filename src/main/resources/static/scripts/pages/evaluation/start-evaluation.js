@@ -101,7 +101,7 @@ const onOpenStartEvaluation = () => {
             } else {
                 confirmationModal({
                     title: 'Atenção',
-                    message: 'A company selecionada já possui uma avaliação em andamento. Deseja iniciar uma nova avaliação ou continuar a avaliação existente?',
+                    message: 'A empresa selecionada já possui uma avaliação em andamento. Deseja iniciar uma nova avaliação ou continuar a avaliação existente?',
                     confirmText: 'Iniciar nova avaliação',
                     cancelText: 'Continuar avaliação',
                     haveCancel: false,
