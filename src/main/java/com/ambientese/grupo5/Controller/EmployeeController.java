@@ -31,6 +31,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable Long id) {
+        EmployeeModel employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
+    }
     @GetMapping("/search")
     public ResponseEntity<List<EmployeeRegistration>> findEmployees(
             @RequestParam(required = false) String name,

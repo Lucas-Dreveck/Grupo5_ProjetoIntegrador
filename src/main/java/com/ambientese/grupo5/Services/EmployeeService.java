@@ -113,4 +113,9 @@ public class EmployeeService {
         EmployeeModel employee = employeeRepository.findById(id).orElse(null);
         employeeRepository.delete(employee);
     }
+
+    public EmployeeModel getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new ValidationException("Funcionário não encontrado com o ID: " + id));
+    }
 }
