@@ -10,6 +10,7 @@ public class RankingEvaluation {
     private CertificateLevelEnum certificateLevel;
     private String segment;
     private SizeEnum size;
+    private String city;
     private Integer finalScore;
     private Integer socialScore;
     private Integer enviornmentalScore;
@@ -18,7 +19,7 @@ public class RankingEvaluation {
     
     public RankingEvaluation(long id, Integer ranking, String companyName, CertificateLevelEnum certificateLevel,
             String segment, SizeEnum size, Integer finalScore, Integer socialScore, Integer enviornmentalScore,
-            Integer governmentScore, Boolean finishList) {
+            Integer governmentScore, Boolean finishList, String city) {
         this.id = id;
         this.ranking = ranking;
         this.companyName = companyName;
@@ -30,6 +31,7 @@ public class RankingEvaluation {
         this.enviornmentalScore = enviornmentalScore;
         this.governmentScore = governmentScore;
         this.finishList = finishList;
+        this.city = city;
     }
 
     public long getId() {
@@ -80,6 +82,8 @@ public class RankingEvaluation {
         this.size = size;
     }
 
+    
+
     public Integer getFinalScore() {
         return finalScore;
     }
@@ -118,6 +122,14 @@ public class RankingEvaluation {
 
     public void setFinishList(Boolean finishList) {
         this.finishList = finishList;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
         

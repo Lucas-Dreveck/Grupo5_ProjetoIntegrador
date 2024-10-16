@@ -8,8 +8,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.DTO.RankingEvaluation;
-import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Model.Enums.SizeEnum;
+import com.ambientese.grupo5.Model.EvaluationModel;
 import com.ambientese.grupo5.Repository.CompanyRepository;
 import com.ambientese.grupo5.Repository.EvaluationRepository;
 import com.ambientese.grupo5.Specifications.EvaluationSpecifications;
@@ -76,7 +76,8 @@ public class RankingService {
                 evaluation.getSocialScore(),
                 evaluation.getEnviornmentalScore(),
                 evaluation.getGovernmentScore(),
-                end == filteredEvaluations.size()
+                end == filteredEvaluations.size(),
+                evaluation.getCompany().getAddres().getCity()
             )).collect(Collectors.toList());
 
         return result;
