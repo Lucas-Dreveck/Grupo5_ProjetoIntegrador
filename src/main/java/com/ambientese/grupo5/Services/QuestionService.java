@@ -92,4 +92,9 @@ public class QuestionService {
             return ResponseEntity.noContent().build();
         }
     }
+
+    public QuestionModel getQuestion(long id) {
+        return questionRepository.findById(id).orElseThrow(() ->
+            new IllegalArgumentException("Pergunta não encontrada"));
+    }
 }

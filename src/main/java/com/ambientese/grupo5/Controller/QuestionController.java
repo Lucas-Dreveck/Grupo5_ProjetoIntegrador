@@ -47,6 +47,11 @@ public class QuestionController {
         return ResponseEntity.ok(resultado);
     }
 
+    @GetMapping("search/id/{id}")
+    public QuestionModel getQuestion(@PathVariable long id) {
+        return questionService.getQuestion(id);
+    }
+
     @PostMapping
     public QuestionModel createQuestion(@RequestBody QuestionRequest request) {
         return questionService.createQuestion(request.getDescription(), request.getPillar());
