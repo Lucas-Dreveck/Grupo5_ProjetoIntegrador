@@ -41,47 +41,68 @@ public class EvaluationService {
 
     @Autowired
     private CompanyRepository companyRepository;
-
+    
     @Transactional
     public EvaluationResponse searchQuestionsInDb(Boolean isNewEvaluation, Long companyId) {
         if (isNewEvaluation) {
-            Random random = new Random();
-            Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
-            if (latestEvaluation.isPresent()) {
-                answerRepository.deleteAll(latestEvaluation.get().getAnswers());
-                evaluationRepository.delete(latestEvaluation.get());
-            }
-
-            List<QuestionModel> allQuestions = new ArrayList<>();
-            for (PillarEnum pillar : PillarEnum.values()) {
-                List<QuestionModel> questionsPillar = questionRepository.findByPillar(pillar);
-
-                Collections.shuffle(questionsPillar, random);
-
-                allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
-            }
-            if (allQuestions.size() != 30) {
-                throw new RuntimeException("Não foi possível encontrar o número necessário de questions");
-            }
-            return new EvaluationResponse(allQuestions, null);
+            return handleNewEvaluation(companyId);
         } else {
-            Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
-            if (latestEvaluation.isPresent()) {
-                List<EvaluationRequest> evaluationRequests = latestEvaluation.get().getAnswers().stream()
-                    .map(answer -> new EvaluationRequest(
-                        answer.getQuestion().getId(),
-                        answer.getQuestion().getDescription(),
-                        answer.getAnswer(),
-                        answer.getQuestion().getPillar(),
-                        latestEvaluation.get().getId()
-                    ))
-                    .collect(Collectors.toList());
-                return new EvaluationResponse(null, evaluationRequests);
-            } else {
-                throw new RuntimeException("Não foi possível encontrar o formulário");
-            }
+            return handleExistingEvaluation(companyId);
         }
     }
+    
+    private EvaluationResponse handleNewEvaluation(Long companyId) {
+        deleteIncompleteEvaluationIfExists(companyId);
+    
+        List<QuestionModel> selectedQuestions = selectQuestionsForEvaluation();
+        if (selectedQuestions.size() != 30) {
+            throw new RuntimeException("Não foi possível encontrar o número necessário de questions");
+        }
+    
+        return new EvaluationResponse(selectedQuestions, null);
+    }
+    
+    private void deleteIncompleteEvaluationIfExists(Long companyId) {
+        Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
+        if (latestEvaluation.isPresent()) {
+            answerRepository.deleteAll(latestEvaluation.get().getAnswers());
+            evaluationRepository.delete(latestEvaluation.get());
+        }
+    }
+    
+    private List<QuestionModel> selectQuestionsForEvaluation() {
+        List<QuestionModel> allQuestions = new ArrayList<>();
+        Random random = new Random();
+        for (PillarEnum pillar : PillarEnum.values()) {
+            List<QuestionModel> questionsPillar = questionRepository.findByPillar(pillar);
+            Collections.shuffle(questionsPillar, random);
+            allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
+        }
+        return allQuestions;
+    }
+    
+    private EvaluationResponse handleExistingEvaluation(Long companyId) {
+        Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
+        if (latestEvaluation.isPresent()) {
+            List<EvaluationRequest> evaluationRequests = createEvaluationRequests(latestEvaluation.get());
+            return new EvaluationResponse(null, evaluationRequests);
+        } else {
+            throw new RuntimeException("Não foi possível encontrar o formulário");
+        }
+    }
+    
+    private List<EvaluationRequest> createEvaluationRequests(EvaluationModel evaluation) {
+        return evaluation.getAnswers().stream()
+            .map(answer -> new EvaluationRequest(
+                answer.getQuestion().getId(),
+                answer.getQuestion().getDescription(),
+                answer.getAnswer(),
+                answer.getQuestion().getPillar(),
+                evaluation.getId()
+            ))
+            .collect(Collectors.toList());
+    }
+    
 
     @Transactional
     public EvaluationModel createEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList, Boolean isComplete) {
