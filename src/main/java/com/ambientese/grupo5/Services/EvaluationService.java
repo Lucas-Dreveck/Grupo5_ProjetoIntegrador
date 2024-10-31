@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.DTO.EvaluationRequest;
 import com.ambientese.grupo5.DTO.EvaluationResponse;
+import com.ambientese.grupo5.Exception.QuestionsNotFoundException;
 import com.ambientese.grupo5.Model.AnswerModel;
 import com.ambientese.grupo5.Model.CompanyModel;
 import com.ambientese.grupo5.Model.EvaluationModel;
@@ -61,7 +62,7 @@ public class EvaluationService {
                 allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
             }
             if (allQuestions.size() != 30) {
-                throw new RuntimeException("Não foi possível encontrar o número necessário de questions");
+                throw new QuestionsNotFoundException("Não foi possível encontrar o número necessário de questions");
             }
             return new EvaluationResponse(allQuestions, null);
         } else {
@@ -273,10 +274,10 @@ public class EvaluationService {
 
     private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList) {
         if (evaluationRequestList.size() != 30) {
-            throw new RuntimeException("Número de questions inválido");
+            throw new IllegalArgumentException("Número de questions inválido");
         }
         if (companyId == null) {
-            throw new RuntimeException("ID da company inválido");
+            throw new IllegalArgumentException("ID da company inválido");
         }
     }
 
