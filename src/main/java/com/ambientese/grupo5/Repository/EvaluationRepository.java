@@ -14,15 +14,15 @@ public interface EvaluationRepository extends JpaRepository<EvaluationModel, Lon
     @Query("""
         SELECT e 
         FROM EvaluationModel e 
-        INNER JOIN (
-            SELECT f2.company.id AS companyId, MAX(f2.id) AS maxId 
+        WHERE e.id = (
+            SELECT MAX(f2.id) 
             FROM EvaluationModel f2 
-            GROUP BY f2.company.id
-        ) subquery 
-        ON e.id = subquery.maxId
+            WHERE f2.company.id = e.company.id
+        )
         ORDER BY e.finalScore DESC
         """)
     List<EvaluationModel> findLatestByCompanyOrderByFinalScoreDesc();
+
 
 
     @Query("SELECT e FROM EvaluationModel e WHERE e.id IN (SELECT MAX(e2.id) FROM EvaluationModel e2 WHERE e2.company.id = :companyId GROUP BY e2.company.id)")
