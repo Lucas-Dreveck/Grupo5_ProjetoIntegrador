@@ -163,5 +163,9 @@
 		<sonar.exclusions>**/InitialDataLoader.java,**/View/**/*</sonar.exclusions>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
+		<sonar.java.test.binaries>${project.build.directory}/test-classes</sonar.java.test.binaries>
+		<sonar.tests>${project.basedir}/src/test/java</sonar.tests>
+		<sonar.sources>${project.basedir}/src/main/java</sonar.sources>
 	</properties>
 </project>
