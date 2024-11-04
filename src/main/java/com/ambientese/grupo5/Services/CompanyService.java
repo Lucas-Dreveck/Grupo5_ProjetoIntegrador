@@ -15,8 +15,8 @@ import com.ambientese.grupo5.model.EvaluationModel;
 import com.ambientese.grupo5.repository.AddressRepository;
 import com.ambientese.grupo5.repository.CompanyRepository;
 import com.ambientese.grupo5.repository.EvaluationRepository;
-import com.ambientese.grupo5.services.validations.Company.CNPJValidation;
-import com.ambientese.grupo5.services.validations.Company.MandatoryFieldsValidation;
+import com.ambientese.grupo5.services.validations.company.CNPJValidation;
+import com.ambientese.grupo5.services.validations.company.MandatoryFieldsValidation;
 
 import jakarta.transaction.Transactional;
 

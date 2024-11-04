@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.services.validations.Company;
+package com.ambientese.grupo5.services.validations.company;
 
 import com.ambientese.grupo5.dto.CompanyRequest;
 import com.ambientese.grupo5.exception.ValidationException;
