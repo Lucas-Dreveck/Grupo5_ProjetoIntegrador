@@ -72,12 +72,12 @@ public class RankingService {
                 evaluation.getCertificate(),
                 evaluation.getCompany().getSegment(),
                 evaluation.getCompany().getCompanySize(),
+                evaluation.getCompany().getAddres().getCity(),
                 evaluation.getFinalScore(),
                 evaluation.getSocialScore(),
                 evaluation.getEnviornmentalScore(),
                 evaluation.getGovernmentScore(),
-                end == filteredEvaluations.size(),
-                evaluation.getCompany().getAddres().getCity()
+                end == filteredEvaluations.size()
             )).collect(Collectors.toList());
 
         return result;

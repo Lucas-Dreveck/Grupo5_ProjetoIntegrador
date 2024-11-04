@@ -74,5 +74,18 @@ services:
     depends_on:
       - prometheus
 
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      SONARQUBE_JDBC_URL: jdbc:mysql://db:3306/sonar?createDatabaseIfNotExist=true&serverTimezone=UTC
+      SONARQUBE_JDBC_USERNAME: root
+      SONARQUBE_JDBC_PASSWORD: root
+    depends_on:
+      - db
+    
+  
 volumes:
   mysql-data:
