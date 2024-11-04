@@ -15,6 +15,9 @@
 	<description>Projeto Integrador 3° semestre - Ambiente-se - Grupo 5</description>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>SEU_TOKEN</sonar.login>
+		<sonar.exclusions>**/src/main/java/com/ambientese/grupo5/InitialDataLoader.java</sonar.exclusions>
 	</properties>
 
 	<dependencies>
