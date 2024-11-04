@@ -138,7 +138,7 @@ public class EvaluationService {
         return evaluationRepository.save(evaluationModel);
     }
 
-    private EvaluationModel replaceIncompleteEvaluationWithComplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
+    public EvaluationModel replaceIncompleteEvaluationWithComplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
         // Remover todas as answers antigas do formulário incompleto
         List<AnswerModel> oldAnswers = incompleteEvaluation.getAnswers();
         if (oldAnswers != null && !oldAnswers.isEmpty()) {
@@ -161,7 +161,7 @@ public class EvaluationService {
         return incompleteEvaluation;
     }
 
-    private EvaluationModel replaceIncompleteEvaluationWithIncomplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
+    public EvaluationModel replaceIncompleteEvaluationWithIncomplete(EvaluationModel incompleteEvaluation, List<EvaluationRequest> evaluationRequestList) {
         // Remover todas as answers antigas do formulário incompleto
         List<AnswerModel> oldAnswers = incompleteEvaluation.getAnswers();
         if (oldAnswers != null && !oldAnswers.isEmpty()) {
