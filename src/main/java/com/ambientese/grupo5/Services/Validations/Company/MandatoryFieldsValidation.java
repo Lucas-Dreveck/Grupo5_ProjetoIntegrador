@@ -1,8 +1,9 @@
-package com.ambientese.grupo5.Services.Validations.Company;
+package com.ambientese.grupo5.services.validations.Company;
 
-import com.ambientese.grupo5.DTO.CompanyRequest;
-import com.ambientese.grupo5.Exception.ValidationException;
-import com.ambientese.grupo5.Model.AddressModel;
+import com.ambientese.grupo5.dto.CompanyRequest;
+import com.ambientese.grupo5.exception.ValidationException;
+import com.ambientese.grupo5.model.AddressModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Services.EvaluationService;
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.services.EvaluationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

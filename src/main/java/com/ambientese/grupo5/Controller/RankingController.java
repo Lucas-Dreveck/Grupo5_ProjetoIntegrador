@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
-import com.ambientese.grupo5.DTO.RankingEvaluation;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
-import com.ambientese.grupo5.Services.RankingService;
+import com.ambientese.grupo5.dto.RankingEvaluation;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
+import com.ambientese.grupo5.services.RankingService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Filters;
+package com.ambientese.grupo5.filters;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ambientese.grupo5.Services       .JWTUtil;
+import com.ambientese.grupo5.services.JWTUtil;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import jakarta.servlet.FilterChain;

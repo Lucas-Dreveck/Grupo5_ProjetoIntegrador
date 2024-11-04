@@ -1,11 +1,12 @@
-package com.ambientese.grupo5.Model;
+package com.ambientese.grupo5.model;
 import java.util.Objects;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
+import com.ambientese.grupo5.model.enums.SizeEnum;
+
 import jakarta.persistence.*;
 
 @Entity

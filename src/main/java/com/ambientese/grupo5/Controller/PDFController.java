@@ -1,6 +1,6 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
-import com.ambientese.grupo5.Services.PDFService;
+import com.ambientese.grupo5.services.PDFService;
 import com.itextpdf.text.DocumentException;
 
 import io.swagger.v3.oas.annotations.tags.Tag;

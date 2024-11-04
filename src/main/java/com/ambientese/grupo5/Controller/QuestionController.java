@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.QuestionRegistration;
-import com.ambientese.grupo5.DTO.QuestionRequest;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Services.QuestionService;
+import com.ambientese.grupo5.dto.QuestionRegistration;
+import com.ambientese.grupo5.dto.QuestionRequest;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.services.QuestionService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

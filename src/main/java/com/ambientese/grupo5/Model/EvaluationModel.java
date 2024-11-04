@@ -1,6 +1,6 @@
-package com.ambientese.grupo5.Model;
+package com.ambientese.grupo5.model;
 
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;

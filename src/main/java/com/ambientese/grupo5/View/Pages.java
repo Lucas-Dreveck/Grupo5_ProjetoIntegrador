@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.View;
+package com.ambientese.grupo5.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
