@@ -159,7 +159,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>squ_5e9e074605bd395649acd553a48011d8ad5fc347</sonar.login>
+		<sonar.login>SEU_TOKEN</sonar.login>
 		<sonar.exclusions>**/InitialDataLoader.java,**/View/**/*</sonar.exclusions>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
