@@ -7,7 +7,6 @@ import com.ambientese.grupo5.Services.RankingService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +21,11 @@ import java.util.List;
 @Tag(name = "Ranking", description = "Endpoints para gerenciamento de rankings")
 public class RankingController {
 
-    @Autowired
-    private RankingService rankingService;
+    private final RankingService rankingService;
+
+    public RankingController(RankingService rankingService) {
+        this.rankingService = rankingService;
+    }
 
     @GetMapping("/score")
     public ResponseEntity<List<RankingEvaluation>> sortByScore(

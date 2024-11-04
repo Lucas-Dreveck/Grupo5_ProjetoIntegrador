@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.DTO.EvaluationRequest;
@@ -30,17 +29,21 @@ import jakarta.transaction.Transactional;
 @Service
 public class EvaluationService {
 
-    @Autowired
-    private EvaluationRepository evaluationRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
+    public EvaluationService(EvaluationRepository evaluationRepository,
+                             QuestionRepository questionRepository,
+                             AnswerRepository answerRepository,
+                             CompanyRepository companyRepository) {
+        this.evaluationRepository = evaluationRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.companyRepository = companyRepository;
+    }
 
     @Transactional
     public EvaluationResponse searchQuestionsInDb(Boolean isNewEvaluation, Long companyId) {

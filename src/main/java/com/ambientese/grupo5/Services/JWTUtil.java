@@ -11,17 +11,18 @@ import jakarta.annotation.PostConstruct;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JWTUtil {
     private Algorithm algorithm;
     private JWTVerifier verifier;
+    private final JWTConfig jwtConfig;
 
-    @Autowired
-    private JWTConfig jwtConfig;
-
+    public JWTUtil(JWTConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
+    
     @PostConstruct
     public void init() {
         String secret = jwtConfig.getJwtSecret();

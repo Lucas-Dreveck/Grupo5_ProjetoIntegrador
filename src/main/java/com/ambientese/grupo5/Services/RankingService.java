@@ -3,7 +3,6 @@ package com.ambientese.grupo5.Services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +18,14 @@ import jakarta.transaction.Transactional;
 @Service
 public class RankingService {
 
-    @Autowired
-    private EvaluationRepository evaluationRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    public RankingService(EvaluationRepository evaluationRepository, 
+                          CompanyRepository companyRepository) {
+        this.evaluationRepository = evaluationRepository;
+        this.companyRepository = companyRepository;
+    }
 
     @Transactional
     public List<RankingEvaluation> sortByScoreWithFilter(String tradeName, String segment, SizeEnum companySize, int page, int size) {

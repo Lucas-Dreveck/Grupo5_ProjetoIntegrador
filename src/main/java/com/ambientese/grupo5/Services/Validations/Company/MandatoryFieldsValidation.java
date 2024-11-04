@@ -3,23 +3,25 @@ package com.ambientese.grupo5.Services.Validations.Company;
 import com.ambientese.grupo5.DTO.CompanyRequest;
 import com.ambientese.grupo5.Exception.ValidationException;
 import com.ambientese.grupo5.Model.AddressModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MandatoryFieldsValidation {
 
-    @Autowired
-    private CNPJValidation cnpjValidation;
+    private final CNPJValidation cnpjValidation;
+    private final PhoneValidation phoneValidation;
+    private final CEPValidation cepValidation;
+    private final EmailValidation emailValidation;
 
-    @Autowired
-    private PhoneValidation phoneValidation;
-
-    @Autowired
-    private CEPValidation cepValidation;
-
-    @Autowired
-    private EmailValidation emailValidation;
+    public MandatoryFieldsValidation(CNPJValidation cnpjValidation,
+                                      PhoneValidation phoneValidation,
+                                      CEPValidation cepValidation,
+                                      EmailValidation emailValidation) {
+        this.cnpjValidation = cnpjValidation;
+        this.phoneValidation = phoneValidation;
+        this.cepValidation = cepValidation;
+        this.emailValidation = emailValidation;
+    }
 
     public void validateMandatoryFields(CompanyRequest companyRequest) {
         validateCompanyRequest(companyRequest);

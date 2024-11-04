@@ -3,7 +3,6 @@ package com.ambientese.grupo5.Services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.DTO.EmployeeRegistration;
@@ -20,17 +19,20 @@ import jakarta.transaction.Transactional;
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final RoleRepository roleRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           RoleRepository roleRepository,
+                           UserService userService,
+                           UserRepository userRepository) {
+        this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public List<EmployeeRegistration> allPagedEmployeesWithFilter(String name, int page, int size) {

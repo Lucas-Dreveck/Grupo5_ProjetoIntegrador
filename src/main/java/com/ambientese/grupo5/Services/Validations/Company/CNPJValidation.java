@@ -3,7 +3,6 @@ package com.ambientese.grupo5.Services.Validations.Company;
 import com.ambientese.grupo5.Exception.ValidationException;
 import com.ambientese.grupo5.Model.CompanyModel;
 import com.ambientese.grupo5.Repository.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class CNPJValidation {
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+
+    public CNPJValidation(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     public boolean isValidCnpj(String cnpj) {
         if (cnpj == null || cnpj.length() != 14) {
