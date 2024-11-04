@@ -13,12 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>grupo5</name>
 	<description>Projeto Integrador 3° semestre - Ambiente-se - Grupo 5</description>
-	<properties>
-		<java.version>17</java.version>
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>SEU_TOKEN</sonar.login>
-		<sonar.exclusions>**/src/main/java/com/ambientese/grupo5/InitialDataLoader.java</sonar.exclusions>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -133,7 +127,41 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-        </plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.11</version>
+				<configuration>
+					<excludes>
+						<exclude>**/InitialDataLoader.*</exclude>
+						<exclude>**/View/**/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 
+	<properties>
+		<java.version>17</java.version>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>squ_5e9e074605bd395649acd553a48011d8ad5fc347</sonar.login>
+		<sonar.exclusions>**/InitialDataLoader.java,**/View/**/*</sonar.exclusions>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+	</properties>
 </project>
