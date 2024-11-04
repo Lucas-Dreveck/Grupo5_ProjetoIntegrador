@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ambientese.grupo5.Exception.InsufficientQuestionsException;
+import com.ambientese.grupo5.Exception.InvalidCompanyIdException;
+import com.ambientese.grupo5.Exception.InvalidQuestionCountException;
 import com.ambientese.grupo5.DTO.EvaluationRequest;
 import com.ambientese.grupo5.DTO.EvaluationResponse;
 import com.ambientese.grupo5.Model.AnswerModel;
@@ -53,7 +56,7 @@ public class EvaluationService {
 
         List<QuestionModel> selectedQuestions = selectQuestionsForEvaluation();
         if (selectedQuestions.size() != REQUIRED_QUESTIONS) {
-            throw new RuntimeException("Número insuficiente de questões encontradas");
+            throw new InsufficientQuestionsException("Número insuficiente de questões encontradas");
         }
 
         return new EvaluationResponse(selectedQuestions, null);
@@ -165,10 +168,10 @@ public class EvaluationService {
 
     private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> requests) {
         if (requests.size() != REQUIRED_QUESTIONS) {
-            throw new RuntimeException("Número de questões inválido");
+            throw new InvalidQuestionCountException("Número de questões inválido");
         }
         if (companyId == null) {
-            throw new RuntimeException("ID da empresa inválido");
+            throw new InvalidCompanyIdException("ID da empresa inválido");
         }
     }
 
