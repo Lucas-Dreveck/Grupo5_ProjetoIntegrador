@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ambientese.grupo5.DTO.EvaluationRequest;
+import com.ambientese.grupo5.DTO.EvaluationResponse;
 import com.ambientese.grupo5.Exception.InsufficientQuestionsException;
 import com.ambientese.grupo5.Exception.InvalidCompanyIdException;
 import com.ambientese.grupo5.Exception.InvalidQuestionCountException;
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
 import com.ambientese.grupo5.Model.AnswerModel;
 import com.ambientese.grupo5.Model.CompanyModel;
 import com.ambientese.grupo5.Model.EvaluationModel;
@@ -28,9 +28,10 @@ import com.ambientese.grupo5.Repository.EvaluationRepository;
 import com.ambientese.grupo5.Repository.QuestionRepository;
 
 import jakarta.transaction.Transactional;
+
 @Service
 public class EvaluationService {
-
+    
     private static final int REQUIRED_QUESTIONS = 30;
     private static final int QUESTIONS_PER_PILLAR = 10;
 
@@ -56,7 +57,7 @@ public class EvaluationService {
 
         List<QuestionModel> selectedQuestions = selectQuestionsForEvaluation();
         if (selectedQuestions.size() != REQUIRED_QUESTIONS) {
-            throw new InsufficientQuestionsException("Número insuficiente de questões encontradas");
+            throw new InsufficientQuestionsException();
         }
 
         return new EvaluationResponse(selectedQuestions, null);
@@ -95,60 +96,95 @@ public class EvaluationService {
                 answer.getQuestion().getPillar(),
                 evaluation.getId()
             ))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Transactional
-    public EvaluationModel createEvaluation(Long companyId, List<EvaluationRequest> evaluationRequests, Boolean isComplete) {
-        return evaluationRepository.findIncompleteByCompanyId(companyId)
-            .map(existingEvaluation -> updateEvaluation(existingEvaluation, evaluationRequests, isComplete))
-            .orElseGet(() -> createNewEvaluation(companyId, evaluationRequests, isComplete));
+    public EvaluationModel createEvaluation(Long companyId, List<EvaluationRequest> evaluationRequests, boolean isComplete) {
+        Optional<EvaluationModel> incompleteEvaluationOpt = evaluationRepository.findIncompleteByCompanyId(companyId);
+
+        if (isComplete) {
+            validateCompleteEvaluation(companyId, evaluationRequests);
+            return incompleteEvaluationOpt
+                .map(evaluation -> replaceIncompleteEvaluationWithComplete(evaluation, evaluationRequests))
+                .orElseGet(() -> createCompleteEvaluation(companyId, evaluationRequests));
+        } else {
+            return incompleteEvaluationOpt
+                .map(evaluation -> replaceIncompleteEvaluationWithIncomplete(evaluation, evaluationRequests))
+                .orElseGet(() -> createIncompleteEvaluation(companyId, evaluationRequests));
+        }
     }
 
-    private EvaluationModel createNewEvaluation(Long companyId, List<EvaluationRequest> requests, boolean isComplete) {
+    private EvaluationModel createCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequests) {
+        CompanyModel company = companyRepository.findById(companyId)
+            .orElseThrow(InvalidCompanyIdException::new);
+
+        EvaluationModel evaluationModel = new EvaluationModel();
+        evaluationModel.setCompany(company);
+        evaluationModel = updateScores(evaluationModel, evaluationRequests);
+
+        List<AnswerModel> answers = createAnswers(evaluationModel, evaluationRequests);
+        answerRepository.saveAll(answers);
+        evaluationModel.setAnswers(answers);
+        evaluationRepository.save(evaluationModel);
+
+        updateRanking();
+
+        return evaluationModel;
+    }
+
+    private EvaluationModel createIncompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequests) {
         CompanyModel company = companyRepository.findById(companyId)
             .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
 
-        EvaluationModel evaluation = new EvaluationModel();
-        evaluation.setCompany(company);
-        evaluation.setAnswerDate(new Date());
-        evaluation = evaluationRepository.saveAndFlush(evaluation);
+        EvaluationModel evaluationModel = new EvaluationModel();
+        evaluationModel.setCompany(company);
+        evaluationModel.setAnswerDate(new Date());
+        evaluationModel = evaluationRepository.saveAndFlush(evaluationModel);
 
-        updateEvaluationAttributes(evaluation, requests, isComplete);
-
-        return evaluation;
-    }
-
-    private EvaluationModel updateEvaluation(EvaluationModel evaluation, List<EvaluationRequest> requests, boolean isComplete) {
-        clearExistingAnswers(evaluation);
-        updateEvaluationAttributes(evaluation, requests, isComplete);
-        return evaluation;
-    }
-
-    private void updateEvaluationAttributes(EvaluationModel evaluation, List<EvaluationRequest> requests, boolean isComplete) {
-        List<AnswerModel> answers = createAnswers(evaluation, requests);
+        List<AnswerModel> answers = createAnswers(evaluationModel, evaluationRequests);
         answerRepository.saveAll(answers);
-        evaluation.setAnswers(answers);
-        
-        if (isComplete) {
-            validateCompleteEvaluation(evaluation.getCompany().getId(), requests);
-            calculateAndSetScores(evaluation, requests);
-            updateRanking();
-        }
-        
-        evaluationRepository.save(evaluation);
+        evaluationModel.setAnswers(answers);
+
+        return evaluationRepository.save(evaluationModel);
+    }
+
+    private EvaluationModel replaceIncompleteEvaluationWithComplete(EvaluationModel evaluation, List<EvaluationRequest> evaluationRequests) {
+        clearExistingAnswers(evaluation);
+        updateScores(evaluation, evaluationRequests);
+        evaluation.setAnswerDate(new Date());
+
+        List<AnswerModel> newAnswers = createAnswers(evaluation, evaluationRequests);
+        answerRepository.saveAll(newAnswers);
+        evaluation.setAnswers(newAnswers);
+        evaluationRepository.saveAndFlush(evaluation);
+
+        updateRanking();
+
+        return evaluation;
+    }
+
+    private EvaluationModel replaceIncompleteEvaluationWithIncomplete(EvaluationModel evaluation, List<EvaluationRequest> evaluationRequests) {
+        clearExistingAnswers(evaluation);
+        evaluation.setAnswerDate(new Date());
+
+        List<AnswerModel> newAnswers = createAnswers(evaluation, evaluationRequests);
+        answerRepository.saveAll(newAnswers);
+        evaluation.setAnswers(newAnswers);
+
+        return evaluationRepository.saveAndFlush(evaluation);
     }
 
     private void clearExistingAnswers(EvaluationModel evaluation) {
         if (!evaluation.getAnswers().isEmpty()) {
-            answerRepository.deleteAll(evaluation.getAnswers());
             evaluation.setAnswers(new ArrayList<>());
             evaluationRepository.saveAndFlush(evaluation);
+            answerRepository.deleteAll(evaluation.getAnswers());
         }
     }
 
-    private List<AnswerModel> createAnswers(EvaluationModel evaluation, List<EvaluationRequest> requests) {
-        return requests.stream()
+    private List<AnswerModel> createAnswers(EvaluationModel evaluation, List<EvaluationRequest> evaluationRequests) {
+        return evaluationRequests.stream()
             .map(request -> {
                 QuestionModel question = questionRepository.findById(request.getQuestionId())
                     .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
@@ -166,12 +202,12 @@ public class EvaluationService {
         }
     }
 
-    private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> requests) {
-        if (requests.size() != REQUIRED_QUESTIONS) {
-            throw new InvalidQuestionCountException("Número de questões inválido");
+    private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequests) {
+        if (evaluationRequests.size() != REQUIRED_QUESTIONS) {
+            throw new InvalidQuestionCountException();
         }
         if (companyId == null) {
-            throw new InvalidCompanyIdException("ID da empresa inválido");
+            throw new InvalidCompanyIdException();
         }
     }
 
@@ -184,20 +220,25 @@ public class EvaluationService {
         return evaluationRepository.findById(id).orElse(null);
     }
 
-    private void calculateAndSetScores(EvaluationModel evaluation, List<EvaluationRequest> requests) {
-        ScoreCalculator calculator = new ScoreCalculator(requests);
-        evaluation.setFinalScore(calculator.getFinalScore());
-        evaluation.setSocialScore(calculator.getSocialScore());
-        evaluation.setEnviornmentalScore(calculator.getEnvironmentalScore());
-        evaluation.setGovernmentScore(calculator.getGovernmentScore());
-        evaluation.setCertificate(calculateCertificateLevel(calculator.getFinalScore()));
-        evaluation.setAnswerDate(new Date());
+    private EvaluationModel updateScores(EvaluationModel evaluationModel, List<EvaluationRequest> evaluationRequests) {
+        ScoreCalculator calculator = new ScoreCalculator(evaluationRequests);
+        evaluationModel.setFinalScore(calculator.getFinalScore());
+        evaluationModel.setSocialScore(calculator.getSocialScore());
+        evaluationModel.setEnviornmentalScore(calculator.getEnvironmentalScore());
+        evaluationModel.setGovernmentScore(calculator.getGovernmentScore());
+        evaluationModel.setCertificate(calculateCertificateLevel(calculator.getFinalScore()));
+        evaluationModel.setAnswerDate(new Date());
+        return evaluationRepository.saveAndFlush(evaluationModel);
     }
 
-    private CertificateLevelEnum calculateCertificateLevel(int finalScore) {
-        if (finalScore >= 100) return CertificateLevelEnum.Ouro;
-        if (finalScore >= 75.1) return CertificateLevelEnum.Prata;
-        return CertificateLevelEnum.Bronze;
+    private CertificateLevelEnum calculateCertificateLevel(double finalScore) {
+        if (finalScore >= 100) {
+            return CertificateLevelEnum.Ouro;
+        } else if (finalScore >= 75.1) {
+            return CertificateLevelEnum.Prata;
+        } else {
+            return CertificateLevelEnum.Bronze;
+        }
     }
 
     private static class ScoreCalculator {
@@ -211,7 +252,8 @@ public class EvaluationService {
             int compliant = 0;
 
             for (EvaluationRequest request : requests) {
-                if (request.getUserAnswer() == AnswersEnum.NaoSeAdequa) continue;
+                if (request.getUserAnswer() == null || request.getUserAnswer() == AnswersEnum.NaoSeAdequa) 
+                    continue;
 
                 totalValid++;
                 if (request.getUserAnswer() == AnswersEnum.Conforme) {
