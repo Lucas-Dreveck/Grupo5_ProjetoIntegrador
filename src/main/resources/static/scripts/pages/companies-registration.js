@@ -62,14 +62,15 @@ function onOpenCompany() {
 
     document.querySelector('.tableCompany').addEventListener('click', (event) => {
 
-        const { currentApplicantsName, currentApplicantsPhone, currentTradeName,
+        const { currentLogo, currentApplicantsName, currentApplicantsPhone, currentTradeName,
             currentCompanyName, currentCnpj, currentInscription,
             currentEmail, currentCompanyPhone, currentCompanySize, currentSegment,
             currentCep, currentUf, currentNeighborhood, currentCity, currentNumber,
             currentStreet } = processEventCompanies(event);
-        if(event.target.classList.contains('imgEdit')) {
 
+        if(event.target.classList.contains('imgEdit')) {
             currentid = event.target.getAttribute('data-id');
+            document.getElementById('logoEdit').value = currentLogo;
             document.getElementById('tradeNameEdit').value = currentTradeName;
             document.getElementById('applicantsNameEdit').value = currentApplicantsName;
             document.getElementById('applicantsPhoneEdit').value = currentApplicantsPhone;
@@ -113,6 +114,7 @@ function onOpenCompany() {
     });
 
     document.getElementById('confirmAddCompany').addEventListener('click', () => {
+        const imageUrl = document.getElementById('logo').value;
         const tradeName = document.getElementById('tradeName').value;
         const applicantsName = document.getElementById('applicantsName').value;
         const applicantsPhone = document.getElementById('applicantsPhone').value;
@@ -142,6 +144,7 @@ function onOpenCompany() {
         }
 
         const data = {
+            imageUrl,
             tradeName,
             applicantsName,
             applicantsPhone,
@@ -186,6 +189,7 @@ function onOpenCompany() {
                 overlay.style.display = 'none';
                 nextDataPageCompanies();
                 currentPage = 0;
+                document.getElementById('logo').value = '';
                 document.getElementById('tradeName').value = '';
                 document.getElementById('applicantsName').value = '';
                 document.getElementById('applicantsPhone').value = '';
@@ -210,6 +214,7 @@ function onOpenCompany() {
     });
 
     document.getElementById('confirmEditCompany').addEventListener('click', () => {
+        const imageUrl = document.getElementById('logoEdit').value;
         const tradeName = document.getElementById('tradeNameEdit').value;
         const applicantsName = document.getElementById('applicantsNameEdit').value;
         const applicantsPhone = document.getElementById('applicantsPhoneEdit').value;
@@ -239,6 +244,7 @@ function onOpenCompany() {
         }
 
         const data = {
+            imageUrl,
             tradeName,
             applicantsName,
             applicantsPhone,
@@ -285,6 +291,7 @@ function onOpenCompany() {
                 nextDataPageCompanies();
                 divEdit.style.display = 'none';
                 overlay.style.display = 'none';
+                document.getElementById('logoEdit').value = '';
                 document.getElementById('tradeNameEdit').value = '';
                 document.getElementById('applicantsNameEdit').value = '';
                 document.getElementById('applicantsPhoneEdit').value = '';
@@ -371,6 +378,7 @@ function addTableLinesCompanies(data) {
     data.forEach((company, index) => {
         const newLine = document.createElement('tr');
 
+        company.tradeName=="Apple" && console.log(company);
         const colorClass = count % 2 === 0 ? 'blue' : '';
         count++;
 
@@ -385,6 +393,7 @@ function addTableLinesCompanies(data) {
             <td class="thStyle ${colorClass}">
                 <img src="/icons//Companies-Registration/edit.png" 
                     data-id="${company.id}"
+                    data-logo="${company.imageUrl}"
                     data-tradeName="${company.tradeName}"
                     data-applicantsName="${company.applicantsName}"
                     data-applicantsPhone="${company.applicantsPhone}"
@@ -415,6 +424,7 @@ function addTableLinesCompanies(data) {
 
 function processEventCompanies(event) {
     const currentid = event.target.getAttribute('data-id');
+    const currentLogo = event.target.getAttribute('data-logo');
     const currentTradeName = event.target.getAttribute('data-tradeName');
     const currentApplicantsName = event.target.getAttribute('data-applicantsName');
     const currentApplicantsPhone = event.target.getAttribute('data-applicantsPhone');
@@ -434,6 +444,7 @@ function processEventCompanies(event) {
 
     return {
         currentid,
+        currentLogo,
         currentTradeName,
         currentApplicantsName,
         currentApplicantsPhone,
