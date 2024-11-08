@@ -112,6 +112,7 @@ public class CompanyService {
         return companies.subList(start, end).stream()
                 .map(company -> new CompanyRegistration(
                         company.getId(),
+                        company.getImageUrl(),
                         company.getTradeName(),
                         company.getApplicantsName(),
                         company.getApplicantsPhone(),

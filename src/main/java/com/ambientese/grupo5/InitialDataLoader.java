@@ -56,6 +56,10 @@ public class InitialDataLoader implements CommandLineRunner {
             for (int i = 0; i < numberToGenerate; i++) {
                 CompanyModel company = new CompanyModel();
                 company.setTradeName(getRandomTradeName());
+                String name = "Apple";
+                if (company.getTradeName().equals(name)) {                    
+                    company.setImageUrl("https://t.ctcdn.com.br/aFp_I8ScTJJch32H29ImNebDEYU=/i489949.jpeg");
+                }
                 company.setApplicantsName(faker.name().fullName());
                 String cellPhone = faker.phoneNumber().cellPhone();
                 if (cellPhone.length() > 15) {

@@ -15,6 +15,8 @@ public class CompanyModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String imageUrl;
+
     @NotNull
     @NotBlank
     private String tradeName;
@@ -91,6 +93,14 @@ public class CompanyModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getTradeName() {
