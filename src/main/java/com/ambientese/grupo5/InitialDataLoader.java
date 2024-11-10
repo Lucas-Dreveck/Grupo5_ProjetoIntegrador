@@ -24,23 +24,27 @@ import com.github.javafaker.Faker;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
-    @Autowired
-    private EvaluationService evaluationService;
+    private final EvaluationService evaluationService;
+
+    public InitialDataLoader(UserRepository userRepository, CompanyRepository companyRepository, RoleRepository roleRepository,
+            EmployeeRepository employeeRepository, QuestionRepository questionRepository, EvaluationService evaluationService) {
+        this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
+        this.roleRepository = roleRepository;
+        this.employeeRepository = employeeRepository;
+        this.questionRepository = questionRepository;
+        this.evaluationService = evaluationService;
+    }
 
     private final Faker faker = new Faker(new Locale("pt-BR"));
 
