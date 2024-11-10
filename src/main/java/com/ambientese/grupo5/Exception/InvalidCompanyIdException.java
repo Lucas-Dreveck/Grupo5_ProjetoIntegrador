@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Exception;
+package com.ambientese.grupo5.exception;
 
 public class InvalidCompanyIdException extends RuntimeException {
     public InvalidCompanyIdException() {
