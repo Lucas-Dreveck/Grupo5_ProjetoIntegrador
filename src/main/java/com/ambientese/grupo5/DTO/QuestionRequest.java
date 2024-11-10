@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.DTO;
-
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
+package com.ambientese.grupo5.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.ambientese.grupo5.model.enums.PillarEnum;
 
 public class QuestionRequest {
     @NotNull

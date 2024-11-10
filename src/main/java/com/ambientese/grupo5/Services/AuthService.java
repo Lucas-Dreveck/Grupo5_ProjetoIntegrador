@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.Random;
 
@@ -10,10 +10,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.EmployeeRepository;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.EmployeeRepository;
+import com.ambientese.grupo5.repository.UserRepository;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service

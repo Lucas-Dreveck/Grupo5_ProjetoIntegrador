@@ -1,11 +1,11 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 
-import com.ambientese.grupo5.DTO.CompanyRegistration;
-import com.ambientese.grupo5.DTO.CompanyRequest;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Services.CompanyService;
+import com.ambientese.grupo5.dto.CompanyRegistration;
+import com.ambientese.grupo5.dto.CompanyRequest;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.services.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

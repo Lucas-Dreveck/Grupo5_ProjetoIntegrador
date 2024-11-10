@@ -1,7 +1,8 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
-import com.ambientese.grupo5.Model.QuestionModel;
 import java.util.List;
+
+import com.ambientese.grupo5.model.QuestionModel;
 
 public class EvaluationResponse {
     private List<QuestionModel> questions;

@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
 import java.time.LocalDate;
 
-import com.ambientese.grupo5.Model.RoleModel;
-import com.ambientese.grupo5.Model.UserModel;
+import com.ambientese.grupo5.model.RoleModel;
+import com.ambientese.grupo5.model.UserModel;
 
 public class EmployeeRegistration {
     private Long id;

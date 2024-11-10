@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,20 +11,19 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
-import com.ambientese.grupo5.Exception.QuestionsNotFoundException;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Repository.AnswerRepository;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Repository.QuestionRepository;
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.model.AnswerModel;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.AnswerRepository;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.repository.QuestionRepository;
 
 import jakarta.transaction.Transactional;
 

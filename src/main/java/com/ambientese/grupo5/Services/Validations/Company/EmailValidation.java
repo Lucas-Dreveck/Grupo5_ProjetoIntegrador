@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services.Validations.Company;
+package com.ambientese.grupo5.services.validations.company;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.RankingEvaluation;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Specifications.EvaluationSpecifications;
+import com.ambientese.grupo5.dto.RankingEvaluation;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.specifications.EvaluationSpecifications;
 
 import jakarta.transaction.Transactional;
 

@@ -15,11 +15,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.Model.*;
-import com.ambientese.grupo5.Model.Enums.*;
-import com.ambientese.grupo5.Repository.*;
-import com.ambientese.grupo5.Services.EvaluationService;
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.model.*;
+import com.ambientese.grupo5.model.enums.*;
+import com.ambientese.grupo5.repository.*;
+import com.ambientese.grupo5.services.EvaluationService;
 import com.github.javafaker.Faker;
 
 @Component
