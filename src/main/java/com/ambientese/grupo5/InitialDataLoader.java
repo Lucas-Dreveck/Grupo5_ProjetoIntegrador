@@ -153,7 +153,7 @@ public class InitialDataLoader implements CommandLineRunner {
             List<CompanyModel> companies = companyRepository.findAll();
             for (CompanyModel company : companies) {
                 List<EvaluationRequest> evaluationRequests = generateEvaluationRequest();
-                evaluationService.createCompleteEvaluation(company.getId(), evaluationRequests);
+                evaluationService.createEvaluation(company.getId(), evaluationRequests, true);
             }
 
             // Create root user
