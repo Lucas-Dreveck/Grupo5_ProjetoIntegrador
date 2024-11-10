@@ -1,12 +1,12 @@
 package com.ambientese.grupo5;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -224,12 +224,12 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
     private List<QuestionModel> getRandomQuestions(List<QuestionModel> questions, int numberOfQuestions) {
-        Random random = new Random();
+        SecureRandom secureRandom = new SecureRandom();
         List<QuestionModel> randomQuestions = new ArrayList<>();
         List<Integer> selectedIndexes = new ArrayList<>();
     
         while (randomQuestions.size() < numberOfQuestions && selectedIndexes.size() < questions.size()) {
-            int randomIndex = random.nextInt(questions.size());
+            int randomIndex = secureRandom.nextInt(questions.size());
             if (!selectedIndexes.contains(randomIndex)) {
                 selectedIndexes.add(randomIndex);
                 QuestionModel randomQuestion = questions.get(randomIndex);

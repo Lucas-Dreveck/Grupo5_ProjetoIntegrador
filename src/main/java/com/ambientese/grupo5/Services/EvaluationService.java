@@ -1,11 +1,11 @@
 package com.ambientese.grupo5.services;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public class EvaluationService {
     @Transactional
     public EvaluationResponse searchQuestionsInDb(Boolean isNewEvaluation, Long companyId) {
         if (isNewEvaluation) {
-            Random random = new Random();
+            SecureRandom secureRandom = new SecureRandom();
             Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
             if (latestEvaluation.isPresent()) {
                 answerRepository.deleteAll(latestEvaluation.get().getAnswers());
@@ -60,7 +60,7 @@ public class EvaluationService {
             for (PillarEnum pillar : PillarEnum.values()) {
                 List<QuestionModel> questionsPillar = questionRepository.findByPillar(pillar);
 
-                Collections.shuffle(questionsPillar, random);
+                Collections.shuffle(questionsPillar, secureRandom);
 
                 allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
             }
