@@ -54,7 +54,7 @@ function updateMenuButtons() {
 
     // Hide or show buttons based on permissions
     Object.keys(menuButtons).forEach(button => {
-        menuButtons[button]?.style.display = permissions[role]?.includes(button) ? 'none' : 'block';
+        menuButtons[button].style.display = permissions[role]?.includes(button) ? 'none' : 'block';
     });
 
     const subitemRegistration = document.querySelectorAll('.menu .sub-list li');
