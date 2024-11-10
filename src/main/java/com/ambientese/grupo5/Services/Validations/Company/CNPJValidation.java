@@ -1,8 +1,9 @@
-package com.ambientese.grupo5.Services.Validations.Company;
+package com.ambientese.grupo5.services.validations.company;
 
-import com.ambientese.grupo5.Exception.ValidationException;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Repository.CompanyRepository;
+import com.ambientese.grupo5.exception.ValidationException;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.repository.CompanyRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

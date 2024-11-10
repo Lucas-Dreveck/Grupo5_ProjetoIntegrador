@@ -1,11 +1,11 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
+import com.ambientese.grupo5.model.AnswerModel;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
 import com.itextpdf.text.DocumentException;
 
 import org.springframework.stereotype.Service;

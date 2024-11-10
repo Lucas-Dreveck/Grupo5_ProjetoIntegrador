@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.EmployeeRegistration;
-import com.ambientese.grupo5.DTO.EmployeeRequest;
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Services.EmployeeService;
+import com.ambientese.grupo5.dto.EmployeeRegistration;
+import com.ambientese.grupo5.dto.EmployeeRequest;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.services.EmployeeService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

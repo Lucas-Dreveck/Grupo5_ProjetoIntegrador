@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.UserLogin;
-import com.ambientese.grupo5.Services.AuthService;
+import com.ambientese.grupo5.dto.UserLogin;
+import com.ambientese.grupo5.services.AuthService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -288,17 +288,18 @@ function exportPDF(companyId, tradeName) {
 
 function frameSetup() {
     document.addEventListener("click", function(event) {
-        if (!sidebar.contains(event.target) && expandButton.classList.contains("active")) {
+        if (!sidebar?.contains(event.target) && expandButton?.classList.contains("active")) {
             expandButton.classList.remove("active");
-            menu.classList.remove("expanded");
+            menu?.classList.remove("expanded");
         }
     });
 
-    expandButton.addEventListener("click", expandButtonClicked);
-    menuItems.forEach(item => {
+    expandButton?.addEventListener("click", expandButtonClicked);
+
+    menuItems?.forEach(item => {
         const subList = item.nextElementSibling;
 
-        if (subList && subList.classList.contains('sub-list')) {
+        if (subList?.classList.contains('sub-list')) {
             item.addEventListener('click', () => subList.classList.toggle('show'));
 
             subList.querySelectorAll('li').forEach(subItem => subItem.addEventListener("click", menuButtonClicked));
@@ -307,7 +308,7 @@ function frameSetup() {
         }
     });
 
-    loginLogout.addEventListener("click", menuButtonClicked);
+    loginLogout?.addEventListener("click", menuButtonClicked);
     getMainFrameContent("ranking", null, false);
 }
 

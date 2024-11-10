@@ -1,6 +1,6 @@
-package com.ambientese.grupo5.Model;
+package com.ambientese.grupo5.model;
 
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;

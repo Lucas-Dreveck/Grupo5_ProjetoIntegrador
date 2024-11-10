@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,19 +10,20 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Repository.AnswerRepository;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Repository.QuestionRepository;
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.exception.QuestionsNotFoundException;
+import com.ambientese.grupo5.model.AnswerModel;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.AnswerRepository;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.repository.QuestionRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -64,7 +65,7 @@ public class EvaluationService {
                 allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
             }
             if (allQuestions.size() != 30) {
-                throw new RuntimeException("Não foi possível encontrar o número necessário de questions");
+                throw new QuestionsNotFoundException("Não foi possível encontrar o número necessário de questions");
             }
             return new EvaluationResponse(allQuestions, null);
         } else {
@@ -276,10 +277,10 @@ public class EvaluationService {
 
     private void validateCompleteEvaluation(Long companyId, List<EvaluationRequest> evaluationRequestList) {
         if (evaluationRequestList.size() != 30) {
-            throw new RuntimeException("Número de questions inválido");
+            throw new IllegalArgumentException("Número de questions inválido");
         }
         if (companyId == null) {
-            throw new RuntimeException("ID da company inválido");
+            throw new IllegalArgumentException("ID da company inválido");
         }
     }
 

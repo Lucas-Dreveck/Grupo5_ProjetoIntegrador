@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Services.UserService;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.services.UserService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;

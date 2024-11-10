@@ -1,6 +1,6 @@
-package com.ambientese.grupo5.Model;
+package com.ambientese.grupo5.model;
 
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;

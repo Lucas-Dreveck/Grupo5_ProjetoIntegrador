@@ -1,7 +1,5 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
-import com.ambientese.grupo5.Model.AddressModel;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
@@ -10,6 +8,9 @@ import jakarta.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.ambientese.grupo5.model.AddressModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class CompanyRequest {
 

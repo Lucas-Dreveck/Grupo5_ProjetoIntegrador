@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.UserRepository;
 
 @Service
 public class UserService {
