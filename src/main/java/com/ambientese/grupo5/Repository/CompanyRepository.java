@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.Repository;
+package com.ambientese.grupo5.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.ambientese.grupo5.Model.CompanyModel;
+import com.ambientese.grupo5.model.CompanyModel;
 
 import java.util.List;
 import java.util.Optional;

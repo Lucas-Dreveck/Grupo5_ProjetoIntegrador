@@ -1,12 +1,12 @@
-package com.ambientese.grupo5.DTO;
-
-import com.ambientese.grupo5.Model.UserModel;
+package com.ambientese.grupo5.dto;
 
 import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+
+import com.ambientese.grupo5.model.UserModel;
 
 public class EmployeeRequest {
 

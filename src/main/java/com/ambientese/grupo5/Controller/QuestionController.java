@@ -1,8 +1,7 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.QuestionRegistration;
-import com.ambientese.grupo5.DTO.QuestionRequest;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Services.QuestionService;
+import com.ambientese.grupo5.dto.QuestionRegistration;
+import com.ambientese.grupo5.dto.QuestionRequest;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.services.QuestionService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -27,8 +26,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Perguntas", description = "Endpoints para gerenciamento de perguntas")
 public class QuestionController {
    
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionService questionService;
+
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/{pillar}")
     public List<QuestionModel> listQuestionsPerPillar(@PathVariable PillarEnum pillar) {

@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Model.Enums;
+package com.ambientese.grupo5.model.enums;
 
 public enum AnswersEnum {
     Conforme,

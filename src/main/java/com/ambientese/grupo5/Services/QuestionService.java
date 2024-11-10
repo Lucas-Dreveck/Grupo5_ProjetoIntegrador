@@ -1,26 +1,28 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.QuestionRegistration;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Repository.AnswerRepository;
-import com.ambientese.grupo5.Repository.QuestionRepository;
+import com.ambientese.grupo5.dto.QuestionRegistration;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.AnswerRepository;
+import com.ambientese.grupo5.repository.QuestionRepository;
 
 @Service
 public class QuestionService {
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
-    @Autowired
-    private AnswerRepository answerRepository;
+    public QuestionService(QuestionRepository questionRepository, 
+                           AnswerRepository answerRepository) {
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+    }
 
     public List<QuestionModel> listQuestions() {
         return questionRepository.findAll();

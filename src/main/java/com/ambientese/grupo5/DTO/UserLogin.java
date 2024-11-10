@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
 public class UserLogin {
     private String login;

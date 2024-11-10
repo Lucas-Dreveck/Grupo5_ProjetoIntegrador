@@ -1,13 +1,12 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 
-import com.ambientese.grupo5.DTO.CompanyRegistration;
-import com.ambientese.grupo5.DTO.CompanyRequest;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Services.CompanyService;
+import com.ambientese.grupo5.dto.CompanyRegistration;
+import com.ambientese.grupo5.dto.CompanyRequest;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.services.CompanyService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +23,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Empresa", description = "Endpoints para gerenciamento de empresas")
 public class CompanyController {
     
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    public CompanyController(CompanyService companyService, CompanyRepository companyRepository) {
+        this.companyService = companyService;
+        this.companyRepository = companyRepository;
+    }
 
     @GetMapping
     public ResponseEntity<List<CompanyModel>> getAllCompanies() {

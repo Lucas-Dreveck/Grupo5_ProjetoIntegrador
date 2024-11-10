@@ -1,42 +1,44 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.CompanyRegistration;
-import com.ambientese.grupo5.DTO.CompanyRequest;
-import com.ambientese.grupo5.Exception.ValidationException;
-import com.ambientese.grupo5.Model.AddressModel;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Repository.AddressRepository;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Services.Validations.Company.CNPJValidation;
-import com.ambientese.grupo5.Services.Validations.Company.MandatoryFieldsValidation;
+import com.ambientese.grupo5.dto.CompanyRegistration;
+import com.ambientese.grupo5.dto.CompanyRequest;
+import com.ambientese.grupo5.exception.ValidationException;
+import com.ambientese.grupo5.model.AddressModel;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.repository.AddressRepository;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.services.validations.company.CNPJValidation;
+import com.ambientese.grupo5.services.validations.company.MandatoryFieldsValidation;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class CompanyService {
     
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+    private final AddressRepository addressRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final MandatoryFieldsValidation mandatoryFieldsValidation;
+    private final CNPJValidation cnpjValidation;
 
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private EvaluationRepository evaluationRepository;
-
-    @Autowired
-    private MandatoryFieldsValidation mandatoryFieldsValidation;
-
-    @Autowired
-    private CNPJValidation cnpjValidation;
+    public CompanyService(CompanyRepository companyRepository,
+                          AddressRepository addressRepository,
+                          EvaluationRepository evaluationRepository,
+                          MandatoryFieldsValidation mandatoryFieldsValidation,
+                          CNPJValidation cnpjValidation) {
+        this.companyRepository = companyRepository;
+        this.addressRepository = addressRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.mandatoryFieldsValidation = mandatoryFieldsValidation;
+        this.cnpjValidation = cnpjValidation;
+    }
 
     public List<CompanyModel> getAllCompanies() {
         return companyRepository.findAll();

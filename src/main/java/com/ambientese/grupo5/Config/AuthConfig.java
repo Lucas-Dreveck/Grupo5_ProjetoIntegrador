@@ -1,17 +1,19 @@
-package com.ambientese.grupo5.Config;
+package com.ambientese.grupo5.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ambientese.grupo5.Filters.AuthFilter;
-import com.ambientese.grupo5.Services.JWTUtil;
+import com.ambientese.grupo5.filters.AuthFilter;
+import com.ambientese.grupo5.services.JWTUtil;
 
 @Configuration
 public class AuthConfig {
-    @Autowired
-    private JWTUtil jwtUtil;
+    private final JWTUtil jwtUtil;
+
+    public AuthConfig(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Bean
     public FilterRegistrationBean<AuthFilter> authFilter() {

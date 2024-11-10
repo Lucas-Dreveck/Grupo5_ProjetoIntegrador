@@ -1,31 +1,30 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
-import com.ambientese.grupo5.Exception.InsufficientQuestionsException;
-import com.ambientese.grupo5.Exception.InvalidCompanyIdException;
-import com.ambientese.grupo5.Exception.InvalidQuestionCountException;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Repository.AnswerRepository;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Repository.QuestionRepository;
+import com.ambientese.grupo5.exception.InsufficientQuestionsException;
+import com.ambientese.grupo5.exception.InvalidCompanyIdException;
+import com.ambientese.grupo5.exception.InvalidQuestionCountException;
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.model.AnswerModel;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.AnswerRepository;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.repository.QuestionRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -35,17 +34,21 @@ public class EvaluationService {
     private static final int REQUIRED_QUESTIONS = 30;
     private static final int QUESTIONS_PER_PILLAR = 10;
 
-    @Autowired
-    private EvaluationRepository evaluationRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
+    public EvaluationService(EvaluationRepository evaluationRepository,
+                             QuestionRepository questionRepository,
+                             AnswerRepository answerRepository,
+                             CompanyRepository companyRepository) {
+        this.evaluationRepository = evaluationRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.companyRepository = companyRepository;
+    }
 
     @Transactional
     public EvaluationResponse searchQuestionsInDb(boolean isNewEvaluation, Long companyId) {
@@ -72,10 +75,10 @@ public class EvaluationService {
 
     private List<QuestionModel> selectQuestionsForEvaluation() {
         List<QuestionModel> allQuestions = new ArrayList<>();
-        Random random = new Random();
+        SecureRandom secureRandom = new SecureRandom();
         for (PillarEnum pillar : PillarEnum.values()) {
             List<QuestionModel> questionsPillar = questionRepository.findByPillar(pillar);
-            Collections.shuffle(questionsPillar, random);
+            Collections.shuffle(questionsPillar, secureRandom);
             allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), QUESTIONS_PER_PILLAR)));
         }
         return allQuestions;

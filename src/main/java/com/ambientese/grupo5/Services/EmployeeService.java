@@ -1,36 +1,38 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.DTO.EmployeeRegistration;
-import com.ambientese.grupo5.DTO.EmployeeRequest;
-import com.ambientese.grupo5.Exception.ValidationException;
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.EmployeeRepository;
-import com.ambientese.grupo5.Repository.RoleRepository;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.dto.EmployeeRegistration;
+import com.ambientese.grupo5.dto.EmployeeRequest;
+import com.ambientese.grupo5.exception.ValidationException;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.EmployeeRepository;
+import com.ambientese.grupo5.repository.RoleRepository;
+import com.ambientese.grupo5.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final RoleRepository roleRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           RoleRepository roleRepository,
+                           UserService userService,
+                           UserRepository userRepository) {
+        this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public List<EmployeeRegistration> allPagedEmployeesWithFilter(String name, int page, int size) {

@@ -1,7 +1,7 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
-import com.ambientese.grupo5.Model.AddressModel;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
+import com.ambientese.grupo5.model.AddressModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class CompanyRegistration {
     private Long id;

@@ -1,9 +1,10 @@
-package com.ambientese.grupo5.Repository;
+package com.ambientese.grupo5.repository;
 
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Model.QuestionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.PillarEnum;
 
 import java.util.List;
 

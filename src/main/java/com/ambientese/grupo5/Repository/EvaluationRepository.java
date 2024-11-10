@@ -1,10 +1,11 @@
-package com.ambientese.grupo5.Repository;
+package com.ambientese.grupo5.repository;
 
-import com.ambientese.grupo5.Model.EvaluationModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.ambientese.grupo5.model.EvaluationModel;
 
 import java.util.List;
 import java.util.Optional;
