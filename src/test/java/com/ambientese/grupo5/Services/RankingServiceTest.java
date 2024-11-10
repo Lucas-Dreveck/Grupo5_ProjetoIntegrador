@@ -1,7 +1,7 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.repository.EvaluationRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

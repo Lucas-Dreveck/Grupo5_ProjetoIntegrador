@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,15 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.AnswerId;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.AnswerModel;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.AnswerId;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
 import com.itextpdf.text.DocumentException;
 
 import java.util.ArrayList;

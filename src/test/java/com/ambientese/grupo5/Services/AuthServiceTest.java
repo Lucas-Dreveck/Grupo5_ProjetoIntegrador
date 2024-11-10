@@ -1,10 +1,10 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Model.RoleModel;
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.EmployeeRepository;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.model.RoleModel;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.EmployeeRepository;
+import com.ambientese.grupo5.repository.UserRepository;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

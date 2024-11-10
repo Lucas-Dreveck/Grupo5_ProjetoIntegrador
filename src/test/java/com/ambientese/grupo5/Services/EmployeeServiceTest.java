@@ -1,14 +1,14 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.DTO.EmployeeRegistration;
-import com.ambientese.grupo5.DTO.EmployeeRequest;
-import com.ambientese.grupo5.Exception.ValidationException;
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Model.RoleModel;
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.EmployeeRepository;
-import com.ambientese.grupo5.Repository.RoleRepository;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.dto.EmployeeRegistration;
+import com.ambientese.grupo5.dto.EmployeeRequest;
+import com.ambientese.grupo5.exception.ValidationException;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.model.RoleModel;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.EmployeeRepository;
+import com.ambientese.grupo5.repository.RoleRepository;
+import com.ambientese.grupo5.repository.UserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

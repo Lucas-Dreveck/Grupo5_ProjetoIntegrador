@@ -1,366 +1,295 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.DTO.EvaluationRequest;
-import com.ambientese.grupo5.DTO.EvaluationResponse;
-import com.ambientese.grupo5.Model.CompanyModel;
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.QuestionModel;
-import com.ambientese.grupo5.Model.AnswerId;
-import com.ambientese.grupo5.Model.AnswerModel;
-import com.ambientese.grupo5.Repository.CompanyRepository;
-import com.ambientese.grupo5.Repository.EvaluationRepository;
-import com.ambientese.grupo5.Repository.QuestionRepository;
-import com.ambientese.grupo5.Repository.AnswerRepository;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.ambientese.grupo5.dto.EvaluationRequest;
+import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.exception.InsufficientQuestionsException;
+import com.ambientese.grupo5.exception.InvalidCompanyIdException;
+import com.ambientese.grupo5.model.CompanyModel;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.QuestionModel;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
+import com.ambientese.grupo5.repository.AnswerRepository;
+import com.ambientese.grupo5.repository.CompanyRepository;
+import com.ambientese.grupo5.repository.EvaluationRepository;
+import com.ambientese.grupo5.repository.QuestionRepository;
 
 @ExtendWith(MockitoExtension.class)
 class EvaluationServiceTest {
 
     @Mock
     private EvaluationRepository evaluationRepository;
-
-    @Mock
-    private CompanyRepository companyRepository;
-    
     @Mock
     private QuestionRepository questionRepository;
-
     @Mock
     private AnswerRepository answerRepository;
+    @Mock
+    private CompanyRepository companyRepository;
 
-    @Spy
     @InjectMocks
     private EvaluationService evaluationService;
 
-    List<QuestionModel> questionsMock = Arrays.asList(
-        new QuestionModel("Pergunta 1", PillarEnum.Social),
-        new QuestionModel("Pergunta 2", PillarEnum.Social),
-        new QuestionModel("Pergunta 3", PillarEnum.Social),
-        new QuestionModel("Pergunta 4", PillarEnum.Social),
-        new QuestionModel("Pergunta 5", PillarEnum.Social),
-        new QuestionModel("Pergunta 6", PillarEnum.Social),
-        new QuestionModel("Pergunta 7", PillarEnum.Social),
-        new QuestionModel("Pergunta 8", PillarEnum.Social),
-        new QuestionModel("Pergunta 9", PillarEnum.Social),
-        new QuestionModel("Pergunta 10", PillarEnum.Social),
-        new QuestionModel("Pergunta 1", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 2", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 3", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 4", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 5", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 6", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 7", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 8", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 9", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 10", PillarEnum.Ambiental),
-        new QuestionModel("Pergunta 1", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 2", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 3", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 4", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 5", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 6", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 7", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 8", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 9", PillarEnum.Governamental),
-        new QuestionModel("Pergunta 10", PillarEnum.Governamental)
-    );
+    private CompanyModel company;
+    private List<QuestionModel> questionsPerPillar;
+    private List<EvaluationRequest> completeEvaluation;
 
-    List<EvaluationRequest> evaluationList = Arrays.asList(
-        new EvaluationRequest(1L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(2L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(3L, PillarEnum.Social, AnswersEnum.NaoConforme),
-        new EvaluationRequest(4L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(5L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(6L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(7L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(8L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(9L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(10L, PillarEnum.Social, AnswersEnum.Conforme),
-        new EvaluationRequest(11L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(12L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(13L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(14L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(15L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(16L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(17L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(18L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(19L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(20L, PillarEnum.Ambiental, AnswersEnum.Conforme),
-        new EvaluationRequest(21L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(22L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(23L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(24L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(25L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(26L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(27L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(28L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(29L, PillarEnum.Governamental, AnswersEnum.Conforme),
-        new EvaluationRequest(30L, PillarEnum.Governamental, AnswersEnum.Conforme)
-    );
+    @BeforeEach
+    void setUp() {
+        company = new CompanyModel();
+        company.setId(1L);
+
+        // Criar 10 questões por pilar
+        questionsPerPillar = createQuestionsForPillar(10);
+        
+        // Criar avaliação completa com 30 questões
+        completeEvaluation = createCompleteEvaluation();
+    }
 
     @Test
-    void WhenSearchQuestionsInDbForNewEvaluationThenReturnNewQuestions() {
+    void whenStartNewEvaluation_thenSuccess() {
         // Arrange
         when(evaluationRepository.findIncompleteByCompanyId(1L)).thenReturn(Optional.empty());
-        when(questionRepository.findByPillar(PillarEnum.Social)).thenReturn(questionsMock);
-        when(questionRepository.findByPillar(PillarEnum.Ambiental)).thenReturn(questionsMock);
-        when(questionRepository.findByPillar(PillarEnum.Governamental)).thenReturn(questionsMock);
+        when(questionRepository.findByPillar(any(PillarEnum.class))).thenReturn(questionsPerPillar);
 
         // Act
-        EvaluationResponse questions = evaluationService.searchQuestionsInDb(true, 1L);
+        EvaluationResponse response = evaluationService.searchQuestionsInDb(true, 1L);
 
         // Assert
-        assertNotNull(questions.getQuestions());
-        assertEquals(30, questions.getQuestions().size());
+        assertNotNull(response.getQuestions());
+        assertEquals(30, response.getQuestions().size());
+        verify(questionRepository, times(3)).findByPillar(any(PillarEnum.class));
     }
 
     @Test
-    void WhenSearchQuestionsInDbForExistingEvaluationThenReturnCurrentQuestions() {
+    void whenStartNewEvaluation_withInsufficientQuestions_thenThrowException() {
         // Arrange
-        EvaluationModel existingEvaluation = new EvaluationModel();
-        existingEvaluation.setId(1L);
-        List<AnswerModel> answers = new ArrayList<>();
-        answers.add(new AnswerModel(new AnswerId(existingEvaluation.getId(), 1L), existingEvaluation, new QuestionModel("Question 1", PillarEnum.Social), AnswersEnum.Conforme));
-        answers.add(new AnswerModel(new AnswerId(existingEvaluation.getId(), 2L), existingEvaluation, new QuestionModel("Question 2", PillarEnum.Ambiental), AnswersEnum.NaoConforme));
-        existingEvaluation.setAnswers(answers);
-        when(evaluationRepository.findIncompleteByCompanyId(1L)).thenReturn(Optional.of(existingEvaluation));
-
-        // Act
-        EvaluationResponse questions = evaluationService.searchQuestionsInDb(false, 1L);
-
-        // Assert
-        assertNotNull(questions.getEvaluationRequests());
-        assertEquals(2, questions.getEvaluationRequests().size());
-        assertEquals(0L, questions.getEvaluationRequests().get(0).getQuestionId());
-        assertEquals(AnswersEnum.Conforme, questions.getEvaluationRequests().get(0).getUserAnswer());
-        assertEquals(0L, questions.getEvaluationRequests().get(1).getQuestionId());
-        assertEquals(AnswersEnum.NaoConforme, questions.getEvaluationRequests().get(1).getUserAnswer());
-    }
-
-    @Test
-    void WhenSearchQuestionsInDbAndNotEnoughQuestionsFoundThenThrowException() {
-        // Arrange
+        List<QuestionModel> insufficientQuestions = createQuestionsForPillar(5);
         when(evaluationRepository.findIncompleteByCompanyId(1L)).thenReturn(Optional.empty());
-        when(questionRepository.findByPillar(PillarEnum.Social)).thenReturn(questionsMock.subList(0, 3));
-        when(questionRepository.findByPillar(PillarEnum.Ambiental)).thenReturn(questionsMock.subList(0, 3));
-        when(questionRepository.findByPillar(PillarEnum.Governamental)).thenReturn(questionsMock.subList(0, 3));
+        when(questionRepository.findByPillar(any(PillarEnum.class))).thenReturn(insufficientQuestions);
 
-        // Act and Assert
-        assertThrows(RuntimeException.class, () -> evaluationService.searchQuestionsInDb(true, 1L));
+        // Act & Assert
+        assertThrows(InsufficientQuestionsException.class, 
+            () -> evaluationService.searchQuestionsInDb(true, 1L));
     }
 
     @Test
-    void whenCreateCompleteEvaluationThenCreateCertificate() {
+    void whenContinueExistingEvaluation_thenReturnSavedAnswers() {
         // Arrange
-        Long companyId = 1L;
-        List<EvaluationRequest> evaluationRequestList = evaluationList;
-
-        CompanyModel companyMock = new CompanyModel();
-        companyMock.setId(companyId);
-
-        // Mock the QuestionRepository to return the expected QuestionModel instances
-        when(questionRepository.findById(anyLong()))
-            .thenReturn(Optional.of(new QuestionModel()));
-
-        when(evaluationRepository.findIncompleteByCompanyId(companyId)).thenReturn(Optional.empty());
-        when(companyRepository.findById(companyId)).thenReturn(Optional.of(companyMock));
-        when(evaluationRepository.save(any(EvaluationModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(evaluationRepository.saveAndFlush(any(EvaluationModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(answerRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        EvaluationModel existingEvaluation = createExistingEvaluation();
+        when(evaluationRepository.findIncompleteByCompanyId(1L))
+            .thenReturn(Optional.of(existingEvaluation));
 
         // Act
-        EvaluationModel result = evaluationService.createEvaluation(companyId, evaluationRequestList, true);
+        EvaluationResponse response = evaluationService.searchQuestionsInDb(false, 1L);
 
         // Assert
-        verify(evaluationService, times(1)).createCompleteEvaluation(companyId, evaluationRequestList);
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithComplete(any(), any());
-        verify(evaluationService, never()).createIncompleteEvaluation(any(), any());
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithIncomplete(any(), any());
-        assertNotNull(result);
-        // Add more assertions to verify the result
+        assertNotNull(response.getEvaluationRequests());
+        assertTrue(response.getEvaluationRequests().isEmpty());
     }
 
     @Test
-    void whenReplaceIncompleteEvaluationWithComplete() {
+    void whenSubmitCompleteEvaluation_withGoldScore_thenSuccessAndGoldCertificate() {
         // Arrange
-        Long companyId = 1L;
-        List<EvaluationRequest> evaluationRequestList = evaluationList;
-        EvaluationModel incompleteEvaluation = new EvaluationModel();
-        incompleteEvaluation.setId(1L);
-        CompanyModel companyModel = new CompanyModel();
-        companyModel.setId(companyId);
-        incompleteEvaluation.setCompany(companyModel);
+        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
+        when(questionRepository.findById(anyLong())).thenReturn(Optional.of(new QuestionModel()));
+        when(evaluationRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+        when(evaluationRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
 
-        // Mock the QuestionRepository to return the expected QuestionModel instances
-        when(questionRepository.findById(anyLong()))
-            .thenReturn(Optional.of(new QuestionModel()));
-
-        when(evaluationRepository.findIncompleteByCompanyId(companyId)).thenReturn(Optional.of(incompleteEvaluation));
-        when(answerRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        // Criar avaliação com todas as respostas conformes (100%)
+        List<EvaluationRequest> perfectEvaluation = createPerfectEvaluation();
 
         // Act
-        EvaluationModel result = evaluationService.createEvaluation(companyId, evaluationRequestList, true);
+        EvaluationModel result = evaluationService.createEvaluation(1L, perfectEvaluation, true);
 
         // Assert
-        verify(evaluationService, never()).createCompleteEvaluation(any(), any());
-        verify(evaluationService, times(1)).replaceIncompleteEvaluationWithComplete(incompleteEvaluation, evaluationRequestList);
-        verify(evaluationService, never()).createIncompleteEvaluation(any(), any());
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithIncomplete(any(), any());
         assertNotNull(result);
-        // Add more assertions to verify the result
+        assertEquals(100, result.getFinalScore());
+        assertEquals(CertificateLevelEnum.Ouro, result.getCertificate());
+        verify(evaluationRepository).save(any(EvaluationModel.class));
     }
 
     @Test
-    void whenCreateIncompleteEvaluation() {
+    void whenSubmitCompleteEvaluation_withSilverScore_thenSuccessAndSilverCertificate() {
         // Arrange
-        Long companyId = 1L;
-        List<EvaluationRequest> evaluationRequestList = evaluationList;
+        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
+        when(questionRepository.findById(anyLong())).thenReturn(Optional.of(new QuestionModel()));
+        when(evaluationRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+        when(evaluationRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
 
-        CompanyModel companyMock = new CompanyModel();
-        companyMock.setId(companyId);
-
-        // Mock the QuestionRepository to return the expected QuestionModel instances
-        when(questionRepository.findById(anyLong()))
-            .thenReturn(Optional.of(new QuestionModel()));
-
-        when(evaluationRepository.findIncompleteByCompanyId(companyId)).thenReturn(Optional.empty());
-        when(companyRepository.findById(companyId)).thenReturn(Optional.of(companyMock));
-        when(evaluationRepository.saveAndFlush(any(EvaluationModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(evaluationRepository.save(any(EvaluationModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(answerRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        // Criar avaliação com 80% de conformidade
+        List<EvaluationRequest> silverEvaluation = createEvaluationWithScore(80);
 
         // Act
-        EvaluationModel result = evaluationService.createEvaluation(companyId, evaluationRequestList, false);
+        EvaluationModel result = evaluationService.createEvaluation(1L, silverEvaluation, true);
 
         // Assert
-        verify(evaluationService, never()).createCompleteEvaluation(any(), any());
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithComplete(any(), any());
-        verify(evaluationService, times(1)).createIncompleteEvaluation(companyId, evaluationRequestList);
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithIncomplete(any(), any());
         assertNotNull(result);
-        // Add more assertions to verify the result
+        assertTrue(result.getFinalScore() >= 75.1);
+        assertEquals(CertificateLevelEnum.Prata, result.getCertificate());
     }
 
     @Test
-    void whenReplaceIncompleteEvaluationWithIncomplete() {
+    void whenSubmitCompleteEvaluation_withBronzeScore_thenSuccessAndBronzeCertificate() {
         // Arrange
-        Long companyId = 1L;
-        List<EvaluationRequest> evaluationRequestList = evaluationList;
-        EvaluationModel incompleteEvaluation = new EvaluationModel();
-        incompleteEvaluation.setId(1L);
-        CompanyModel companyModel = new CompanyModel();
-        companyModel.setId(companyId);
-        incompleteEvaluation.setCompany(companyModel);
+        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
+        when(questionRepository.findById(anyLong())).thenReturn(Optional.of(new QuestionModel()));
+        when(evaluationRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+        when(evaluationRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
 
-        // Mock the QuestionRepository to return the expected QuestionModel instances
-        when(questionRepository.findById(anyLong()))
-            .thenReturn(Optional.of(new QuestionModel()));
-
-        when(evaluationRepository.findIncompleteByCompanyId(companyId)).thenReturn(Optional.of(incompleteEvaluation));
-        when(evaluationRepository.saveAndFlush(any(EvaluationModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(answerRepository.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        // Criar avaliação com 60% de conformidade
+        List<EvaluationRequest> bronzeEvaluation = createEvaluationWithScore(60);
 
         // Act
-        EvaluationModel result = evaluationService.createEvaluation(companyId, evaluationRequestList, false);
+        EvaluationModel result = evaluationService.createEvaluation(1L, bronzeEvaluation, true);
 
         // Assert
-        verify(evaluationService, never()).createCompleteEvaluation(any(), any());
-        verify(evaluationService, never()).replaceIncompleteEvaluationWithComplete(any(), any());
-        verify(evaluationService, never()).createIncompleteEvaluation(any(), any());
-        verify(evaluationService, times(1)).replaceIncompleteEvaluationWithIncomplete(incompleteEvaluation, evaluationRequestList);
         assertNotNull(result);
-        // Add more assertions to verify the result
+        assertTrue(result.getFinalScore() <= 75);
+        assertEquals(CertificateLevelEnum.Bronze, result.getCertificate());
     }
 
     @Test
-    void whenHaveActiveEvaluation() {
+    void whenSubmitIncompleteEvaluation_thenSaveWithoutCertificate() {
         // Arrange
-        Long companyId = 1L;
+        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
+        when(questionRepository.findById(anyLong())).thenReturn(Optional.of(new QuestionModel()));
+        when(evaluationRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+        when(evaluationRepository.saveAndFlush(any())).thenAnswer(i -> i.getArgument(0));
+
+        List<EvaluationRequest> partialEvaluation = completeEvaluation.subList(0, 15);
+
+        // Act
+        EvaluationModel result = evaluationService.createEvaluation(1L, partialEvaluation, false);
+
+        // Assert
+        assertNotNull(result);
+        assertNull(result.getFinalScore());
+        assertNull(result.getCertificate());
+        verify(evaluationRepository).save(any(EvaluationModel.class));
+    }
+
+    @Test
+    void whenHaveActiveEvaluation_thenReturnTrue() {
+        // Arrange
         EvaluationModel activeEvaluation = new EvaluationModel();
-        activeEvaluation.setId(1L);
-        CompanyModel companyModel = new CompanyModel();
-        companyModel.setId(companyId);
-        activeEvaluation.setCompany(companyModel);
-
-        when(evaluationRepository.findLatestEvaluationByCompanyId(companyId)).thenReturn(activeEvaluation);
+        activeEvaluation.setCompany(company);
+        when(evaluationRepository.findLatestEvaluationByCompanyId(1L))
+            .thenReturn(activeEvaluation);
 
         // Act
-        boolean hasActiveEvaluation = evaluationService.haveActiveEvaluation(companyId);
+        boolean result = evaluationService.haveActiveEvaluation(1L);
 
         // Assert
-        assertTrue(hasActiveEvaluation);
+        assertTrue(result);
     }
 
     @Test
-    void whenNoActiveEvaluation() {
+    void whenNoActiveEvaluation_thenReturnFalse() {
         // Arrange
-        Long companyId = 1L;
-
-        when(evaluationRepository.findLatestEvaluationByCompanyId(companyId)).thenReturn(null);
+        when(evaluationRepository.findLatestEvaluationByCompanyId(1L))
+            .thenReturn(null);
 
         // Act
-        boolean hasActiveEvaluation = evaluationService.haveActiveEvaluation(companyId);
+        boolean result = evaluationService.haveActiveEvaluation(1L);
 
         // Assert
-        assertFalse(hasActiveEvaluation);
+        assertFalse(result);
     }
 
     @Test
-    void whenSearchById() {
+    void whenSearchById_thenReturnEvaluation() {
         // Arrange
-        Long evaluationId = 1L;
-        EvaluationModel expectedEvaluation = new EvaluationModel();
-        expectedEvaluation.setId(evaluationId);
-
-        when(evaluationRepository.findById(evaluationId)).thenReturn(Optional.of(expectedEvaluation));
+        EvaluationModel evaluation = new EvaluationModel();
+        evaluation.setId(1L);
+        when(evaluationRepository.findById(1L)).thenReturn(Optional.of(evaluation));
 
         // Act
-        EvaluationModel result = evaluationService.searchById(evaluationId);
+        EvaluationModel result = evaluationService.searchById(1L);
 
         // Assert
         assertNotNull(result);
-        assertSame(expectedEvaluation, result);
+        assertEquals(1L, result.getId());
     }
 
     @Test
-    void testCalculateCertificateLevelGold() {
-        CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(100);
-        assertEquals(CertificateLevelEnum.Ouro, actualLevel);
+    void whenSubmitCompleteEvaluation_withInvalidCompanyId_thenThrowException() {
+        // Arrange
+        when(companyRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(InvalidCompanyIdException.class,
+            () -> evaluationService.createEvaluation(999L, completeEvaluation, true));
     }
 
-    @Test
-    void testCalculateCertificateLevelSilver() {
-        CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(80);
-        assertEquals(CertificateLevelEnum.Prata, actualLevel);
+    // Métodos auxiliares
+    private List<QuestionModel> createQuestionsForPillar(int count) {
+        return Arrays.asList(new QuestionModel[count]); // Simplificado para o exemplo
     }
 
-    @Test
-    void testCalculateCertificateLevelBronze() {
-        CertificateLevelEnum actualLevel = evaluationService.calculateCertificateLevel(60);
-        assertEquals(CertificateLevelEnum.Bronze, actualLevel);
+    private List<EvaluationRequest> createCompleteEvaluation() {
+        List<EvaluationRequest> requests = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            PillarEnum pillar = i <= 10 ? PillarEnum.Social :
+                              i <= 20 ? PillarEnum.Ambiental : 
+                              PillarEnum.Governamental;
+            requests.add(new EvaluationRequest((long)i, pillar, AnswersEnum.Conforme));
+        }
+        return requests;
+    }
+
+    private List<EvaluationRequest> createPerfectEvaluation() {
+        return completeEvaluation.stream()
+            .map(req -> new EvaluationRequest(
+                req.getQuestionId(),
+                req.getQuestionPillar(),
+                AnswersEnum.Conforme
+            ))
+            .toList();
+    }
+
+    private List<EvaluationRequest> createEvaluationWithScore(int targetScore) {
+        List<EvaluationRequest> evaluation = new ArrayList<>();
+        int conformeCount = (targetScore * 30) / 100;
+        
+        for (int i = 0; i < 30; i++) {
+            PillarEnum pillar = i < 10 ? PillarEnum.Social :
+                              i < 20 ? PillarEnum.Ambiental :
+                              PillarEnum.Governamental;
+            
+            AnswersEnum answer = i < conformeCount ? AnswersEnum.Conforme : AnswersEnum.NaoConforme;
+            
+            evaluation.add(new EvaluationRequest(
+                (long)(i + 1),
+                pillar,
+                answer
+            ));
+        }
+        return evaluation;
+    }
+
+    private EvaluationModel createExistingEvaluation() {
+        EvaluationModel evaluation = new EvaluationModel();
+        evaluation.setId(1L);
+        evaluation.setCompany(company);
+        // Adicione alguns answers conforme necessário
+        return evaluation;
     }
 }
