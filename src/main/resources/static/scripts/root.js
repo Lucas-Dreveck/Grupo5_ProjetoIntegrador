@@ -36,15 +36,15 @@ const freeInputs = () => {
 function updateMenuButtons() {
     const userInfo = token ? jwt_decode(token) : null;
     const role = userInfo ? userInfo.role : "Guest";
-    
+
     const permissions = {
         "Admin": [],
         "Gestor": [],
         "Consultor": ["employees"],
         "Guest": ["companies", "employees", "questions", "start-evaluation"]
     };
-    
-    // Lista de todos os botões do menu
+
+    // Menu buttons
     const menuButtons = {
         "companies": document.querySelector('.menu li[page="companies"]'),
         "employees": document.querySelector('.menu li[page="employees"]'),
@@ -52,17 +52,14 @@ function updateMenuButtons() {
         "start-evaluation": document.querySelector('.menu li[page="start-evaluation"]'),
     };
 
-    // Itera sobre as permissões e esconde os botões necessários
+    // Hide or show buttons based on permissions
     Object.keys(menuButtons).forEach(button => {
-        if (permissions[role] && permissions[role].includes(button)) {
-            menuButtons[button].style.display = 'none';
-        } else {
-            menuButtons[button].style.display = 'block';
-        }
+        menuButtons[button]?.style.display = permissions[role]?.includes(button) ? 'none' : 'block';
     });
 
     const subitemRegistration = document.querySelectorAll('.menu .sub-list li');
     let allHidden = true;
+
     subitemRegistration.forEach(item => {
         if (item.style.display !== 'none') {
             allHidden = false;
@@ -70,11 +67,7 @@ function updateMenuButtons() {
     });
 
     const itemRegistration = document.querySelector('.menu .main-list > li:first-child');
-    if (allHidden) {
-        itemRegistration.style.display = 'none';
-    } else {
-        itemRegistration.style.display = 'block';
-    }
+    itemRegistration && (itemRegistration.style.display = allHidden ? 'none' : 'block');
 }
 
 function loadSelectedPageScript(page, props) {
@@ -294,17 +287,18 @@ function exportPDF(companyId, tradeName) {
 
 function frameSetup() {
     document.addEventListener("click", function(event) {
-        if (!sidebar.contains(event.target) && expandButton.classList.contains("active")) {
+        if (!sidebar?.contains(event.target) && expandButton?.classList.contains("active")) {
             expandButton.classList.remove("active");
-            menu.classList.remove("expanded");
+            menu?.classList.remove("expanded");
         }
     });
 
-    expandButton.addEventListener("click", expandButtonClicked);
-    menuItems.forEach(item => {
+    expandButton?.addEventListener("click", expandButtonClicked);
+
+    menuItems?.forEach(item => {
         const subList = item.nextElementSibling;
 
-        if (subList && subList.classList.contains('sub-list')) {
+        if (subList?.classList.contains('sub-list')) {
             item.addEventListener('click', () => subList.classList.toggle('show'));
 
             subList.querySelectorAll('li').forEach(subItem => subItem.addEventListener("click", menuButtonClicked));
@@ -313,7 +307,7 @@ function frameSetup() {
         }
     });
 
-    loginLogout.addEventListener("click", menuButtonClicked);
+    loginLogout?.addEventListener("click", menuButtonClicked);
     getMainFrameContent("ranking", null, false);
 }
 
