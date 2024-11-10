@@ -5,7 +5,6 @@ import com.itextpdf.text.DocumentException;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Tag(name = "PDF", description = "Endpoints para gerar PDFs")
 public class PDFController {
 
-    @Autowired
-    private PDFService pdfService;
+    private final PDFService pdfService;
+
+    public PDFController(PDFService pdfService) {
+        this.pdfService = pdfService;
+    }
 
     @PostMapping
     public ResponseEntity<byte[]> exportPdf(@RequestBody Map<String, String> payload) throws DocumentException, IOException {

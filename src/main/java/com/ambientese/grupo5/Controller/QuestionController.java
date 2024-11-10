@@ -2,7 +2,6 @@ package com.ambientese.grupo5.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Perguntas", description = "Endpoints para gerenciamento de perguntas")
 public class QuestionController {
    
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionService questionService;
+
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/{pillar}")
     public List<QuestionModel> listQuestionsPerPillar(@PathVariable PillarEnum pillar) {

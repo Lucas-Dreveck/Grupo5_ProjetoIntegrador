@@ -1,16 +1,15 @@
 package com.ambientese.grupo5;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,23 +23,27 @@ import com.github.javafaker.Faker;
 
 @Component
 public class InitialDataLoader implements CommandLineRunner {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
-    @Autowired
-    private EvaluationService evaluationService;
+    private final EvaluationService evaluationService;
+
+    public InitialDataLoader(UserRepository userRepository, CompanyRepository companyRepository, RoleRepository roleRepository,
+            EmployeeRepository employeeRepository, QuestionRepository questionRepository, EvaluationService evaluationService) {
+        this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
+        this.roleRepository = roleRepository;
+        this.employeeRepository = employeeRepository;
+        this.questionRepository = questionRepository;
+        this.evaluationService = evaluationService;
+    }
 
     private final Faker faker = new Faker(new Locale("pt-BR"));
 
@@ -150,7 +153,7 @@ public class InitialDataLoader implements CommandLineRunner {
             List<CompanyModel> companies = companyRepository.findAll();
             for (CompanyModel company : companies) {
                 List<EvaluationRequest> evaluationRequests = generateEvaluationRequest();
-                evaluationService.createCompleteEvaluation(company.getId(), evaluationRequests);
+                evaluationService.createEvaluation(company.getId(), evaluationRequests, true);
             }
 
             // Create root user
@@ -221,12 +224,12 @@ public class InitialDataLoader implements CommandLineRunner {
     }
 
     private List<QuestionModel> getRandomQuestions(List<QuestionModel> questions, int numberOfQuestions) {
-        Random random = new Random();
+        SecureRandom secureRandom = new SecureRandom();
         List<QuestionModel> randomQuestions = new ArrayList<>();
         List<Integer> selectedIndexes = new ArrayList<>();
     
         while (randomQuestions.size() < numberOfQuestions && selectedIndexes.size() < questions.size()) {
-            int randomIndex = random.nextInt(questions.size());
+            int randomIndex = secureRandom.nextInt(questions.size());
             if (!selectedIndexes.contains(randomIndex)) {
                 selectedIndexes.add(randomIndex);
                 QuestionModel randomQuestion = questions.get(randomIndex);

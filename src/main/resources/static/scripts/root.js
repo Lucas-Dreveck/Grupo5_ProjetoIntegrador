@@ -70,6 +70,7 @@ function updateMenuButtons() {
     itemRegistration && (itemRegistration.style.display = allHidden ? 'none' : 'block');
 }
 
+
 function loadSelectedPageScript(page, props) {
     switch (page) {
         case "login":
