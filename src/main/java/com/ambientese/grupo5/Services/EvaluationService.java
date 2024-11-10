@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.dto.EvaluationRequest;
 import com.ambientese.grupo5.dto.EvaluationResponse;
+import com.ambientese.grupo5.exception.QuestionsNotFoundException;
 import com.ambientese.grupo5.model.AnswerModel;
 import com.ambientese.grupo5.model.CompanyModel;
 import com.ambientese.grupo5.model.EvaluationModel;
