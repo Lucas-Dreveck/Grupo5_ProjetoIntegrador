@@ -1,7 +1,7 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
-import com.ambientese.grupo5.Model.Enums.PillarEnum;
-import com.ambientese.grupo5.Model.Enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.AnswersEnum;
+import com.ambientese.grupo5.model.enums.PillarEnum;
 
 public class EvaluationRequest {
     private Long questionId;

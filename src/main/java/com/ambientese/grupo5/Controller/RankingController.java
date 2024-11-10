@@ -1,13 +1,12 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
-import com.ambientese.grupo5.DTO.RankingEvaluation;
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
-import com.ambientese.grupo5.Services.RankingService;
+import com.ambientese.grupo5.dto.RankingEvaluation;
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
+import com.ambientese.grupo5.services.RankingService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +21,11 @@ import java.util.List;
 @Tag(name = "Ranking", description = "Endpoints para gerenciamento de rankings")
 public class RankingController {
 
-    @Autowired
-    private RankingService rankingService;
+    private final RankingService rankingService;
+
+    public RankingController(RankingService rankingService) {
+        this.rankingService = rankingService;
+    }
 
     @GetMapping("/score")
     public ResponseEntity<List<RankingEvaluation>> sortByScore(

@@ -1,35 +1,35 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Model.UserModel;
-import com.ambientese.grupo5.Repository.EmployeeRepository;
-import com.ambientese.grupo5.Repository.UserRepository;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.model.UserModel;
+import com.ambientese.grupo5.repository.EmployeeRepository;
+import com.ambientese.grupo5.repository.UserRepository;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
+    private final JavaMailSender mailSender;
+    private final JWTUtil jwtUtil;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private JWTUtil jwtUtil;
+    public AuthService(UserRepository userRepository, EmployeeRepository employeeRepository, 
+                       JavaMailSender mailSender, JWTUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.employeeRepository = employeeRepository;
+        this.mailSender = mailSender;
+        this.jwtUtil = jwtUtil;
+    }
 
     public boolean authenticate(String login, String password) {
         UserModel user = userRepository.findByLogin(login);
@@ -80,8 +80,8 @@ public class AuthService {
     }
 
     private String generateRecoveryCode() {
-        Random random = new Random();
-        int code = 100000 + random.nextInt(900000);
+        SecureRandom secureRandom = new SecureRandom();
+        int code = 100000 + secureRandom.nextInt(900000);
         return String.valueOf(code);
     }
 

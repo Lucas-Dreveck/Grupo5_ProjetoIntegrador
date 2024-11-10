@@ -1,6 +1,6 @@
-package com.ambientese.grupo5.Services;
+package com.ambientese.grupo5.services;
 
-import com.ambientese.grupo5.Config.JWTConfig;
+import com.ambientese.grupo5.config.JWTConfig;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -11,17 +11,18 @@ import jakarta.annotation.PostConstruct;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JWTUtil {
     private Algorithm algorithm;
     private JWTVerifier verifier;
+    private final JWTConfig jwtConfig;
 
-    @Autowired
-    private JWTConfig jwtConfig;
-
+    public JWTUtil(JWTConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
+    
     @PostConstruct
     public void init() {
         String secret = jwtConfig.getJwtSecret();

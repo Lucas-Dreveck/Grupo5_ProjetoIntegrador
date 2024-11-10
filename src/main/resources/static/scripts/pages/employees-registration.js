@@ -339,9 +339,9 @@ function nextDataPageEmployees() {
 }
 
 function justNumbers(event) {
-    var key = event.key;
-    var keyCode = event.keyCode || event.which;
-    var ctrlPressed = event.ctrlKey || event.metaKey;
+    const key = event.key;
+    const keyCode = event.keyCode || event.which;
+    const ctrlPressed = event.ctrlKey || event.metaKey;
 
     if(ctrlPressed && keyCode === 65 || keyCode === 67 || keyCode === 86 || keyCode === 88) {
         return;

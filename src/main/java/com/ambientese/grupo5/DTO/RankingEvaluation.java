@@ -1,7 +1,7 @@
-package com.ambientese.grupo5.DTO;
+package com.ambientese.grupo5.dto;
 
-import com.ambientese.grupo5.Model.Enums.CertificateLevelEnum;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
+import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
+import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class RankingEvaluation {
     private long id;

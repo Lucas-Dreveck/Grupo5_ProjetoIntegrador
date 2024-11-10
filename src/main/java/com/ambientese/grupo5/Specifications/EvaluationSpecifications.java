@@ -1,9 +1,9 @@
-package com.ambientese.grupo5.Specifications;
-
-import com.ambientese.grupo5.Model.EvaluationModel;
-import com.ambientese.grupo5.Model.Enums.SizeEnum;
+package com.ambientese.grupo5.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
+
+import com.ambientese.grupo5.model.EvaluationModel;
+import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class EvaluationSpecifications {
 

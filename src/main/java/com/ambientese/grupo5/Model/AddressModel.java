@@ -1,4 +1,4 @@
-package com.ambientese.grupo5.Model;
+package com.ambientese.grupo5.model;
 
 import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;

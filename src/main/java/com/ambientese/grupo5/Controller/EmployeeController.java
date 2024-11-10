@@ -1,10 +1,9 @@
-package com.ambientese.grupo5.Controller;
+package com.ambientese.grupo5.controller;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambientese.grupo5.DTO.EmployeeRegistration;
-import com.ambientese.grupo5.DTO.EmployeeRequest;
-import com.ambientese.grupo5.Model.EmployeeModel;
-import com.ambientese.grupo5.Services.EmployeeService;
+import com.ambientese.grupo5.dto.EmployeeRegistration;
+import com.ambientese.grupo5.dto.EmployeeRequest;
+import com.ambientese.grupo5.model.EmployeeModel;
+import com.ambientese.grupo5.services.EmployeeService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -28,8 +27,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Funcionario", description = "Endpoints para gerenciamento de funcionários")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable Long id) {
