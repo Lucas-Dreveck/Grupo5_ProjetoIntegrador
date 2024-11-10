@@ -3,7 +3,6 @@ package com.ambientese.grupo5.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.dto.CompanyRegistration;
@@ -23,20 +22,23 @@ import jakarta.transaction.Transactional;
 @Service
 public class CompanyService {
     
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+    private final AddressRepository addressRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final MandatoryFieldsValidation mandatoryFieldsValidation;
+    private final CNPJValidation cnpjValidation;
 
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private EvaluationRepository evaluationRepository;
-
-    @Autowired
-    private MandatoryFieldsValidation mandatoryFieldsValidation;
-
-    @Autowired
-    private CNPJValidation cnpjValidation;
+    public CompanyService(CompanyRepository companyRepository,
+                          AddressRepository addressRepository,
+                          EvaluationRepository evaluationRepository,
+                          MandatoryFieldsValidation mandatoryFieldsValidation,
+                          CNPJValidation cnpjValidation) {
+        this.companyRepository = companyRepository;
+        this.addressRepository = addressRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.mandatoryFieldsValidation = mandatoryFieldsValidation;
+        this.cnpjValidation = cnpjValidation;
+    }
 
     public List<CompanyModel> getAllCompanies() {
         return companyRepository.findAll();

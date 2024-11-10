@@ -1,6 +1,5 @@
 package com.ambientese.grupo5.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +16,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Auth", description = "Endpoints para autenticação")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+
 
     @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody UserLogin user) {

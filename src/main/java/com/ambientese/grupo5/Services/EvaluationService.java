@@ -1,14 +1,13 @@
 package com.ambientese.grupo5.services;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ambientese.grupo5.dto.EvaluationRequest;
@@ -31,22 +30,26 @@ import jakarta.transaction.Transactional;
 @Service
 public class EvaluationService {
 
-    @Autowired
-    private EvaluationRepository evaluationRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final CompanyRepository companyRepository;
 
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
+    public EvaluationService(EvaluationRepository evaluationRepository,
+                             QuestionRepository questionRepository,
+                             AnswerRepository answerRepository,
+                             CompanyRepository companyRepository) {
+        this.evaluationRepository = evaluationRepository;
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.companyRepository = companyRepository;
+    }
 
     @Transactional
     public EvaluationResponse searchQuestionsInDb(Boolean isNewEvaluation, Long companyId) {
         if (isNewEvaluation) {
-            Random random = new Random();
+            SecureRandom secureRandom = new SecureRandom();
             Optional<EvaluationModel> latestEvaluation = evaluationRepository.findIncompleteByCompanyId(companyId);
             if (latestEvaluation.isPresent()) {
                 answerRepository.deleteAll(latestEvaluation.get().getAnswers());
@@ -57,7 +60,7 @@ public class EvaluationService {
             for (PillarEnum pillar : PillarEnum.values()) {
                 List<QuestionModel> questionsPillar = questionRepository.findByPillar(pillar);
 
-                Collections.shuffle(questionsPillar, random);
+                Collections.shuffle(questionsPillar, secureRandom);
 
                 allQuestions.addAll(questionsPillar.subList(0, Math.min(questionsPillar.size(), 10)));
             }

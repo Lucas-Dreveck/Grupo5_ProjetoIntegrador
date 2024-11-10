@@ -7,7 +7,6 @@ import com.ambientese.grupo5.services.EvaluationService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +20,11 @@ import java.util.List;
 @Tag(name = "Questionario", description = "Endpoints para gerenciamento de questionários")
 public class EvaluationController {
 
-    @Autowired
-    private EvaluationService evaluationService;
+    private final EvaluationService evaluationService;
+
+    public EvaluationController(EvaluationService evaluationService) {
+        this.evaluationService = evaluationService;
+    }
 
     @GetMapping("/api/auth/haveActiveEvaluation/{companyId}")
     public boolean haveActiveEvaluation(@PathVariable() Long companyId) {
