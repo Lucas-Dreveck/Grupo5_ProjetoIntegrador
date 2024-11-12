@@ -8,6 +8,7 @@ public class RankingEvaluation {
     private Integer ranking;
     private String companyName;
     private CertificateLevelEnum certificateLevel;
+    private String imageUrl;
     private String segment;
     private SizeEnum size;
     private String city;
@@ -18,12 +19,13 @@ public class RankingEvaluation {
     private Boolean finishList;
 
     public RankingEvaluation(long id, Integer ranking, String companyName, CertificateLevelEnum certificateLevel,
-            String segment, SizeEnum size, String city, Integer finalScore, Integer socialScore,
+            String imageUrl, String segment, SizeEnum size, String city, Integer finalScore, Integer socialScore,
             Integer enviornmentalScore, Integer governmentScore, Boolean finishList) {
         this.id = id;
         this.ranking = ranking;
         this.companyName = companyName;
         this.certificateLevel = certificateLevel;
+        this.imageUrl = imageUrl;
         this.segment = segment;
         this.size = size;
         this.city = city;
@@ -64,6 +66,14 @@ public class RankingEvaluation {
 
     public void setCertificateLevel(CertificateLevelEnum certificateLevel) {
         this.certificateLevel = certificateLevel;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getSegment() {
@@ -129,6 +139,7 @@ public class RankingEvaluation {
     public void setFinishList(Boolean finishList) {
         this.finishList = finishList;
     }
+
     
     
 }

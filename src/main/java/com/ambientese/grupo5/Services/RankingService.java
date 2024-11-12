@@ -72,6 +72,7 @@ public class RankingService {
                 evaluation.getCompany().getRanking(),
                 evaluation.getCompany().getTradeName(),
                 evaluation.getCertificate(),
+                evaluation.getCompany().getImageUrl(),
                 evaluation.getCompany().getSegment(),
                 evaluation.getCompany().getCompanySize(),
                 evaluation.getCompany().getAddres().getCity(),

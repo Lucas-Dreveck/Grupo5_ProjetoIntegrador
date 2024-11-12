@@ -264,6 +264,7 @@ tbody tr {
 .labelStyle {
     margin-top: 2%;
     font-size: 22px;
+    margin-bottom: 5px;
 }
 
 .divBtnAdd, .divBtnEdit, .divBtnDelete {

@@ -5,6 +5,7 @@ import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class CompanyRegistration {
     private Long id;
+    private String imageUrl;
     private String tradeName;
     private String applicantsName;
     private String applicantsPhone;
@@ -22,10 +23,11 @@ public class CompanyRegistration {
     public CompanyRegistration() {
     }
 
-    public CompanyRegistration(Long id, String tradeName, String applicantsName, String applicantsPhone, String companyName,
+    public CompanyRegistration(Long id, String imageUrl, String tradeName, String applicantsName, String applicantsPhone, String companyName,
             String cnpj, String socialInscription, AddressModel address, String email, String companyPhone, String segment,
             SizeEnum companySize, Integer ranking, Boolean finishList) {
         this.id = id;
+        this.imageUrl = imageUrl;
         this.tradeName = tradeName;
         this.applicantsName = applicantsName;
         this.applicantsPhone = applicantsPhone;
@@ -47,6 +49,14 @@ public class CompanyRegistration {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getTradeName() {
