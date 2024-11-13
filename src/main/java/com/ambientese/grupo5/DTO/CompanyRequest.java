@@ -14,6 +14,8 @@ import com.ambientese.grupo5.model.enums.SizeEnum;
 
 public class CompanyRequest {
 
+    private String imageUrl;
+
     @NotNull
     @NotBlank
     private String tradeName;
@@ -59,6 +61,14 @@ public class CompanyRequest {
     @NotNull
     @NotBlank
     private SizeEnum companySize;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getTradeName() {
         return tradeName;

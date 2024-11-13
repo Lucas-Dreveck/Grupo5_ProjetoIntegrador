@@ -133,6 +133,7 @@ public class CompanyService {
     }
 
     public void mapCompany(CompanyModel companyModel, CompanyRequest companyRequest) {
+        companyModel.setImageUrl(companyRequest.getImageUrl());
         companyModel.setTradeName(companyRequest.getTradeName());
         companyModel.setApplicantsName(companyRequest.getApplicantsName());
         companyModel.setApplicantsPhone(companyRequest.getApplicantsPhone());
