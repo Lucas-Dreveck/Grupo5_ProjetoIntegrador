@@ -134,7 +134,7 @@ public class InitialDataLoader implements CommandLineRunner {
                 String[] questions;
                 switch (pillar) {
                     case Ambiental:
-                        questions = enviornmentalQuestions;
+                        questions = environmentalQuestions;
                         break;
                     case Social:
                         questions = socialQuestions;
@@ -208,11 +208,11 @@ public class InitialDataLoader implements CommandLineRunner {
         List<EvaluationRequest> evaluationRequests = new ArrayList<>();
 
         // Supondo que há 10 questions para cada pillar (Ambiental, Social, Governamental)
-        List<QuestionModel> enviornmentalQuestionsList = questionRepository.findByPillar(PillarEnum.Ambiental);
+        List<QuestionModel> environmentalQuestionsList = questionRepository.findByPillar(PillarEnum.Ambiental);
         List<QuestionModel> socialQuestionsList = questionRepository.findByPillar(PillarEnum.Social);
         List<QuestionModel> governmentQuestionsList = questionRepository.findByPillar(PillarEnum.Governamental);
 
-        List<QuestionModel> selectedQuestions = getRandomQuestions(enviornmentalQuestionsList, 10);
+        List<QuestionModel> selectedQuestions = getRandomQuestions(environmentalQuestionsList, 10);
         selectedQuestions.addAll(getRandomQuestions(socialQuestionsList, 10));
         selectedQuestions.addAll(getRandomQuestions(governmentQuestionsList, 10));
 
@@ -284,7 +284,7 @@ public class InitialDataLoader implements CommandLineRunner {
 
     private final List<AnswersEnum> answerProbability = generateAnswerPobability();
 
-    private static final String[] enviornmentalQuestions = {
+    private static final String[] environmentalQuestions = {
         "A empresa possui uma política ambiental clara e documentada?",
         "A empresa possui metas de redução de emissões de carbono?",
         "A empresa gerencia adequadamente seus resíduos sólidos?",

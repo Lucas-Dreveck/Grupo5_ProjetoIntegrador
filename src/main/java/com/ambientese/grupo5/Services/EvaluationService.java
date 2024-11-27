@@ -227,7 +227,7 @@ public class EvaluationService {
         ScoreCalculator calculator = new ScoreCalculator(evaluationRequests);
         evaluationModel.setFinalScore(calculator.getFinalScore());
         evaluationModel.setSocialScore(calculator.getSocialScore());
-        evaluationModel.setEnviornmentalScore(calculator.getEnvironmentalScore());
+        evaluationModel.setEnvironmentalScore(calculator.getEnvironmentalScore());
         evaluationModel.setGovernmentScore(calculator.getGovernmentScore());
         evaluationModel.setCertificate(calculateCertificateLevel(calculator.getFinalScore()));
         evaluationModel.setAnswerDate(new Date());

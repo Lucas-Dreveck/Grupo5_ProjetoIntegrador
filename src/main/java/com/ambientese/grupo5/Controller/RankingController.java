@@ -1,9 +1,9 @@
 package com.ambientese.grupo5.controller;
 
-import com.ambientese.grupo5.dto.RankingEvaluation;
 import com.ambientese.grupo5.model.EvaluationModel;
 import com.ambientese.grupo5.model.enums.SizeEnum;
 import com.ambientese.grupo5.services.RankingService;
+import com.ambientese.grupo5.model.RankingView;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -28,14 +28,14 @@ public class RankingController {
     }
 
     @GetMapping("/score")
-    public ResponseEntity<List<RankingEvaluation>> sortByScore(
+    public ResponseEntity<List<RankingView>> sortByScore(
             @RequestParam(required = false) String tradeName,
             @RequestParam(required = false) String segment,
             @RequestParam(required = false) SizeEnum companySize,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
         
-        List<RankingEvaluation> result = rankingService.sortByScoreWithFilter(tradeName, segment, companySize, page, size);
+        List<RankingView> result = rankingService.sortByScoreWithFilter(tradeName, segment, companySize, page, size);
         return ResponseEntity.ok(result);
     }
 
@@ -44,9 +44,9 @@ public class RankingController {
         return rankingService.listSegments();
     }
 
-    @GetMapping("/enviornmental")
-    public List<EvaluationModel> sortByEnviornmentalPillar() {
-        return rankingService.sortByEnviornmentalPillar();
+    @GetMapping("/environmental")
+    public List<EvaluationModel> sortByEnvironmentalPillar() {
+        return rankingService.sortByEnvironmentalPillar();
     }
 
     @GetMapping("/social")

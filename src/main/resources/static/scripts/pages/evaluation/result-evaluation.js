@@ -26,13 +26,13 @@ const createGraphs = (evaluation) => {
         </div>
         <div class="graph">
             <svg viewBox="0 0 36 36" class="circular-chart">
-                <path class="circle enviornmental-graph"
-                stroke-dasharray="${evaluation.enviornmentalScore}, 100"
+                <path class="circle environmental-graph"
+                stroke-dasharray="${evaluation.environmentalScore}, 100"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
-                <text x="18" y="20" text-anchor="middle" class="percentage">${evaluation.enviornmentalScore}%</text>
+                <text x="18" y="20" text-anchor="middle" class="percentage">${evaluation.environmentalScore}%</text>
             </svg>
             <h2 class="subtitle">Ambiental</h2>
         </div>
@@ -90,9 +90,9 @@ const renderTables = (answers) => {
     
     const socialTable = createTable('social', socialData);
     const governmentTable = createTable('government', governmentData);
-    const enviornmentalData = createTable('enviornmental', enviornmentData);
+    const environmentalData = createTable('environmental', enviornmentData);
     
-    return socialTable + governmentTable + enviornmentalData;
+    return socialTable + governmentTable + environmentalData;
 }
 
 const onOpenResultEvaluation = (props) => {

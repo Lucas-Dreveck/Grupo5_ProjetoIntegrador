@@ -35,8 +35,8 @@ public class EvaluationModel {
     @Column(name = "social_score")
     private Integer socialScore;
 
-    @Column(name = "anviornmental_score")
-    private Integer enviornmentalScore;
+    @Column(name = "environmental_score")
+    private Integer environmentalScore;
 
     @Column(name = "government_score")
     private Integer governmentScore;
@@ -108,12 +108,12 @@ public class EvaluationModel {
         this.socialScore = socialScore;
     }
 
-    public Integer getEnviornmentalScore() {
-        return enviornmentalScore;
+    public Integer getEnvironmentalScore() {
+        return environmentalScore;
     }
 
-    public void setEnviornmentalScore(Integer enviornmentalScore) {
-        this.enviornmentalScore = enviornmentalScore;
+    public void setEnvironmentalScore(Integer environmentalScore) {
+        this.environmentalScore = environmentalScore;
     }
 
     public Integer getGovernmentScore() {

@@ -173,7 +173,7 @@ const onOpenEvaluation = (props) => {
         }
     });
     const government = [];
-    const enviornmental = [];
+    const environmental = [];
     const social = [];
 
     fetch(`${ApiURL}/auth/evaluation/${props.isNew}?companyId=${props.company.id}`, options)
@@ -191,8 +191,8 @@ const onOpenEvaluation = (props) => {
                             government.push(item);
                         }
                     } else if (item.pillar === 'Ambiental') {
-                        if (enviornmental.length < questionNumbers) {
-                            enviornmental.push(item);
+                        if (environmental.length < questionNumbers) {
+                            environmental.push(item);
                         }    
                     } else if (item.pillar === 'Social') {
                         if (social.length < questionNumbers) {
@@ -206,17 +206,17 @@ const onOpenEvaluation = (props) => {
                     if (item.questionPillar === 'Governamental') {
                         government.push(item);
                     } else if (item.questionPillar === 'Ambiental') {
-                        enviornmental.push(item);
+                        environmental.push(item);
                     } else if (item.questionPillar === 'Social') {
                         social.push(item);
                     }
                 });
             }
             
-            allQuestions = [...government, ...enviornmental, ...social];
+            allQuestions = [...government, ...environmental, ...social];
 
             renderQuestions(government)
-            renderQuestions(enviornmental)
+            renderQuestions(environmental)
             renderQuestions(social, true)
         })
         .catch(err => {

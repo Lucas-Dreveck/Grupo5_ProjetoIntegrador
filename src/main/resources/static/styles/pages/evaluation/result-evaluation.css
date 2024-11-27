@@ -75,7 +75,7 @@
     stroke: #0071bf;
 }
 
-.enviornmental-graph {
+.environmental-graph {
     stroke: #6ac04a;
 }
 
@@ -149,11 +149,11 @@
     background-color: #8ab7e0;
 }
 
-.tables .table-enviornmental .even-row{
+.tables .table-environmental .even-row{
     background-color: #6ac04a;
 }
 
-.tables .table-enviornmental .odd-row{
+.tables .table-environmental .odd-row{
     background-color: #a0dca0;
 }
 

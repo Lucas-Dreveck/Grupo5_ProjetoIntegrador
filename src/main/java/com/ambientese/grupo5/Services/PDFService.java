@@ -49,16 +49,16 @@ public class PDFService {
 
         PillarEnum social = PillarEnum.Social;
         PillarEnum government = PillarEnum.Governamental;
-        PillarEnum enviornmental = PillarEnum.Ambiental;
+        PillarEnum environmental = PillarEnum.Ambiental;
 
         List<AnswerModel> answers = evaluation.getAnswers();
         List<AnswerModel> answersSocial = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(social)).collect(Collectors.toList());
         List<AnswerModel> answersGovernment = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(government)).collect(Collectors.toList());
-        List<AnswerModel> answersEnviornmental = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(enviornmental)).collect(Collectors.toList());
+        List<AnswerModel> answersEnvironmental = answers.stream().filter(answer -> answer.getQuestion().getPillar().equals(environmental)).collect(Collectors.toList());
 
         String socialPercentage = evaluation.getSocialScore() + "%";
         String governmentPercentage = evaluation.getGovernmentScore() + "%";
-        String enviornmentalPercentage = evaluation.getEnviornmentalScore() + "%";
+        String environmentalPercentage = evaluation.getEnvironmentalScore() + "%";
 
          String cssContent = "h1, h2 { text-align: center; }"
                 + "table { width: 100%; border-collapse: collapse; }"
@@ -85,9 +85,9 @@ public class PDFService {
                 + generateTableHtml(answersGovernment)
                 + "</table>"
                 + "<div class=\"page-break\"></div>"
-                + "<h2 class=\"title\">Ambiental " + enviornmentalPercentage + "</h2>"
-                + "<table class=\"table table-enviornmental\">"
-                + generateTableHtml(answersEnviornmental)
+                + "<h2 class=\"title\">Ambiental " + environmentalPercentage + "</h2>"
+                + "<table class=\"table table-environmental\">"
+                + generateTableHtml(answersEnvironmental)
                 + "</table>"
                 + "</div>"
                 + "</div>"

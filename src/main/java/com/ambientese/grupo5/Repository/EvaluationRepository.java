@@ -34,7 +34,7 @@ public interface EvaluationRepository extends JpaRepository<EvaluationModel, Lon
 
     List<EvaluationModel> findAllByOrderByFinalScoreAsc();
     List<EvaluationModel> findAllByOrderBySocialScoreAsc();
-    List<EvaluationModel> findAllByOrderByEnviornmentalScoreAsc();
+    List<EvaluationModel> findAllByOrderByEnvironmentalScoreAsc();
     List<EvaluationModel> findAllByOrderByGovernmentScoreAsc();
 
     List<EvaluationModel> findByCompanyId(Long companyId);
