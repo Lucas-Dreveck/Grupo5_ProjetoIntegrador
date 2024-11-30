@@ -7,6 +7,8 @@ import com.ambientese.grupo5.model.enums.CertificateLevelEnum;
 import com.ambientese.grupo5.model.enums.SizeEnum;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 @Entity
@@ -16,10 +18,10 @@ import jakarta.persistence.Id;
     "   c.id AS id, " +
     "   c.ranking AS ranking, " +
     "   c.trade_name AS company_name, " +
-    "   e.certificate_level AS certificate_level, " +
+    "   e.certificate AS certificate_level, " +
     "   c.image_url AS image_url, " +
     "   c.segment AS segment, " +
-    "   c.size AS size, " +
+    "   c.company_size AS size, " +
     "   a.city AS city, " +
     "   e.final_score AS final_score, " +
     "   e.social_score AS social_score, " +
@@ -39,17 +41,31 @@ public class RankingView {
     private long id;
     
     private Integer ranking;
+
     private String companyName;
+
+    @Enumerated(EnumType.STRING)
     private CertificateLevelEnum certificateLevel;
+
     private String imageUrl;
+
     private String segment;
+
     private SizeEnum size;
+
     private String city;
+
     private Integer finalScore;
+    
     private Integer socialScore;
+
     private Integer environmentalScore;
+
     private Integer governmentScore;
-    private Boolean finishList;
+
+    private Boolean finishList = false;
+
+    public RankingView() {}
 
     public RankingView(long id, Integer ranking, String companyName, CertificateLevelEnum certificateLevel,
             String imageUrl, String segment, SizeEnum size, String city, Integer finalScore, Integer socialScore,
@@ -82,6 +98,8 @@ public class RankingView {
     public Integer getEnvironmentalScore() { return environmentalScore; }
     public Integer getGovernmentScore() { return governmentScore; }
     public Boolean getFinishList() { return finishList; }
-    
+    public void setFinishList(Boolean finishList) {
+        this.finishList = finishList;
+    }
     
 }
